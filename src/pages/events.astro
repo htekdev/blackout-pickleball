@@ -1,35 +1,233 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const events = [
+  {
+    id: 'blackout-chicago-2026',
+    title: 'Blackout Pickleball Chicago',
+    subtitle: 'Chicago Day Party 🎾⚡️',
+    date: 'Saturday, May 16, 2026',
+    time: '1:00 PM – 5:00 PM CT',
+    dateISO: '2026-05-16T13:00:00-05:00',
+    venue: 'Chipickle Pickleball Club',
+    address: '1900 South Wabash Avenue, Chicago, IL 60616',
+    city: 'Chicago, IL',
+    image: '/images/events/blackout-chicago.jpg',
+    price: '$28.52',
+    ticketUrl: 'https://www.eventbrite.com/e/blackout-pickleball-chicago-tickets-1988527028873',
+    ticketLabel: 'Get Tickets',
+    description: 'Chicago — we\'re bringing the heat to the court. Blackout Pickleball is taking over for a high-energy daytime experience you don\'t want to miss. This is where sport meets vibes — think competition, music, content, and community all in one.',
+    highlights: [
+      'Open play + competitive rotations + pro players',
+      'Music & high-energy atmosphere',
+      'Content-worthy moments all day',
+      'A crowd that\'s here to connect & have fun',
+    ],
+    refundPolicy: 'No refunds',
+    duration: '4 hours',
+    format: 'In person',
+    status: 'on-sale', // on-sale, sold-out, coming-soon
+  },
+  {
+    id: 'juneteenth-pb-celebration-2026',
+    title: 'Juneteenth PB Celebration',
+    subtitle: 'Celebrate Freedom on the Court 🎉',
+    date: 'Thursday, June 19, 2026',
+    time: 'TBA',
+    dateISO: '2026-06-19T00:00:00-05:00',
+    venue: 'TBA',
+    address: '',
+    city: 'TBA',
+    image: null, // placeholder — RSVPify blocked scraping
+    price: 'Free / RSVP',
+    ticketUrl: 'https://juneteenthpbcelebration.rsvpify.com/',
+    ticketLabel: 'RSVP Now',
+    description: 'Join Blackout Pickleball for a special Juneteenth celebration on the courts. Honor the holiday through sport, community, and culture. More details coming soon — RSVP to save your spot.',
+    highlights: [
+      'Juneteenth celebration on the courts',
+      'Community gathering & open play',
+      'Celebrate diversity through sport',
+    ],
+    refundPolicy: null,
+    duration: 'TBA',
+    format: 'In person',
+    status: 'on-sale',
+  },
+];
+
+// Sort by date
+events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTime());
 ---
 
-<BaseLayout title="Events" description="Upcoming Blackout Pickleball events, tournaments, and community gatherings.">
+<BaseLayout title="Events" description="Upcoming Blackout events — pickleball tournaments, community mixers, and celebrations. Join the movement.">
 
+  <!-- Hero Section -->
+  <section class="relative py-20 sm:py-28 bg-blackout text-text-inverse overflow-hidden">
+    <!-- Decorative elements -->
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute top-10 left-10 w-64 h-64 border border-white/20 rounded-full"></div>
+      <div class="absolute bottom-10 right-10 w-96 h-96 border border-white/10 rounded-full"></div>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-4">Upcoming Events</p>
+      <h1 class="text-4xl sm:text-6xl font-black tracking-tight font-display">Pull Up & Play</h1>
+      <p class="mt-5 text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+        Where sport meets vibes. Competition, music, content, and community — all in one.
+      </p>
+    </div>
+  </section>
+
+  <!-- Events List -->
   <section class="py-16 sm:py-24 bg-surface">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <p class="text-accent font-semibold text-sm uppercase tracking-widest mb-3">Upcoming Events</p>
-        <h1 class="text-4xl sm:text-5xl font-black tracking-tight">Play with Us</h1>
-        <p class="mt-4 text-text-light text-lg">Join the Blackout Pickleball community at our upcoming events.</p>
-      </div>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
-      <!-- Event Card Placeholder -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="bg-gradient-to-r from-blackout to-blackout-light p-8 text-text-inverse">
-          <span class="text-accent text-sm font-semibold uppercase tracking-widest">Coming Soon</span>
-          <h2 class="text-2xl font-black mt-2">Blackout Community Mixer</h2>
-          <p class="text-white/70 mt-2">Details coming soon — follow us on social media for updates!</p>
-        </div>
-        <div class="p-6">
-          <p class="text-text-light">
-            We're planning exciting community events for pickleball players of all levels. Stay tuned for dates, locations, and registration details.
-          </p>
-          <div class="mt-4 flex gap-4">
-            <a href="https://www.instagram.com/blackoutpickleball" target="_blank" rel="noopener noreferrer" class="text-sm text-accent hover:text-accent-dark font-medium transition-colors">
-              Follow on Instagram &rarr;
-            </a>
+      {events.map((event, index) => (
+        <article class="group bg-white rounded-2xl shadow-sm border border-border hover:shadow-lg transition-all duration-300 overflow-hidden">
+          <div class="grid md:grid-cols-5 gap-0">
+
+            {/* Image Column */}
+            <div class="md:col-span-2 relative overflow-hidden bg-surface-dark">
+              {event.image ? (
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  class="w-full h-56 md:h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                />
+              ) : (
+                <div class="w-full h-56 md:h-full flex items-center justify-center bg-gradient-to-br from-blackout to-blackout-light">
+                  <div class="text-center text-white/80 p-6">
+                    <svg class="w-16 h-16 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p class="text-sm font-medium">Event Image Coming Soon</p>
+                  </div>
+                </div>
+              )}
+              {/* Date badge */}
+              <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 text-center shadow-md">
+                <p class="text-xs font-bold uppercase text-text-light leading-none">
+                  {new Date(event.dateISO).toLocaleDateString('en-US', { month: 'short' })}
+                </p>
+                <p class="text-2xl font-black text-blackout leading-none mt-0.5">
+                  {new Date(event.dateISO).getDate()}
+                </p>
+              </div>
+              {/* Status badge */}
+              {event.status === 'sold-out' && (
+                <div class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                  Sold Out
+                </div>
+              )}
+            </div>
+
+            {/* Content Column */}
+            <div class="md:col-span-3 p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                {/* Title & Subtitle */}
+                <h2 class="text-2xl sm:text-3xl font-black tracking-tight font-display text-blackout group-hover:text-accent-gold-dark transition-colors">
+                  {event.title}
+                </h2>
+                {event.subtitle && (
+                  <p class="text-base text-text-light mt-1">{event.subtitle}</p>
+                )}
+
+                {/* Meta Info Row */}
+                <div class="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-sm text-text-light">
+                  {/* Date & Time */}
+                  <div class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-accent-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>{event.date}</span>
+                  </div>
+                  {event.time !== 'TBA' && (
+                    <div class="flex items-center gap-1.5">
+                      <svg class="w-4 h-4 text-accent-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{event.time}</span>
+                    </div>
+                  )}
+                  {/* Location */}
+                  <div class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-accent-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>{event.venue !== 'TBA' ? `${event.venue} · ${event.city}` : 'Location TBA'}</span>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p class="mt-4 text-text-light leading-relaxed">
+                  {event.description}
+                </p>
+
+                {/* Highlights */}
+                {event.highlights && event.highlights.length > 0 && (
+                  <ul class="mt-4 space-y-1.5">
+                    {event.highlights.map((h) => (
+                      <li class="flex items-start gap-2 text-sm text-text-light">
+                        <span class="text-accent-gold mt-0.5">✦</span>
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Footer: Price + CTA */}
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-6 pt-5 border-t border-border-light gap-4">
+                <div class="flex items-center gap-4">
+                  <span class="text-xl font-black text-blackout">{event.price}</span>
+                  {event.duration !== 'TBA' && (
+                    <span class="text-xs text-text-light bg-surface-dark px-2.5 py-1 rounded-full">{event.duration}</span>
+                  )}
+                  {event.format && (
+                    <span class="text-xs text-text-light bg-surface-dark px-2.5 py-1 rounded-full">{event.format}</span>
+                  )}
+                </div>
+                <a
+                  href={event.ticketUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class:list={[
+                    'inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm tracking-wide transition-all duration-200 shadow-sm',
+                    event.status === 'sold-out'
+                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed pointer-events-none'
+                      : 'bg-blackout text-white hover:bg-accent-gold hover:text-blackout hover:shadow-md',
+                  ]}
+                >
+                  {event.ticketLabel}
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
           </div>
-        </div>
-      </div>
+        </article>
+      ))}
+
+    </div>
+  </section>
+
+  <!-- Follow CTA -->
+  <section class="py-16 bg-surface-dark border-t border-border-light">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-black tracking-tight font-display">Don't Miss a Thing</h2>
+      <p class="mt-3 text-text-light text-lg">Follow us on Instagram for event announcements, recaps, and behind-the-scenes content.</p>
+      <a
+        href="https://www.instagram.com/blackoutpickleball"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-blackout text-white rounded-xl font-bold text-sm hover:bg-accent-gold hover:text-blackout transition-all duration-200 shadow-sm hover:shadow-md"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        @blackoutpickleball
+      </a>
     </div>
   </section>
 
