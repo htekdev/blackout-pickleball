@@ -217,5 +217,42 @@ function formatPrice(cents: number): string {
       )}
     </div>
   </section>
+
+  {/* JSON-LD Product structured data for SEO */}
+  {!isDemo && filteredCatalog.length > 0 && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Blackout Shop",
+      "description": "Shop Blackout performance gear — tees, hoodies, hats and more across all sports.",
+      "url": "https://brandblackout.com/shop",
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": filteredCatalog.length,
+        "itemListElement": filteredCatalog.map((product, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "Product",
+            "name": product.name,
+            "image": product.images[0] ? `https://brandblackout.com${product.images[0]}` : undefined,
+            "url": `https://brandblackout.com/product/${product.id}`,
+            "brand": {
+              "@type": "Brand",
+              "name": "Blackout"
+            },
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "USD",
+              "lowPrice": (getLowestPrice(product.prices) / 100).toFixed(2),
+              "highPrice": (Math.max(...product.prices.map(p => p.amount)) / 100).toFixed(2),
+              "offerCount": product.prices.length,
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        }))
+      }
+    })} />
+  )}
 
 </BaseLayout>

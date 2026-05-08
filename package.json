@@ -26,6 +26,7 @@
     "tailwindcss": "4.1"
   },
   "devDependencies": {
+    "qrcode": "^1.5.4",
     "sharp": "^0.34.5"
   }
 }
