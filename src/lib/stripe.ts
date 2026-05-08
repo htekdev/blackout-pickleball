@@ -18,6 +18,7 @@ export interface CatalogItem {
   name: string;
   description: string | null;
   images: string[];
+  sport: string;
   prices: Array<{
     id: string;
     amount: number;
@@ -39,6 +40,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
     name: product.name,
     description: product.description,
     images: product.images,
+    sport: (product.metadata?.sport || 'pickleball').toLowerCase(),
     prices: prices
       .filter((p) => p.product === product.id)
       .map((p) => ({

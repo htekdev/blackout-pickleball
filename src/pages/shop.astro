@@ -5,6 +5,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import AddToCartButton from '../components/AddToCartButton';
 import { getCatalog, type CatalogItem } from '../lib/stripe';
 
+// Read category filter from query param
+const url = new URL(Astro.request.url);
+const activeCategory = (url.searchParams.get('category') || 'all').toLowerCase();
+
+// Sport categories config
+const categories = [
+  { id: 'all', label: 'All', active: true },
+  { id: 'pickleball', label: 'Pickleball', active: true },
+  { id: 'tennis', label: 'Tennis', active: false, comingSoon: true },
+];
+
 let catalog: CatalogItem[] = [];
 let isDemo = false;
 
@@ -16,13 +27,14 @@ try {
   catalog = await getCatalog();
 } catch (e) {
   isDemo = true;
-  // Demo products for development/preview
+  // Demo products for development/preview — all tagged with sport metadata
   catalog = [
     {
       id: 'demo_tee',
       name: 'Blackout Performance Tee',
       description: 'Premium court-ready tee — 85% Polyester / 15% Spandex. Breathable 4-way stretch, moisture-wicking.',
       images: [],
+      sport: 'pickleball',
       prices: [
         { id: 'demo_tee_s', amount: 3500, currency: 'usd', size: 'S' },
         { id: 'demo_tee_m', amount: 3500, currency: 'usd', size: 'M' },
@@ -36,6 +48,7 @@ try {
       name: 'Blackout Hoodie',
       description: 'Warm-up in style. Premium cotton blend hoodie with Blackout Pickleball branding.',
       images: [],
+      sport: 'pickleball',
       prices: [
         { id: 'demo_hoodie_s', amount: 5500, currency: 'usd', size: 'S' },
         { id: 'demo_hoodie_m', amount: 5500, currency: 'usd', size: 'M' },
@@ -48,6 +61,7 @@ try {
       name: 'Blackout Cap',
       description: 'Rep the brand on and off the court. Adjustable snapback with embroidered logo.',
       images: [],
+      sport: 'pickleball',
       prices: [
         { id: 'demo_cap_one', amount: 2500, currency: 'usd', size: 'One Size' },
       ],
@@ -57,6 +71,7 @@ try {
       name: 'Blackout Performance Shorts',
       description: 'Lightweight performance shorts with side pockets. Perfect for tournament play.',
       images: [],
+      sport: 'pickleball',
       prices: [
         { id: 'demo_shorts_s', amount: 4000, currency: 'usd', size: 'S' },
         { id: 'demo_shorts_m', amount: 4000, currency: 'usd', size: 'M' },
@@ -67,6 +82,11 @@ try {
   ];
 }
 
+// Filter catalog by selected category
+const filteredCatalog = activeCategory === 'all'
+  ? catalog
+  : catalog.filter(p => p.sport === activeCategory);
+
 function getLowestPrice(prices: CatalogItem['prices']): number {
   return Math.min(...prices.map(p => p.amount));
 }
@@ -76,14 +96,50 @@ function formatPrice(cents: number): string {
 }
 ---
 
-<BaseLayout title="Shop" description="Shop Blackout Pickleball performance gear — tees, hoodies, hats and more.">
+<BaseLayout title="Shop" description="Shop Blackout performance gear — tees, hoodies, hats and more across all sports.">
 
   <section class="py-16 sm:py-24 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <p class="text-accent font-semibold text-sm uppercase tracking-widest mb-3">Performance Gear</p>
         <h1 class="text-4xl sm:text-5xl font-black tracking-tight">Shop</h1>
-        <p class="mt-4 text-text-light text-lg max-w-xl mx-auto">Engineered for the heat of the game. Browse our full collection of performance pickleball gear.</p>
+        <p class="mt-4 text-text-light text-lg max-w-xl mx-auto">Engineered for the heat of the game. Browse our full collection of Blackout performance gear.</p>
+      </div>
+
+      {/* Sport Category Filter Pills */}
+      <div class="flex justify-center mb-10">
+        <nav class="inline-flex items-center gap-2 p-1.5 bg-gray-100 rounded-full" aria-label="Filter by sport">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat.id;
+            const isDisabled = cat.comingSoon;
+            const href = cat.id === 'all' ? '/shop' : `/shop?category=${cat.id}`;
+
+            return isDisabled ? (
+              <span
+                class="relative px-5 py-2 rounded-full text-sm font-medium text-gray-400 cursor-not-allowed select-none"
+                title="Coming Soon"
+              >
+                {cat.label}
+                <span class="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-gray-200 text-gray-500 uppercase tracking-wide">
+                  Soon
+                </span>
+              </span>
+            ) : (
+              <a
+                href={href}
+                class:list={[
+                  'px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200',
+                  isActive
+                    ? 'bg-blackout text-white shadow-sm'
+                    : 'text-gray-600 hover:text-blackout hover:bg-white',
+                ]}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {cat.label}
+              </a>
+            );
+          })}
+        </nav>
       </div>
 
       {isDemo && (
@@ -96,7 +152,7 @@ function formatPrice(cents: number): string {
 
       <!-- Product Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {catalog.map((product) => (
+        {filteredCatalog.map((product) => (
           <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
             {/* Product Image */}
             <a href={`/product/${product.id}`} class="block">
@@ -149,13 +205,40 @@ function formatPrice(cents: number): string {
         ))}
       </div>
 
-      {catalog.length === 0 && !isDemo && (
+      {filteredCatalog.length === 0 && !isDemo && (
         <div class="bg-blackout/5 rounded-2xl p-12 text-center">
           <span class="text-5xl mb-4 block">🏓</span>
-          <h2 class="text-2xl font-bold mb-2">No Products Yet</h2>
-          <p class="text-text-light max-w-md mx-auto">
-            Products will appear here automatically once they're added to the Stripe catalog.
+          {activeCategory !== 'all' ? (
+            <>
+              <h2 class="text-2xl font-bold mb-2">No {activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} Products Yet</h2>
+              <p class="text-text-light max-w-md mx-auto mb-4">
+                Products for this sport will appear here as they're added. Check out our full collection in the meantime.
+              </p>
+              <a href="/shop" class="inline-flex items-center gap-2 px-6 py-3 bg-blackout text-white rounded-full font-semibold hover:bg-blackout/90 transition-colors">
+                View All Products
+              </a>
+            </>
+          ) : (
+            <>
+              <h2 class="text-2xl font-bold mb-2">No Products Yet</h2>
+              <p class="text-text-light max-w-md mx-auto">
+                Products will appear here automatically once they're added to the Stripe catalog.
+              </p>
+            </>
+          )}
+        </div>
+      )}
+
+      {filteredCatalog.length === 0 && isDemo && activeCategory !== 'all' && activeCategory !== 'pickleball' && (
+        <div class="bg-blackout/5 rounded-2xl p-12 text-center">
+          <span class="text-5xl mb-4 block">🎾</span>
+          <h2 class="text-2xl font-bold mb-2">{activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} — Coming Soon</h2>
+          <p class="text-text-light max-w-md mx-auto mb-4">
+            We're expanding to new sports. Stay tuned for {activeCategory} gear!
           </p>
+          <a href="/shop" class="inline-flex items-center gap-2 px-6 py-3 bg-blackout text-white rounded-full font-semibold hover:bg-blackout/90 transition-colors">
+            View All Products
+          </a>
         </div>
       )}
     </div>
