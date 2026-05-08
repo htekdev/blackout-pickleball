@@ -2,23 +2,23 @@
 
 @theme {
   /* Blackout — White/Clean Premium Theme */
-  --color-blackout: #0a0a0a;
+  --color-blackout: #111111;
   --color-blackout-dark: #000000;
-  --color-blackout-light: #1a1a1a;
-  --color-accent: #0a0a0a;
-  --color-accent-light: #333333;
-  --color-accent-dark: #000000;
+  --color-blackout-light: #2a2a2a;
+  --color-accent: #c9a84c;
+  --color-accent-light: #d9bf72;
+  --color-accent-dark: #a8842c;
   --color-accent-gold: #c9a84c;
-  --color-accent-gold-light: #d4b85e;
-  --color-accent-gold-dark: #b08f3a;
+  --color-accent-gold-light: #d9bf72;
+  --color-accent-gold-dark: #a8842c;
   --color-surface: #ffffff;
-  --color-surface-dark: #f8f8f8;
-  --color-surface-warm: #fafaf8;
-  --color-text: #111111;
-  --color-text-light: #71717a;
+  --color-surface-dark: #f5f2eb;
+  --color-surface-warm: #fcfbf8;
+  --color-text: #121212;
+  --color-text-light: #64646f;
   --color-text-inverse: #ffffff;
-  --color-border: #e5e5e5;
-  --color-border-light: #f0f0f0;
+  --color-border: #e7e1d6;
+  --color-border-light: #f2ede4;
 
   /* Typography — Premium sans-serif */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;

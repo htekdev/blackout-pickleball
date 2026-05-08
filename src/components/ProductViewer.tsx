@@ -87,7 +87,7 @@ export default function ProductViewer({ images, productName }: Props) {
         />
 
         {/* 360° indicator */}
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 backdrop-blur-sm">
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 text-text px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 backdrop-blur-sm border border-border shadow-lg">
           <svg class="w-3.5 h-3.5 animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             <path d="M9 12l2 2 4-4" />
@@ -103,7 +103,7 @@ export default function ProductViewer({ images, productName }: Props) {
             key={i}
             onClick={() => setCurrentIndex(i)}
             class={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-              i === currentIndex ? 'border-blackout ring-2 ring-blackout/20' : 'border-transparent opacity-60 hover:opacity-100'
+              i === currentIndex ? 'border-blackout ring-2 ring-blackout/10' : 'border-border-light opacity-70 hover:opacity-100'
             }`}
           >
             <img src={img} alt={`Angle ${i + 1}`} class="w-full h-full object-cover" />

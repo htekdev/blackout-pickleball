@@ -5,32 +5,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Pickleball" description="Blackout Pickleball — Celebrate diversity and inclusivity within the pickleball community. Performance gear, events, and a movement for representation on the court.">
 
   <!-- Pickleball Hero -->
-  <section class="relative bg-blackout text-text-inverse overflow-hidden py-20 sm:py-28">
-    <div class="absolute inset-0 bg-gradient-to-br from-blackout via-blackout-light to-blackout"></div>
+  <section class="relative bg-white overflow-hidden py-20 sm:py-28">
     <div class="absolute inset-0 overflow-hidden">
-      <div class="absolute -right-20 top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-accent/10 animate-spin-slow"></div>
-      <div class="absolute right-0 top-1/3 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+      <div class="absolute -right-20 top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-black/5 animate-spin-slow"></div>
+      <div class="absolute right-0 top-1/3 w-96 h-96 bg-accent-gold/10 rounded-full blur-3xl"></div>
+      <div class="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-transparent via-black/5 to-transparent"></div>
     </div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
-        <p class="text-accent font-semibold text-sm uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-          <span class="w-8 h-px bg-accent"></span>
+        <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
+          <span class="w-8 h-px bg-accent-gold"></span>
           Blackout Pickleball
         </p>
-        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.9] tracking-tight">
+        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.9] tracking-tight text-blackout font-display">
           Play Bold.<br />
-          <span class="text-accent">Play Blackout.</span>
+          <span class="text-accent-gold">Play Blackout.</span>
         </h1>
-        <p class="mt-6 text-lg sm:text-xl text-white/60 max-w-xl leading-relaxed">
+        <p class="mt-6 text-lg sm:text-xl text-text-light max-w-xl leading-relaxed">
           Our flagship sport — bringing diversity, energy, and bold representation to the fastest-growing sport in America.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row gap-4">
-          <a href="/shop?category=pickleball" class="group inline-flex items-center justify-center px-8 py-4 bg-accent hover:bg-accent-dark text-blackout font-bold rounded-lg transition-all text-sm uppercase tracking-wider shadow-lg shadow-accent/20">
+          <a href="/shop?category=pickleball" class="group inline-flex items-center justify-center px-8 py-4 bg-blackout hover:bg-blackout-light text-white font-bold rounded-lg transition-all text-sm uppercase tracking-wider shadow-lg shadow-blackout/10">
             Shop Pickleball Gear
             <svg class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
           </a>
-          <a href="/events" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white/20 hover:border-accent text-white hover:text-accent font-bold rounded-lg transition-all text-sm uppercase tracking-wider">
+          <a href="/events" class="inline-flex items-center justify-center px-8 py-4 border-2 border-black/15 hover:border-blackout text-blackout font-bold rounded-lg transition-all text-sm uppercase tracking-wider">
             Upcoming Events
           </a>
         </div>
@@ -42,8 +42,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="py-20 sm:py-28 bg-surface">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center">
-        <p class="text-accent font-semibold text-sm uppercase tracking-[0.2em] mb-4">Our Mission</p>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-text tracking-tight">
+        <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-4">Our Mission</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-text tracking-tight font-display">
           Celebrate Diversity.<br />Play with Purpose.
         </h2>
         <p class="mt-8 text-lg sm:text-xl text-text-light leading-relaxed max-w-2xl mx-auto">
@@ -63,7 +63,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           { value: '4.9★', label: 'Gear Rating' },
         ].map((stat) => (
           <div>
-            <div class="text-3xl sm:text-4xl font-black text-accent">{stat.value}</div>
+            <div class="text-3xl sm:text-4xl font-black text-blackout font-display">{stat.value}</div>
             <div class="mt-2 text-sm text-text-light font-medium uppercase tracking-wider">{stat.label}</div>
           </div>
         ))}
@@ -75,8 +75,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="py-20 sm:py-28 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
-        <p class="text-accent font-semibold text-sm uppercase tracking-[0.2em] mb-3">Pickleball Collection</p>
-        <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight">Performance Gear for the Court</h2>
+        <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-3">Pickleball Collection</p>
+        <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight font-display">Performance Gear for the Court</h2>
         <p class="mt-4 text-text-light max-w-xl mx-auto">85% Polyester / 15% Spandex — breathable, 4-way stretch, moisture-wicking. Engineered for the heat of the game.</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -85,17 +85,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           { name: 'Blackout Hoodie', price: '$55.00', desc: 'Warm-up in style', icon: '🧥' },
           { name: 'Blackout Cap', price: '$25.00', desc: 'Rep the brand on court', icon: '🧢' },
         ].map((product) => (
-          <a href="/shop?category=pickleball" class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
-            <div class="aspect-square bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] flex items-center justify-center relative overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <a href="/shop?category=pickleball" class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border hover:-translate-y-1">
+            <div class="aspect-square bg-gradient-to-br from-surface-warm to-surface-dark flex items-center justify-center relative overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <span class="text-6xl group-hover:scale-110 transition-transform duration-500">{product.icon}</span>
             </div>
             <div class="p-6">
-              <h3 class="font-bold text-lg group-hover:text-accent-dark transition-colors">{product.name}</h3>
+              <h3 class="font-bold text-lg group-hover:text-accent-gold transition-colors">{product.name}</h3>
               <p class="text-sm text-text-light mt-1">{product.desc}</p>
               <div class="mt-4 flex items-center justify-between">
-                <span class="text-lg font-black text-accent-dark">{product.price}</span>
-                <span class="text-sm font-semibold text-accent group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                <span class="text-lg font-black text-blackout">{product.price}</span>
+                <span class="text-sm font-semibold text-text-light group-hover:text-blackout group-hover:translate-x-1 transition-all inline-flex items-center gap-1">
                   Shop Now
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                 </span>
@@ -105,7 +105,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         ))}
       </div>
       <div class="text-center mt-12">
-        <a href="/shop?category=pickleball" class="inline-flex items-center px-8 py-4 bg-blackout text-white font-bold rounded-lg hover:bg-accent hover:text-blackout transition-all text-sm uppercase tracking-wider">
+        <a href="/shop?category=pickleball" class="inline-flex items-center px-8 py-4 bg-blackout text-white font-bold rounded-lg hover:bg-accent-light transition-all text-sm uppercase tracking-wider">
           View Full Collection
           <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
         </a>
@@ -117,24 +117,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="py-20 sm:py-28 bg-surface">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
-        <p class="text-accent font-semibold text-sm uppercase tracking-[0.2em] mb-3">Events</p>
-        <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight">Play with Us</h2>
+        <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-3">Events</p>
+        <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight font-display">Play with Us</h2>
         <p class="mt-4 text-text-light text-lg">Community mixers, tournaments, and social play sessions — all skill levels welcome.</p>
       </div>
 
       <!-- Event Card -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="bg-gradient-to-r from-blackout to-blackout-light p-8 text-text-inverse">
-          <span class="text-accent text-sm font-semibold uppercase tracking-widest">Coming Soon</span>
-          <h3 class="text-2xl font-black mt-2">Blackout Pickleball Community Mixer</h3>
-          <p class="text-white/70 mt-2">Details coming soon — follow us on social media for updates!</p>
+      <div class="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+        <div class="bg-gradient-to-r from-surface-warm to-white p-8 border-b border-border">
+          <span class="text-accent-gold text-sm font-semibold uppercase tracking-widest">Coming Soon</span>
+          <h3 class="text-2xl font-black mt-2 text-blackout">Blackout Pickleball Community Mixer</h3>
+          <p class="text-text-light mt-2">Details coming soon — follow us on social media for updates!</p>
         </div>
         <div class="p-6">
           <p class="text-text-light">
             We're planning exciting community events for pickleball players of all levels. Stay tuned for dates, locations, and registration details.
           </p>
           <div class="mt-4">
-            <a href="/events" class="text-sm text-accent hover:text-accent-dark font-medium transition-colors inline-flex items-center gap-1">
+            <a href="/events" class="text-sm text-blackout hover:text-accent-gold font-medium transition-colors inline-flex items-center gap-1">
               View All Events
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
             </a>
@@ -145,23 +145,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <!-- Community Photos Placeholder -->
-  <section class="py-20 sm:py-28 bg-blackout text-text-inverse relative overflow-hidden">
+  <section class="py-20 sm:py-28 bg-surface-warm relative overflow-hidden">
     <div class="absolute inset-0">
-      <div class="absolute left-1/4 top-0 w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent"></div>
-      <div class="absolute right-1/4 top-0 w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent"></div>
+      <div class="absolute left-1/4 top-0 w-px h-full bg-gradient-to-b from-transparent via-black/5 to-transparent"></div>
+      <div class="absolute right-1/4 top-0 w-px h-full bg-gradient-to-b from-transparent via-black/5 to-transparent"></div>
     </div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-accent font-semibold text-sm uppercase tracking-[0.2em] mb-4">Community</p>
-      <h2 class="text-3xl sm:text-4xl font-black tracking-tight">The Blackout Pickleball Family</h2>
-      <p class="mt-4 text-white/60 max-w-xl mx-auto text-lg">
+      <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-4">Community</p>
+      <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-blackout font-display">The Blackout Pickleball Family</h2>
+      <p class="mt-4 text-text-light max-w-xl mx-auto text-lg">
         Real players. Real community. Real impact. See what it means to play Blackout.
       </p>
 
       <!-- Photo Grid Placeholder -->
       <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
         {[1, 2, 3, 4].map(() => (
-          <div class="aspect-square bg-white/5 rounded-xl flex items-center justify-center border border-white/10">
-            <span class="text-white/20 text-sm uppercase tracking-wider">Photo Coming</span>
+        <div class="aspect-square bg-white rounded-xl flex items-center justify-center border border-border shadow-sm">
+          <span class="text-text-light/60 text-sm uppercase tracking-wider">Photo Coming</span>
           </div>
         ))}
       </div>
@@ -171,20 +171,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Join CTA -->
   <section class="py-20 sm:py-28 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight">Join the Pickleball Community</h2>
+      <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight font-display">Join the Pickleball Community</h2>
       <p class="mt-4 text-text-light max-w-xl mx-auto text-lg">
         Follow us on social media, come to an event, and rep the brand on the court.
       </p>
       <div class="mt-10 flex justify-center gap-6 flex-wrap">
-        <a href="https://www.instagram.com/blackoutpickleball" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 bg-blackout text-white rounded-full hover:bg-accent hover:text-blackout transition-all text-sm font-medium">
+        <a href="https://www.instagram.com/blackoutpickleball" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 bg-white text-blackout border border-border rounded-full hover:bg-surface-dark transition-all text-sm font-medium">
           <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           Instagram
         </a>
-        <a href="https://www.facebook.com/blackoutpickleball" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 bg-blackout text-white rounded-full hover:bg-accent hover:text-blackout transition-all text-sm font-medium">
+        <a href="https://www.facebook.com/blackoutpickleball" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 bg-white text-blackout border border-border rounded-full hover:bg-surface-dark transition-all text-sm font-medium">
           <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           Facebook
         </a>
-        <a href="https://www.tiktok.com/@blackoutpickleball" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 bg-blackout text-white rounded-full hover:bg-accent hover:text-blackout transition-all text-sm font-medium">
+        <a href="https://www.tiktok.com/@blackoutpickleball" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 bg-white text-blackout border border-border rounded-full hover:bg-surface-dark transition-all text-sm font-medium">
           <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
           TikTok
         </a>

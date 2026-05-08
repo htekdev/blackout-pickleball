@@ -45,8 +45,8 @@ export default function AddToCartButton({ productId, productName, productImage, 
               onClick={() => setSelectedPrice(p)}
               class={`px-3 py-1.5 text-xs font-semibold rounded-full border transition-colors ${
                 selectedPrice.id === p.id
-                  ? 'bg-[#0a0a0a] text-white border-[#0a0a0a]'
-                  : 'bg-white text-gray-700 border-gray-300 hover:border-[#0a0a0a]'
+                  ? 'bg-blackout text-white border-blackout'
+                  : 'bg-white text-gray-700 border-gray-300 hover:border-blackout'
               }`}
             >
               {p.size}
@@ -61,7 +61,7 @@ export default function AddToCartButton({ productId, productName, productImage, 
         class={`mt-3 w-full py-2.5 rounded-lg font-bold text-sm uppercase tracking-wider transition-all ${
           added
             ? 'bg-green-500 text-white'
-            : 'bg-blackout hover:bg-accent-light text-white'
+            : 'bg-blackout hover:bg-blackout-light text-white'
         }`}
       >
         {added ? '✓ Added!' : `Add to Cart — $${(selectedPrice.amount / 100).toFixed(2)}`}

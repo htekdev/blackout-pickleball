@@ -47,20 +47,20 @@ export default function CartDrawer() {
       {/* Backdrop */}
       {isOpen && (
         <div
-          class="fixed inset-0 bg-black/50 z-40 transition-opacity"
+          class="fixed inset-0 bg-black/25 z-40 transition-opacity backdrop-blur-[2px]"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Drawer */}
       <div
-        class={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        class={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-[0_24px_80px_rgba(17,17,17,0.18)] z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div class="flex flex-col h-full">
           {/* Header */}
-          <div class="flex items-center justify-between p-4 border-b border-gray-100">
+          <div class="flex items-center justify-between p-4 border-b border-border-light">
             <h2 class="text-lg font-bold">
               Your Cart {itemCount > 0 && <span class="text-gray-400">({itemCount})</span>}
             </h2>
@@ -92,7 +92,7 @@ export default function CartDrawer() {
             ) : (
               <div class="space-y-4">
                 {cart.map((item) => (
-                  <div key={item.priceId} class="flex gap-4 bg-gray-50 rounded-xl p-3">
+                  <div key={item.priceId} class="flex gap-4 bg-surface-warm border border-border-light rounded-xl p-3">
                     {/* Image */}
                     <div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
                       {item.image ? (
@@ -114,14 +114,14 @@ export default function CartDrawer() {
                       <div class="flex items-center gap-2 mt-2">
                         <button
                           onClick={() => updateQuantity(item.priceId, item.quantity - 1)}
-                          class="w-7 h-7 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-sm font-bold transition-colors"
+                          class="w-7 h-7 rounded-full bg-white border border-border hover:bg-surface-dark flex items-center justify-center text-sm font-bold transition-colors"
                         >
                           −
                         </button>
                         <span class="text-sm font-medium w-6 text-center">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.priceId, item.quantity + 1)}
-                          class="w-7 h-7 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-sm font-bold transition-colors"
+                          class="w-7 h-7 rounded-full bg-white border border-border hover:bg-surface-dark flex items-center justify-center text-sm font-bold transition-colors"
                         >
                           +
                         </button>
@@ -141,7 +141,7 @@ export default function CartDrawer() {
 
           {/* Footer — Checkout */}
           {cart.length > 0 && (
-            <div class="border-t border-gray-100 p-4 space-y-3">
+            <div class="border-t border-border-light p-4 space-y-3">
               <div class="flex items-center justify-between text-lg font-bold">
                 <span>Total</span>
                 <span>${(total / 100).toFixed(2)}</span>
@@ -149,7 +149,7 @@ export default function CartDrawer() {
               <button
                 onClick={handleCheckout}
                 disabled={isLoading}
-                class="w-full py-3 bg-[#0a0a0a] hover:bg-black text-white font-bold rounded-lg transition-colors text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+                class="w-full py-3 bg-blackout hover:bg-blackout-light text-white font-bold rounded-lg transition-colors text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Processing...' : 'Checkout'}
               </button>

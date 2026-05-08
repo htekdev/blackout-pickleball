@@ -62,16 +62,17 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
 <BaseLayout title="Events" description="Upcoming Blackout events — pickleball tournaments, community mixers, and celebrations. Join the movement.">
 
   <!-- Hero Section -->
-  <section class="relative py-20 sm:py-28 bg-blackout text-text-inverse overflow-hidden">
+  <section class="relative py-20 sm:py-28 bg-white overflow-hidden">
     <!-- Decorative elements -->
-    <div class="absolute inset-0 opacity-5">
-      <div class="absolute top-10 left-10 w-64 h-64 border border-white/20 rounded-full"></div>
-      <div class="absolute bottom-10 right-10 w-96 h-96 border border-white/10 rounded-full"></div>
+    <div class="absolute inset-0">
+      <div class="absolute top-10 left-10 w-64 h-64 border border-black/5 rounded-full"></div>
+      <div class="absolute bottom-10 right-10 w-96 h-96 border border-black/5 rounded-full"></div>
+      <div class="absolute right-0 top-0 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
     </div>
     <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-4">Upcoming Events</p>
-      <h1 class="text-4xl sm:text-6xl font-black tracking-tight font-display">Pull Up & Play</h1>
-      <p class="mt-5 text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+      <h1 class="text-4xl sm:text-6xl font-black tracking-tight font-display text-blackout">Pull Up & Play</h1>
+      <p class="mt-5 text-text-light text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
         Where sport meets vibes. Competition, music, content, and community — all in one.
       </p>
     </div>
@@ -95,8 +96,8 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                   loading={index === 0 ? 'eager' : 'lazy'}
                 />
               ) : (
-                <div class="w-full h-56 md:h-full flex items-center justify-center bg-gradient-to-br from-blackout to-blackout-light">
-                  <div class="text-center text-white/80 p-6">
+                <div class="w-full h-56 md:h-full flex items-center justify-center bg-gradient-to-br from-surface-warm to-surface-dark">
+                  <div class="text-center text-text-light p-6">
                     <svg class="w-16 h-16 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
@@ -196,7 +197,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                     'inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm tracking-wide transition-all duration-200 shadow-sm',
                     event.status === 'sold-out'
                       ? 'bg-gray-200 text-gray-500 cursor-not-allowed pointer-events-none'
-                      : 'bg-blackout text-white hover:bg-accent-gold hover:text-blackout hover:shadow-md',
+                      : 'bg-blackout text-white hover:bg-blackout-light hover:shadow-md',
                   ]}
                 >
                   {event.ticketLabel}
@@ -223,7 +224,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
         href="https://www.instagram.com/blackoutpickleball"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-blackout text-white rounded-xl font-bold text-sm hover:bg-accent-gold hover:text-blackout transition-all duration-200 shadow-sm hover:shadow-md"
+        class="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-white text-blackout border border-border rounded-xl font-bold text-sm hover:bg-surface-dark transition-all duration-200 shadow-sm hover:shadow-md"
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         @blackoutpickleball
