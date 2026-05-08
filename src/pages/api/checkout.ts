@@ -102,7 +102,7 @@ export const POST: APIRoute = async ({ request }) => {
       : 'Something went wrong creating your checkout session. Please try again.';
 
     return new Response(
-      JSON.stringify({ error: message }),
+      JSON.stringify({ error: message, debug: error?.message || 'unknown' }),
       { status: isAuthError ? 503 : 500, headers }
     );
   }

@@ -10,3 +10,4 @@ verify-*.png
 scripts/reprocess*.py
 scripts/screenshots.py
 scripts/verify.py
+keys
