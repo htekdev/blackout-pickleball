@@ -17,4 +17,12 @@
   /* Font family */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Custom animations */
+  --animate-spin-slow: spin-slow 30s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: translateY(-50%) rotate(0deg); }
+  to { transform: translateY(-50%) rotate(360deg); }
 }
