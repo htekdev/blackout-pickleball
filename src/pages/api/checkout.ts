@@ -3,11 +3,16 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
 
-// Use process.env for runtime access in Vercel serverless functions.
-// import.meta.env may be empty if the var wasn't available at build time.
-const STRIPE_KEY = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || '';
-const PLACEHOLDER_KEYS = ['', 'sk_test_placeholder', 'sk_test_xxx'];
-const isStripeConfigured = STRIPE_KEY.startsWith('sk_') && STRIPE_KEY.length > 30;
+// Helper: read Stripe key fresh on every request (not cached at module level).
+// Vercel serverless instances may cold-start before env vars propagate — evaluating
+// process.env inside the handler guarantees we always pick up the latest value.
+function getStripeKey(): string {
+  return process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || '';
+}
+
+function isStripeReady(key: string): boolean {
+  return key.startsWith('sk_') && key.length > 30;
+}
 
 /**
  * Shipping rate options for Stripe Checkout.
@@ -64,11 +69,14 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
 export const POST: APIRoute = async ({ request }) => {
   const headers = { 'Content-Type': 'application/json' };
 
+  // Evaluate Stripe key fresh per-request (not module-level cache)
+  const stripeKey = getStripeKey();
+
   // Guard: Stripe not configured yet
-  if (!isStripeConfigured) {
+  if (!isStripeReady(stripeKey)) {
     return new Response(
       JSON.stringify({
-        error: 'Store coming soon! Payments are not yet enabled. Check back shortly.',
+        error: 'Checkout is temporarily unavailable. Please try again in a moment.',
         code: 'STRIPE_NOT_CONFIGURED',
       }),
       { status: 503, headers }
@@ -85,7 +93,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const stripe = new Stripe(STRIPE_KEY);
+    const stripe = new Stripe(stripeKey);
     const origin = import.meta.env.SITE_URL || 'https://brandblackout.com';
 
     const session = await stripe.checkout.sessions.create({
@@ -115,7 +123,7 @@ export const POST: APIRoute = async ({ request }) => {
       error?.statusCode === 401;
 
     const message = isAuthError
-      ? 'Store coming soon! Payments are not yet enabled. Check back shortly.'
+      ? 'Checkout is temporarily unavailable. Please try again in a moment.'
       : 'Something went wrong creating your checkout session. Please try again.';
 
     return new Response(
