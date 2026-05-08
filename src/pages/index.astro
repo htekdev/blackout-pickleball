@@ -11,19 +11,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="absolute -right-20 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-black/[0.04]"></div>
       <div class="absolute -right-10 top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-black/[0.03]"></div>
       <div class="absolute right-10 top-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-black/[0.02]"></div>
-      <div class="absolute right-0 top-1/3 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl"></div>
+      <div class="absolute right-0 top-1/3 w-96 h-96 bg-black/[0.02] rounded-full blur-3xl"></div>
       <div class="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-transparent via-black/5 to-transparent"></div>
     </div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40 w-full">
       <div class="max-w-3xl">
-        <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
-          <span class="w-8 h-px bg-accent-gold"></span>
+        <p class="text-muted font-semibold text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
+          <span class="w-8 h-px bg-blackout"></span>
           Celebrate Diversity. Play with Purpose.
         </p>
         <h1 class="text-5xl sm:text-6xl lg:text-8xl font-black leading-[0.9] tracking-tight text-blackout font-display">
           Play Bold.<br />
-          <span class="text-accent-gold">Play Blackout.</span>
+          <span class="text-blackout">Play Blackout.</span>
         </h1>
         <p class="mt-8 text-lg sm:text-xl text-text-light max-w-xl leading-relaxed">
           Performance gear engineered for the heat of the game. Premium fabrics, bold designs, built for the court.
@@ -51,7 +51,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="py-20 sm:py-28 bg-surface-warm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
-        <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-3">Shop the Collection</p>
+        <p class="text-muted font-semibold text-sm uppercase tracking-[0.2em] mb-3">Shop the Collection</p>
         <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight font-display">Performance Gear</h2>
         <p class="mt-4 text-text-light max-w-xl mx-auto">Engineered for the heat of the game. 85% Polyester / 15% Spandex - breathable, 4-way stretch, moisture-wicking.</p>
       </div>
@@ -67,7 +67,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <span class="text-6xl group-hover:scale-110 transition-transform duration-500">{product.icon}</span>
             </div>
             <div class="p-6">
-              <h3 class="font-bold text-lg group-hover:text-accent-gold transition-colors">{product.name}</h3>
+              <h3 class="font-bold text-lg group-hover:text-blackout transition-colors">{product.name}</h3>
               <p class="text-sm text-text-light mt-1">{product.desc}</p>
               <div class="mt-4 flex items-center justify-between">
                 <span class="text-lg font-black text-blackout">{product.price}</span>
@@ -91,12 +91,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl mx-auto text-center">
-        <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-4">Our Mission</p>
+        <p class="text-muted font-semibold text-sm uppercase tracking-[0.2em] mb-4">Our Mission</p>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-blackout font-display">A Vibrant Space for Everyone</h2>
         <p class="mt-8 text-lg sm:text-xl text-text-light leading-relaxed">
           We celebrate diversity and inclusivity at Blackout. We're dedicated to increasing Black representation in sports while welcoming everyone - regardless of background - to join us in playing, supporting, and sharing the game.
         </p>
-        <a href="/about" class="inline-flex items-center mt-10 text-blackout hover:text-accent-gold font-semibold transition-colors gap-2 group">
+        <a href="/about" class="inline-flex items-center mt-10 text-blackout hover:text-text-light font-semibold transition-colors gap-2 group">
           Learn Our Story
           <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
         </a>

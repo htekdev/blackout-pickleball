@@ -101,7 +101,7 @@ function formatPrice(cents: number): string {
   <section class="py-16 sm:py-24 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <p class="text-accent-gold font-semibold text-sm uppercase tracking-widest mb-3">Performance Gear</p>
+        <p class="text-muted font-semibold text-sm uppercase tracking-widest mb-3">Performance Gear</p>
         <h1 class="text-4xl sm:text-5xl font-black tracking-tight font-display">Shop</h1>
         <p class="mt-4 text-text-light text-lg max-w-xl mx-auto">Engineered for the heat of the game. Browse our full collection of Blackout performance gear.</p>
       </div>
@@ -143,8 +143,8 @@ function formatPrice(cents: number): string {
       </div>
 
       {isDemo && (
-        <div class="mb-8 p-4 bg-amber-50 border border-amber-200 rounded-xl text-center">
-          <p class="text-amber-800 text-sm font-medium">
+        <div class="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-xl text-center">
+          <p class="text-gray-700 text-sm font-medium">
             🏗️ Preview Mode — These are demo products. Real products will appear once the store is connected to Stripe.
           </p>
         </div>
@@ -175,7 +175,7 @@ function formatPrice(cents: number): string {
             {/* Product Info */}
             <div class="p-4">
               <a href={`/product/${product.id}`} class="block">
-                <h3 class="font-bold text-base group-hover:text-accent-gold transition-colors">{product.name}</h3>
+                <h3 class="font-bold text-base group-hover:text-blackout transition-colors">{product.name}</h3>
               </a>
               {product.description && (
                 <p class="text-sm text-text-light mt-1 line-clamp-2">{product.description}</p>

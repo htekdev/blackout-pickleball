@@ -114,14 +114,14 @@ export default function CartDrawer() {
                       <div class="flex items-center gap-2 mt-2">
                         <button
                           onClick={() => updateQuantity(item.priceId, item.quantity - 1)}
-                          class="w-7 h-7 rounded-full bg-white border border-border hover:bg-surface-dark flex items-center justify-center text-sm font-bold transition-colors"
+                          class="w-7 h-7 rounded-full bg-white border border-border hover:bg-surface-dark hover:border-gray-300 flex items-center justify-center text-sm font-bold transition-colors"
                         >
                           −
                         </button>
                         <span class="text-sm font-medium w-6 text-center">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.priceId, item.quantity + 1)}
-                          class="w-7 h-7 rounded-full bg-white border border-border hover:bg-surface-dark flex items-center justify-center text-sm font-bold transition-colors"
+                          class="w-7 h-7 rounded-full bg-white border border-border hover:bg-surface-dark hover:border-gray-300 flex items-center justify-center text-sm font-bold transition-colors"
                         >
                           +
                         </button>

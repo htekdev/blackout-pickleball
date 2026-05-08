@@ -70,7 +70,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
       <div class="absolute right-0 top-0 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
     </div>
     <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-accent-gold font-semibold text-sm uppercase tracking-[0.2em] mb-4">Upcoming Events</p>
+      <p class="text-muted font-semibold text-sm uppercase tracking-[0.2em] mb-4">Upcoming Events</p>
       <h1 class="text-4xl sm:text-6xl font-black tracking-tight font-display text-blackout">Pull Up & Play</h1>
       <p class="mt-5 text-text-light text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
         Where sport meets vibes. Competition, music, content, and community — all in one.
@@ -126,7 +126,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
             <div class="md:col-span-3 p-6 sm:p-8 flex flex-col justify-between">
               <div>
                 {/* Title & Subtitle */}
-                <h2 class="text-2xl sm:text-3xl font-black tracking-tight font-display text-blackout group-hover:text-accent-gold-dark transition-colors">
+                <h2 class="text-2xl sm:text-3xl font-black tracking-tight font-display text-blackout group-hover:text-text-light-dark transition-colors">
                   {event.title}
                 </h2>
                 {event.subtitle && (
@@ -137,14 +137,14 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                 <div class="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-sm text-text-light">
                   {/* Date & Time */}
                   <div class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-accent-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-blackout flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <span>{event.date}</span>
                   </div>
                   {event.time !== 'TBA' && (
                     <div class="flex items-center gap-1.5">
-                      <svg class="w-4 h-4 text-accent-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg class="w-4 h-4 text-blackout flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span>{event.time}</span>
@@ -152,7 +152,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                   )}
                   {/* Location */}
                   <div class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-accent-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-blackout flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -170,7 +170,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                   <ul class="mt-4 space-y-1.5">
                     {event.highlights.map((h) => (
                       <li class="flex items-start gap-2 text-sm text-text-light">
-                        <span class="text-accent-gold mt-0.5">✦</span>
+                        <span class="text-blackout mt-0.5">✦</span>
                         <span>{h}</span>
                       </li>
                     ))}
