@@ -1,0 +1,59 @@
+{
+  "$schema": "./products.schema.json",
+  "_comment": "Blackout product catalog — edit this file then run: npx tsx scripts/seed-products.ts",
+  "_instructions": {
+    "adding_a_product": "Copy an existing product block, change the fields. Sizes/prices go in the 'prices' array.",
+    "adding_a_size": "Add a new object to the 'prices' array with size and price_cents.",
+    "images": "Upload product images to any public URL (Stripe will host them). Use an array of URLs.",
+    "sport": "Tag every product with a sport: 'pickleball', 'tennis', etc. Used for shop filtering.",
+    "one_size_products": "For hats/accessories, use a single price with size 'One Size'."
+  },
+  "products": [
+    {
+      "name": "Blackout Performance Tee",
+      "description": "Premium court-ready tee — 85% Polyester / 15% Spandex. Breathable 4-way stretch, moisture-wicking. Designed for peak performance on and off the court.",
+      "sport": "pickleball",
+      "images": [],
+      "prices": [
+        { "size": "S", "price_cents": 3500 },
+        { "size": "M", "price_cents": 3500 },
+        { "size": "L", "price_cents": 3500 },
+        { "size": "XL", "price_cents": 3500 },
+        { "size": "XXL", "price_cents": 3500 }
+      ]
+    },
+    {
+      "name": "Blackout Hoodie",
+      "description": "Warm-up in style. Premium cotton blend hoodie with Blackout Pickleball branding. Perfect for pre-match warm-ups and post-match celebrations.",
+      "sport": "pickleball",
+      "images": [],
+      "prices": [
+        { "size": "S", "price_cents": 5500 },
+        { "size": "M", "price_cents": 5500 },
+        { "size": "L", "price_cents": 5500 },
+        { "size": "XL", "price_cents": 5500 }
+      ]
+    },
+    {
+      "name": "Blackout Cap",
+      "description": "Rep the brand on and off the court. Adjustable snapback with embroidered Blackout logo. One size fits most.",
+      "sport": "pickleball",
+      "images": [],
+      "prices": [
+        { "size": "One Size", "price_cents": 2500 }
+      ]
+    },
+    {
+      "name": "Blackout Performance Shorts",
+      "description": "Lightweight performance shorts with side pockets. Perfect for tournament play. Quick-dry fabric keeps you cool under pressure.",
+      "sport": "pickleball",
+      "images": [],
+      "prices": [
+        { "size": "S", "price_cents": 4000 },
+        { "size": "M", "price_cents": 4000 },
+        { "size": "L", "price_cents": 4000 },
+        { "size": "XL", "price_cents": 4000 }
+      ]
+    }
+  ]
+}
