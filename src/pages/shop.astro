@@ -106,12 +106,12 @@ function formatPrice(cents: number): string {
           <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border">
             {/* Product Image */}
             <a href={`/product/${product.id}`} class="block">
-              <div class="aspect-[3/4] bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden relative">
+              <div class="aspect-[3/4] bg-gray-50 overflow-hidden relative">
                 {product.images.length > 0 ? (
                   <img
                     src={product.images[0]}
                     alt={product.name}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                 ) : (

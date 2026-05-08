@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'preact/hooks';
+import { useState, useRef, useEffect, useCallback } from 'preact/hooks';
 
 interface Props {
   images: string[];
@@ -8,34 +8,50 @@ interface Props {
 export default function ProductViewer({ images, productName }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const startXRef = useRef(0);
+  const accumulatorRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const lastFrameTime = useRef(0);
 
   const totalFrames = images.length;
-  const sensitivity = 5; // pixels per frame
+  const sensitivity = 8; // pixels per frame — slightly higher for smoother feel
 
-  const handlePointerDown = (e: any) => {
-    setIsDragging(true);
-    setStartX(e.clientX);
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
-  };
+  const advanceFrame = useCallback((delta: number) => {
+    // Throttle to ~30fps for smooth visual updates
+    const now = performance.now();
+    if (now - lastFrameTime.current < 33) return;
+    lastFrameTime.current = now;
 
-  const handlePointerMove = (e: any) => {
-    if (!isDragging) return;
-    const diff = e.clientX - startX;
-    const frameDiff = Math.floor(diff / sensitivity);
+    accumulatorRef.current += delta;
+    const frameDiff = Math.trunc(accumulatorRef.current / sensitivity);
     if (frameDiff !== 0) {
+      accumulatorRef.current -= frameDiff * sensitivity;
       setCurrentIndex((prev) => {
         let next = (prev + frameDiff) % totalFrames;
         if (next < 0) next += totalFrames;
         return next;
       });
-      setStartX(e.clientX);
     }
+  }, [totalFrames]);
+
+  const handlePointerDown = (e: any) => {
+    setIsDragging(true);
+    startXRef.current = e.clientX;
+    accumulatorRef.current = 0;
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: any) => {
+    if (!isDragging) return;
+    const diff = e.clientX - startXRef.current;
+    startXRef.current = e.clientX;
+    advanceFrame(diff);
   };
 
   const handlePointerUp = () => {
     setIsDragging(false);
+    accumulatorRef.current = 0;
   };
 
   // Touch support for mobile swipe
@@ -43,25 +59,29 @@ export default function ProductViewer({ images, productName }: Props) {
 
   const handleTouchStart = (e: any) => {
     touchStartX.current = e.touches[0].clientX;
+    accumulatorRef.current = 0;
   };
 
   const handleTouchMove = (e: any) => {
+    e.preventDefault(); // prevent page scroll while rotating
     const diff = e.touches[0].clientX - touchStartX.current;
-    const frameDiff = Math.floor(diff / sensitivity);
-    if (frameDiff !== 0) {
-      setCurrentIndex((prev) => {
-        let next = (prev + frameDiff) % totalFrames;
-        if (next < 0) next += totalFrames;
-        return next;
-      });
-      touchStartX.current = e.touches[0].clientX;
-    }
+    touchStartX.current = e.touches[0].clientX;
+    advanceFrame(diff);
   };
 
   // Preload all images
   useEffect(() => {
+    let loaded = 0;
     images.forEach((src) => {
       const img = new Image();
+      img.onload = () => {
+        loaded++;
+        if (loaded === images.length) setIsLoaded(true);
+      };
+      img.onerror = () => {
+        loaded++;
+        if (loaded === images.length) setIsLoaded(true);
+      };
       img.src = src;
     });
   }, [images]);
@@ -71,7 +91,7 @@ export default function ProductViewer({ images, productName }: Props) {
       {/* Main viewer */}
       <div
         ref={containerRef}
-        class="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 cursor-grab active:cursor-grabbing select-none"
+        class="relative aspect-[3/4] rounded-2xl overflow-hidden bg-gray-50 cursor-grab active:cursor-grabbing select-none"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -79,34 +99,62 @@ export default function ProductViewer({ images, productName }: Props) {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
       >
-        <img
-          src={images[currentIndex]}
-          alt={`${productName} - angle ${currentIndex + 1} of ${totalFrames}`}
-          class="w-full h-full object-cover"
-          draggable={false}
-        />
+        {/* All images stacked, only current one visible — no flash between angles */}
+        {images.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={i === currentIndex ? `${productName} - angle ${currentIndex + 1} of ${totalFrames}` : ''}
+            class={`absolute inset-0 w-full h-full object-contain transition-opacity duration-100 ${
+              i === currentIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+            draggable={false}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        ))}
+
+        {/* Loading shimmer */}
+        {!isLoaded && (
+          <div class="absolute inset-0 flex items-center justify-center bg-gray-50">
+            <div class="flex flex-col items-center gap-3">
+              <div class="w-8 h-8 border-2 border-gray-300 border-t-blackout rounded-full animate-spin" />
+              <span class="text-xs text-gray-400 font-medium">Loading 360° view...</span>
+            </div>
+          </div>
+        )}
+
+        {/* Drag indicator overlay (fades after first interaction) */}
+        {!isDragging && currentIndex === 0 && (
+          <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+            <div class="bg-black/5 rounded-full p-4 animate-pulse">
+              <svg class="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18M8 17l4 4m0 0l4-4" transform="rotate(90 12 12)" />
+              </svg>
+            </div>
+          </div>
+        )}
 
         {/* 360° indicator */}
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 text-text px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 backdrop-blur-sm border border-border shadow-lg">
-          <svg class="w-3.5 h-3.5 animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            <path d="M9 12l2 2 4-4" />
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 text-gray-700 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 backdrop-blur-sm border border-gray-200 shadow-sm">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
+            <path d="M12 6v6l4 2" />
           </svg>
-          Drag to rotate • {currentIndex + 1}/{totalFrames}
+          {isDragging ? 'Rotating...' : 'Drag to rotate'} • {currentIndex + 1}/{totalFrames}
         </div>
       </div>
 
       {/* Thumbnail strip */}
-      <div class="flex gap-2 overflow-x-auto pb-2">
+      <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
         {images.map((img, i) => (
           <button
             key={i}
             onClick={() => setCurrentIndex(i)}
-            class={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-              i === currentIndex ? 'border-blackout ring-2 ring-blackout/10' : 'border-border-light opacity-70 hover:opacity-100'
+            class={`flex-shrink-0 w-14 h-[4.5rem] rounded-lg overflow-hidden border-2 transition-all bg-gray-50 ${
+              i === currentIndex ? 'border-blackout ring-2 ring-blackout/10 scale-105' : 'border-gray-200 opacity-60 hover:opacity-100 hover:border-gray-300'
             }`}
           >
-            <img src={img} alt={`Angle ${i + 1}`} class="w-full h-full object-cover" />
+            <img src={img} alt={`Angle ${i + 1}`} class="w-full h-full object-contain" />
           </button>
         ))}
       </div>
