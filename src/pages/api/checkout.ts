@@ -53,6 +53,13 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
   },
 ];
 
+interface CheckoutItem {
+  priceId: string;
+  quantity: number;
+  size?: string;
+  name?: string;
+}
+
 export const POST: APIRoute = async ({ request }) => {
   const headers = { 'Content-Type': 'application/json' };
 
@@ -68,12 +75,12 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Validate all price IDs are real Stripe prices (not fake demo IDs)
     const invalidPrices = items.filter(
-      (item: { priceId: string }) => !isRealPriceId(item.priceId)
+      (item: CheckoutItem) => !isRealPriceId(item.priceId)
     );
     if (invalidPrices.length > 0) {
       console.error(
         'Checkout blocked: fake price IDs detected:',
-        invalidPrices.map((i: { priceId: string }) => i.priceId)
+        invalidPrices.map((i: CheckoutItem) => i.priceId)
       );
       return new Response(
         JSON.stringify({
@@ -86,16 +93,57 @@ export const POST: APIRoute = async ({ request }) => {
 
     const origin = import.meta.env.SITE_URL || 'https://brandblackout.com';
 
+    // Look up each stored price from Stripe to get the verified amount and
+    // product details. We then create inline price_data with the size
+    // appended to the product name so Jonathan sees e.g.
+    // "Gold Men's Crew Tee - L" in Stripe dashboard orders.
+    const line_items = await Promise.all(
+      items.map(async (item: CheckoutItem) => {
+        const storedPrice = await stripe.prices.retrieve(item.priceId, {
+          expand: ['product'],
+        });
+        const product = storedPrice.product as Stripe.Product;
+        const size = item.size || storedPrice.metadata?.size || storedPrice.nickname || '';
+        const displayName = size
+          ? `${product.name} - ${size}`
+          : product.name;
+
+        return {
+          price_data: {
+            currency: storedPrice.currency,
+            unit_amount: storedPrice.unit_amount!,
+            product_data: {
+              name: displayName,
+              ...(product.images?.length ? { images: product.images.slice(0, 1) } : {}),
+              metadata: {
+                size,
+                original_product_id: product.id,
+                original_price_id: item.priceId,
+                slug: product.metadata?.slug || '',
+              },
+            },
+          },
+          quantity: item.quantity,
+        };
+      })
+    );
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items: items.map((item: { priceId: string; quantity: number }) => ({
-        price: item.priceId,
-        quantity: item.quantity,
-      })),
+      line_items,
       shipping_address_collection: {
         allowed_countries: ['US'],
       },
       shipping_options: SHIPPING_OPTIONS,
+      payment_intent_data: {
+        metadata: {
+          order_summary: items
+            .map((item: CheckoutItem) =>
+              `${item.name || 'Item'}${item.size ? ` (${item.size})` : ''} x${item.quantity}`
+            )
+            .join(' | '),
+        },
+      },
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/shop`,
     });
