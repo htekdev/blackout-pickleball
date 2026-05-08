@@ -1,5 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { PRODUCT_CATALOG } from '../lib/products';
+
+// Pick 3 pickleball products for the featured section
+const pickleballFeatured = PRODUCT_CATALOG
+  .filter(p => p.sport === 'pickleball')
+  .slice(0, 3);
 ---
 
 <BaseLayout title="Pickleball" description="Blackout Pickleball — Celebrate diversity and inclusivity within the pickleball community. Performance gear, events, and a movement for representation on the court.">
@@ -79,24 +85,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight font-display">Performance Gear for the Court</h2>
         <p class="mt-4 text-text-light max-w-xl mx-auto">85% Polyester / 15% Spandex — breathable, 4-way stretch, moisture-wicking. Engineered for the heat of the game.</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[
-          { name: 'Blackout Performance Tee', price: '$35.00', desc: 'Premium court-ready tee', icon: '👕' },
-          { name: 'Blackout Hoodie', price: '$55.00', desc: 'Warm-up in style', icon: '🧥' },
-          { name: 'Blackout Cap', price: '$25.00', desc: 'Rep the brand on court', icon: '🧢' },
-        ].map((product) => (
-          <a href="/shop?category=pickleball" class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border hover:-translate-y-1">
-            <div class="aspect-square bg-gradient-to-br from-surface-warm to-surface-dark flex items-center justify-center relative overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <span class="text-6xl group-hover:scale-110 transition-transform duration-500">{product.icon}</span>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {pickleballFeatured.map((product) => (
+          <a href={`/product/${product.slug}`} class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border hover:-translate-y-1">
+            <div class="aspect-[3/4] bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden relative">
+              <img
+                src={product.images.thumbnail}
+                alt={product.name}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute top-3 left-3">
+                <span
+                  class="inline-block w-5 h-5 rounded-full border-2 border-white shadow-sm"
+                  style={`background-color: ${product.colorHex}`}
+                  title={product.colorName}
+                ></span>
+              </div>
             </div>
-            <div class="p-6">
-              <h3 class="font-bold text-lg group-hover:text-blackout transition-colors">{product.name}</h3>
-              <p class="text-sm text-text-light mt-1">{product.desc}</p>
-              <div class="mt-4 flex items-center justify-between">
-                <span class="text-lg font-black text-blackout">{product.price}</span>
+            <div class="p-5">
+              <h3 class="font-bold text-base group-hover:text-blackout transition-colors">{product.name}</h3>
+              <p class="text-xs text-text-light mt-1">{product.colorName}</p>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="text-lg font-black text-blackout">${(product.prices[0].amount / 100).toFixed(2)}</span>
                 <span class="text-sm font-semibold text-text-light group-hover:text-blackout group-hover:translate-x-1 transition-all inline-flex items-center gap-1">
-                  Shop Now
+                  View
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                 </span>
               </div>
