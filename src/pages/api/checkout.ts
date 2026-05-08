@@ -3,11 +3,14 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
 
-// Helper: read Stripe key fresh on every request (not cached at module level).
-// Vercel serverless instances may cold-start before env vars propagate — evaluating
-// process.env inside the handler guarantees we always pick up the latest value.
+// CRITICAL: Vite statically replaces `process.env.X` with '' at build time.
+// Using globalThis.process?.env prevents Vite's static analysis from inlining
+// the value, ensuring the env var is read at RUNTIME in Vercel serverless.
+const _rtenv = (globalThis as any).process?.env ?? {};
+const _SK = 'STRIPE_SECRET' + '_KEY'; // split defeats remaining static analysis
+
 function getStripeKey(): string {
-  return process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || '';
+  return _rtenv[_SK] || '';
 }
 
 function isStripeReady(key: string): boolean {
@@ -94,7 +97,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const stripe = new Stripe(stripeKey);
-    const origin = import.meta.env.SITE_URL || 'https://brandblackout.com';
+    const origin = _rtenv['SITE_URL'] || 'https://brandblackout.com';
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
