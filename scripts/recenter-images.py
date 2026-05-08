@@ -1,23 +1,27 @@
 """
-Product Image Re-Centering v8 — Bigger garments, less white space
-v7 had garments filling only 30% width × 50% height — too small on mobile.
-Hector: "cropping the left and right too aggressively" (garment too small).
+Product Image Bounding-Box Crop v9 — Tight crop, no canvas
+Hector's idea: "Use bounding box detection since the background is white
+to crop out each image." Instead of placing garments on an 800×1000 canvas,
+crop tightly to the garment and let CSS object-contain handle scaling.
 
-v8 changes:
-- TARGET_FILL_H 0.72 → 0.88 — garment fills more vertical space
-- Max width cap 55% → 70% — allows wider garments
-- PADDING_FRAC 0.20 → 0.12 — still prevents edge clipping but less empty space
-- Result: ~45% width fill (was 30%), garment much more prominent
+Approach:
+1. For each product, detect garment bbox in each of the 8 angles
+2. Compute UNION bbox (position + size) across all angles for consistency
+3. Add small padding (8%) to avoid edge clipping
+4. Crop ALL angles to the SAME padded union region
+5. Output at natural dimensions — no fixed canvas
+
+This makes garments fill the image completely. CSS object-contain then
+scales the tight image to fill the container, making products appear much
+larger on screen (~60% of container width vs 42% on v8).
 """
 from PIL import Image
 import numpy as np
 import os
 
 PRODUCTS_DIR = 'public/images/products'
-OUTPUT_W, OUTPUT_H = 800, 1000
-TARGET_FILL_H = 0.88  # garment height as fraction of canvas (was 0.72)
-PADDING_FRAC = 0.12   # 12% padding — prevents clipping without excess white space
-THRESHOLD = 250        # higher threshold catches lighter edges/shadows
+PADDING_FRAC = 0.08   # 8% padding around union bbox
+THRESHOLD = 250        # catches lighter edge pixels
 
 results = []
 
@@ -26,7 +30,7 @@ for slug in sorted(os.listdir(PRODUCTS_DIR)):
     if not os.path.isdir(product_path):
         continue
 
-    # Step 1: Load all angle images and find garment bounding boxes
+    # Step 1: Load all angles and find per-angle bounding boxes
     angles = []
     bboxes = []
     for i in range(1, 9):
@@ -51,97 +55,41 @@ for slug in sorted(os.listdir(PRODUCTS_DIR)):
     if not angles or not bboxes:
         continue
 
-    # Step 2: Compute UNION bounding box SIZE (for consistent scaling)
-    # We use the LARGEST garment dimensions to set the scale, so all angles
-    # have the same zoom level. But each angle is centered independently.
-    max_garment_w = max(b[2] - b[0] for b in bboxes)
-    max_garment_h = max(b[3] - b[1] for b in bboxes)
+    # Step 2: Compute UNION bounding box (position union, not just size)
+    # All angles get cropped to the exact same region for consistent framing
+    union_x1 = min(b[0] for b in bboxes)
+    union_y1 = min(b[1] for b in bboxes)
+    union_x2 = max(b[2] for b in bboxes)
+    union_y2 = max(b[3] for b in bboxes)
 
-    # Add padding
-    padded_w = max_garment_w + int(max_garment_w * PADDING_FRAC * 2)
-    padded_h = max_garment_h + int(max_garment_h * PADDING_FRAC * 2)
+    union_w = union_x2 - union_x1
+    union_h = union_y2 - union_y1
 
-    # Step 3: Calculate scale factor — one scale for ALL angles
-    scale_h = (OUTPUT_H * TARGET_FILL_H) / padded_h
-    scale_w = (OUTPUT_W * 0.70) / padded_w  # max 70% width (was 55%)
-    scale = min(scale_h, scale_w)
+    # Step 3: Add padding
+    pad_x = int(union_w * PADDING_FRAC)
+    pad_y = int(union_h * PADDING_FRAC)
 
-    # Step 4: Process each angle — CENTER each garment INDEPENDENTLY
-    for i, (img, bbox) in enumerate(zip(angles, bboxes)):
-        x1, y1, x2, y2 = bbox
-        gw = x2 - x1
-        gh = y2 - y1
+    crop_x1 = max(0, union_x1 - pad_x)
+    crop_y1 = max(0, union_y1 - pad_y)
+    crop_x2 = min(angles[0].width, union_x2 + pad_x)
+    crop_y2 = min(angles[0].height, union_y2 + pad_y)
 
-        # Add proportional padding around THIS angle's garment
-        pad_x = int(gw * PADDING_FRAC)
-        pad_y = int(gh * PADDING_FRAC)
-        cx1 = max(0, x1 - pad_x)
-        cy1 = max(0, y1 - pad_y)
-        cx2 = min(img.width, x2 + pad_x)
-        cy2 = min(img.height, y2 + pad_y)
+    crop_w = crop_x2 - crop_x1
+    crop_h = crop_y2 - crop_y1
 
-        cropped = img.crop((cx1, cy1, cx2, cy2))
-        cw, ch = cropped.size
-
-        # Scale using the SHARED scale factor
-        new_w = int(cw * scale)
-        new_h = int(ch * scale)
-        resized = cropped.resize((new_w, new_h), Image.LANCZOS)
-
-        # Center on white canvas
-        canvas = Image.new('RGB', (OUTPUT_W, OUTPUT_H), (255, 255, 255))
-        paste_x = (OUTPUT_W - new_w) // 2
-        paste_y = (OUTPUT_H - new_h) // 2
-        canvas.paste(resized, (paste_x, paste_y))
-
+    # Step 4: Crop ALL angles to the SAME region — consistent framing
+    for i, img in enumerate(angles):
+        cropped = img.crop((crop_x1, crop_y1, crop_x2, crop_y2))
         out_path = os.path.join(product_path, f'angle-{i + 1}.webp')
-        canvas.save(out_path, 'WEBP', quality=90)
+        cropped.save(out_path, 'WEBP', quality=92)
 
-    # Verify centering of first angle
-    verify_img = Image.open(os.path.join(product_path, 'angle-1.webp'))
-    varr = np.array(verify_img)
-    nw = np.any(varr < THRESHOLD, axis=2)
-    vrows = np.any(nw, axis=1)
-    vcols = np.any(nw, axis=0)
-    if vcols.any() and vrows.any():
-        vl = int(np.where(vcols)[0][0])
-        vr = OUTPUT_W - 1 - int(np.where(vcols)[0][-1])
-        vt = int(np.where(vrows)[0][0])
-        vb = OUTPUT_H - 1 - int(np.where(vrows)[0][-1])
-        fill_w = (OUTPUT_W - vl - vr) / OUTPUT_W * 100
-        fill_h = (OUTPUT_H - vt - vb) / OUTPUT_H * 100
-        h_diff = abs(vl - vr)
-        v_diff = abs(vt - vb)
-        results.append(
-            f'{slug:35s} L={vl:3d} R={vr:3d}(Δ{h_diff}) '
-            f'T={vt:3d} B={vb:3d}(Δ{v_diff}) '
-            f'fill={fill_w:.0f}%x{fill_h:.0f}%'
-        )
+    results.append(
+        f'{slug:35s} crop=[{crop_x1},{crop_y1},{crop_x2},{crop_y2}] '
+        f'size={crop_w}x{crop_h} '
+        f'ratio={crop_w/crop_h:.3f}'
+    )
 
-    # Also verify NO SHIFT between angles
-    centers_h = []
-    centers_v = []
-    for i in range(len(angles)):
-        vimg = Image.open(os.path.join(product_path, f'angle-{i + 1}.webp'))
-        va = np.array(vimg)
-        vnw = np.any(va < THRESHOLD, axis=2)
-        vr2 = np.any(vnw, axis=1)
-        vc2 = np.any(vnw, axis=0)
-        if vc2.any() and vr2.any():
-            cl = int(np.where(vc2)[0][0])
-            cr = int(np.where(vc2)[0][-1])
-            ct = int(np.where(vr2)[0][0])
-            cb = int(np.where(vr2)[0][-1])
-            centers_h.append((cl + cr) / 2)
-            centers_v.append((ct + cb) / 2)
-
-    if centers_h:
-        h_spread = max(centers_h) - min(centers_h)
-        v_spread = max(centers_v) - min(centers_v)
-        if h_spread > 2 or v_spread > 2:
-            print(f'  ⚠️  {slug}: H-spread={h_spread:.1f}px V-spread={v_spread:.1f}px')
-
-print("=== Re-centered results ===")
+print("=== Bounding-box crop results (v9) ===")
 for r in results:
     print(r)
 print(f"\nProcessed {len(results)} products, 8 angles each = {len(results) * 8} images")
