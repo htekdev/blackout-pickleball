@@ -5,65 +5,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AddToCartButton from '../../components/AddToCartButton';
 import ProductViewer from '../../components/ProductViewer';
 import type { CatalogItem } from '../../lib/stripe';
+import { findProduct, toCatalogItem, PRODUCT_CATALOG } from '../../lib/products';
 
 const { id } = Astro.params;
 
-let product: CatalogItem | null = null;
+let product: (CatalogItem & { colorName?: string; colorHex?: string }) | null = null;
 let isDemo = false;
-
-// Demo products for when Stripe isn't connected
-const demoProducts: Record<string, CatalogItem> = {
-  demo_tee: {
-    id: 'demo_tee',
-    name: 'Blackout Performance Tee',
-    description: 'Premium court-ready tee — 85% Polyester / 15% Spandex. Breathable 4-way stretch fabric designed to release heat and wick moisture. Perfect shape recovery and extreme freedom of movement on the court.\n\nFeatures:\n• Moisture-wicking technology\n• 4-way stretch for unrestricted movement\n• Anti-odor treatment\n• Tagless comfort\n• Available in S through XXL',
-    images: [],
-    sport: 'pickleball',
-    prices: [
-      { id: 'demo_tee_s', amount: 3500, currency: 'usd', size: 'S' },
-      { id: 'demo_tee_m', amount: 3500, currency: 'usd', size: 'M' },
-      { id: 'demo_tee_l', amount: 3500, currency: 'usd', size: 'L' },
-      { id: 'demo_tee_xl', amount: 3500, currency: 'usd', size: 'XL' },
-      { id: 'demo_tee_xxl', amount: 3500, currency: 'usd', size: 'XXL' },
-    ],
-  },
-  demo_hoodie: {
-    id: 'demo_hoodie',
-    name: 'Blackout Hoodie',
-    description: 'Warm-up in style with our premium cotton blend hoodie. Featuring the Blackout Pickleball logo, adjustable drawstring hood, and kangaroo pocket.\n\nFeatures:\n• Premium cotton-poly blend\n• Adjustable drawstring hood\n• Kangaroo pocket\n• Ribbed cuffs and hem\n• Embroidered logo',
-    images: [],
-    sport: 'pickleball',
-    prices: [
-      { id: 'demo_hoodie_s', amount: 5500, currency: 'usd', size: 'S' },
-      { id: 'demo_hoodie_m', amount: 5500, currency: 'usd', size: 'M' },
-      { id: 'demo_hoodie_l', amount: 5500, currency: 'usd', size: 'L' },
-      { id: 'demo_hoodie_xl', amount: 5500, currency: 'usd', size: 'XL' },
-    ],
-  },
-  demo_cap: {
-    id: 'demo_cap',
-    name: 'Blackout Cap',
-    description: 'Rep the brand on and off the court. Adjustable snapback with embroidered Blackout Pickleball logo.\n\nFeatures:\n• Structured mid-profile fit\n• Adjustable snapback closure\n• Embroidered logo\n• Curved brim\n• One size fits most',
-    images: [],
-    sport: 'pickleball',
-    prices: [
-      { id: 'demo_cap_one', amount: 2500, currency: 'usd', size: 'One Size' },
-    ],
-  },
-  demo_shorts: {
-    id: 'demo_shorts',
-    name: 'Blackout Performance Shorts',
-    description: 'Lightweight performance shorts built for tournament play. Deep side pockets for ball storage.\n\nFeatures:\n• Lightweight moisture-wicking fabric\n• Elastic waistband with drawstring\n• Deep side pockets\n• 7-inch inseam\n• Blackout logo print',
-    images: [],
-    sport: 'pickleball',
-    prices: [
-      { id: 'demo_shorts_s', amount: 4000, currency: 'usd', size: 'S' },
-      { id: 'demo_shorts_m', amount: 4000, currency: 'usd', size: 'M' },
-      { id: 'demo_shorts_l', amount: 4000, currency: 'usd', size: 'L' },
-      { id: 'demo_shorts_xl', amount: 4000, currency: 'usd', size: 'XL' },
-    ],
-  },
-};
+let productImages: string[] = [];
 
 try {
   const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
@@ -92,9 +40,20 @@ try {
       }))
       .sort((a, b) => sizeOrder.indexOf(a.size) - sizeOrder.indexOf(b.size)),
   };
+  productImages = stripeProduct.images || [];
 } catch (e) {
   isDemo = true;
-  product = demoProducts[id!] || null;
+  // Look up from full product catalog (matches by slug or id)
+  const catalogProduct = findProduct(id!);
+  if (catalogProduct) {
+    const item = toCatalogItem(catalogProduct);
+    product = {
+      ...item,
+      colorName: catalogProduct.colorName,
+      colorHex: catalogProduct.colorHex,
+    };
+    productImages = catalogProduct.images.angles;
+  }
 }
 
 if (!product) {
@@ -134,11 +93,17 @@ const hasPriceRange = lowestPrice !== highestPrice;
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <!-- Product Images / 360° Viewer -->
         <div>
-          {product.images.length > 1 ? (
-            <ProductViewer client:load images={product.images} productName={product.name} />
+          {productImages.length > 1 ? (
+            <ProductViewer client:load images={productImages} productName={product.name} />
           ) : (
             <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-              {product.images.length === 1 ? (
+              {productImages.length === 1 ? (
+                <img
+                  src={productImages[0]}
+                  alt={product.name}
+                  class="w-full h-full object-cover"
+                />
+              ) : product.images.length > 0 ? (
                 <img
                   src={product.images[0]}
                   alt={product.name}
@@ -160,6 +125,17 @@ const hasPriceRange = lowestPrice !== highestPrice;
         <div>
           <h1 class="text-3xl sm:text-4xl font-black tracking-tight">{product.name}</h1>
           
+          {/* Color info */}
+          {product.colorName && (
+            <div class="mt-3 flex items-center gap-2">
+              <span
+                class="inline-block w-5 h-5 rounded-full border border-gray-300"
+                style={`background-color: ${product.colorHex}`}
+              ></span>
+              <span class="text-sm text-text-light font-medium">{product.colorName}</span>
+            </div>
+          )}
+
           <div class="mt-4">
             <span class="text-2xl font-black text-blackout">
               {hasPriceRange
@@ -186,7 +162,7 @@ const hasPriceRange = lowestPrice !== highestPrice;
               client:load
               productId={product.id}
               productName={product.name}
-              productImage={product.images[0] || ''}
+              productImage={productImages[0] || product.images[0] || ''}
               prices={product.prices.map(p => ({
                 id: p.id,
                 amount: p.amount,
