@@ -2,38 +2,87 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About" description="Learn about Blackout — a multi-sport movement for diversity and inclusivity, starting with pickleball and expanding across sports.">
+<BaseLayout title="About" description="Learn about Blackout — a multi-sport movement for diversity and inclusivity founded by Jonathan Dapaah, starting with pickleball and expanding across sports.">
+
+  <!-- Hero Banner -->
+  <section class="relative bg-blackout text-white py-20 sm:py-28 overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.04]">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-white"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full border border-white"></div>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-white/60 font-semibold text-sm uppercase tracking-[0.2em] mb-4">Our Story</p>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight font-display">Diversity in Every Sport.</h1>
+      <p class="mt-6 text-lg sm:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
+        Blackout is more than a brand — it's a movement to ensure every sport reflects the people who play it.
+      </p>
+    </div>
+  </section>
 
   <section class="py-16 sm:py-24 bg-surface">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <p class="text-muted font-semibold text-sm uppercase tracking-widest mb-3">Our Story</p>
-        <h1 class="text-4xl sm:text-5xl font-black tracking-tight">Diversity in Every Sport.</h1>
+
+      <!-- Mission Statement -->
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <span class="w-10 h-px bg-blackout"></span>
+          <span class="text-muted font-semibold text-xs uppercase tracking-[0.2em]">The Mission</span>
+          <span class="w-10 h-px bg-blackout"></span>
+        </div>
+        <blockquote class="text-2xl sm:text-3xl font-black tracking-tight font-display leading-snug max-w-3xl mx-auto">
+          "To celebrate diversity and inclusivity within the sports community — increasing representation while welcoming everyone, regardless of background."
+        </blockquote>
       </div>
 
+      <!-- Origin Story -->
       <div class="prose prose-lg mx-auto">
         <p class="text-text-light text-lg leading-relaxed">
-          Blackout is a movement — built on the belief that every sport should reflect the diversity of the people who play it. We started with pickleball, the fastest-growing sport in America, because we saw an opportunity to change the face of the game.
+          We started with pickleball — the fastest-growing sport in America — because we saw an opportunity to change the face of the game. The courts were growing fast, but they didn't always reflect the communities around them. Blackout was built to change that.
         </p>
 
         <p class="text-text-light text-lg leading-relaxed mt-6">
-          Our mission is to celebrate diversity and inclusivity within sports. We're dedicated to increasing Black representation in communities that have historically lacked it — while welcoming everyone, regardless of background, to join us in playing, supporting, and sharing the games we love.
+          We're dedicated to increasing Black representation in sports communities that have historically lacked it. But this isn't just about one group — it's about building spaces where everyone feels they belong. Whether you've been playing for years or just picked up a paddle, you're welcome here.
         </p>
 
         <p class="text-text-light text-lg leading-relaxed mt-6">
-          But Blackout doesn't stop at pickleball. We're building a multi-sport brand that carries this energy to tennis, and beyond. Wherever there's a court, a field, or a game — Blackout will be there, bringing bold representation and community.
+          And Blackout doesn't stop at pickleball. We're building a multi-sport brand that carries this energy to tennis and beyond. Wherever there's a court, a field, or a game — Blackout will be there.
         </p>
+      </div>
+
+      <!-- Core Values -->
+      <div class="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-blackout rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </div>
+          <h3 class="font-black text-lg mb-2">Representation</h3>
+          <p class="text-text-light text-sm leading-relaxed">Increasing visibility and creating spaces where underrepresented athletes see themselves.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-blackout rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+          </div>
+          <h3 class="font-black text-lg mb-2">Community</h3>
+          <p class="text-text-light text-sm leading-relaxed">Building welcoming, inclusive spaces where everyone belongs — on and off the court.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-blackout rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <h3 class="font-black text-lg mb-2">Performance</h3>
+          <p class="text-text-light text-sm leading-relaxed">Premium athletic gear that performs at every level — from casual play to competitive courts.</p>
+        </div>
       </div>
 
       <!-- Vision Section -->
       <div class="mt-16 bg-white rounded-2xl p-8 sm:p-12 border border-gray-100">
-        <p class="text-accent font-semibold text-sm uppercase tracking-widest mb-3">The Vision</p>
-        <h2 class="text-2xl font-black mb-4">Bigger Than One Sport</h2>
+        <p class="text-muted font-semibold text-sm uppercase tracking-widest mb-3">The Vision</p>
+        <h2 class="text-2xl font-black mb-4 font-display">Bigger Than One Sport</h2>
         <p class="text-text-light leading-relaxed">
-          Blackout is the parent brand — an umbrella for every sport vertical we launch. Blackout Pickleball is where it all started. Blackout Tennis is coming next. And as the movement grows, so does our reach. Each sport gets its own community, its own gear, and its own identity — united under the Blackout name.
+          Blackout is the parent brand — an umbrella for every sport vertical we launch. Blackout Pickleball is where it all started. Blackout Tennis is coming next. And as the movement grows, so does our reach. Each sport gets its own community, its own gear, and its own identity — all united under the Blackout name.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
-          <span class="px-4 py-2 bg-accent/10 text-accent-dark font-semibold rounded-full text-sm">🏓 Pickleball — Active</span>
+          <span class="px-4 py-2 bg-blackout text-white font-semibold rounded-full text-sm">🏓 Pickleball — Active</span>
           <span class="px-4 py-2 bg-gray-100 text-gray-500 font-semibold rounded-full text-sm">🎾 Tennis — Coming Soon</span>
           <span class="px-4 py-2 bg-gray-100 text-gray-500 font-semibold rounded-full text-sm">🏅 More Sports — Coming Soon</span>
         </div>
@@ -41,19 +90,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <!-- Founder Section -->
       <div class="mt-8 border border-border rounded-2xl p-8 sm:p-12 bg-surface-warm">
-        <h2 class="text-2xl font-black mb-4 font-display">Meet the Founder</h2>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-14 h-14 bg-blackout rounded-full flex items-center justify-center text-white text-xl font-black">JD</div>
+          <div>
+            <h2 class="text-2xl font-black font-display">Jonathan Dapaah</h2>
+            <p class="text-text-light text-sm">Founder, Blackout</p>
+          </div>
+        </div>
         <p class="text-text-light leading-relaxed">
-          Jonathan Dapaah founded Blackout with a bold vision: to create vibrant, inclusive spaces across sports. A passionate athlete himself, Jonathan saw that many sports communities didn't reflect the diversity of the world around them — and he set out to change that. Starting with pickleball, he built a brand that celebrates Black representation while welcoming everyone to the court.
+          Jonathan Dapaah founded Blackout with a bold vision: to create vibrant, inclusive spaces across sports. A passionate athlete and community builder, Jonathan saw that many sports communities didn't reflect the diversity of the world around them — and he set out to change that.
+        </p>
+        <p class="text-text-light leading-relaxed mt-4">
+          Starting with pickleball, he built a brand that celebrates Black representation while welcoming everyone to the court. With a growing community of over 5,000 followers and events across the country, Jonathan is proving that when you lead with purpose, people show up.
         </p>
       </div>
 
       <!-- Gear Section -->
       <div class="mt-8 bg-white rounded-2xl p-8 sm:p-12 border border-gray-100">
-        <h2 class="text-2xl font-black mb-4">Performance Gear</h2>
+        <h2 class="text-2xl font-black mb-4 font-display">Performance Gear</h2>
         <p class="text-text-light leading-relaxed">
           Our high-performance gear is crafted from a premium 85% Polyester and 15% Spandex blend. Designed to release heat and wick moisture, our breathable 4-way stretch fabric ensures perfect shape recovery and extreme freedom of movement. Whether you're on the court for a casual game or competing at the highest level, Blackout gear performs.
         </p>
-        <a href="/shop" class="inline-flex items-center mt-6 text-accent hover:text-accent-dark font-semibold transition-colors gap-2 group">
+        <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div class="py-3">
+            <p class="font-black text-lg">85/15</p>
+            <p class="text-text-light text-xs">Polyester/Spandex</p>
+          </div>
+          <div class="py-3">
+            <p class="font-black text-lg">4-Way</p>
+            <p class="text-text-light text-xs">Stretch Fabric</p>
+          </div>
+          <div class="py-3">
+            <p class="font-black text-lg">Quick</p>
+            <p class="text-text-light text-xs">Moisture Wicking</p>
+          </div>
+          <div class="py-3">
+            <p class="font-black text-lg">UV</p>
+            <p class="text-text-light text-xs">Sun Protection</p>
+          </div>
+        </div>
+        <a href="/shop" class="inline-flex items-center mt-6 px-6 py-3 bg-blackout text-white font-bold rounded-lg hover:bg-accent-light transition-colors text-sm uppercase tracking-wider gap-2 group">
           Shop the Collection
           <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
         </a>

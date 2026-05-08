@@ -54,6 +54,41 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
     <!-- Theme color -->
     <meta name="theme-color" content="#ffffff" />
 
+    <!-- Structured Data: Organization + WebSite -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://brandblackout.com/#organization",
+          "name": "Blackout",
+          "url": "https://brandblackout.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://brandblackout.com/assets/logo/blackout-logo-black.svg"
+          },
+          "description": "A multi-sport diversity and inclusion brand celebrating representation in sports. Performance gear, community events, and a movement bigger than any single game.",
+          "founder": {
+            "@type": "Person",
+            "name": "Jonathan Dapaah"
+          },
+          "sameAs": [
+            "https://www.instagram.com/blackoutpickleball",
+            "https://www.facebook.com/blackoutpickleball",
+            "https://www.tiktok.com/@blackoutpickleball",
+            "https://www.youtube.com/@BlackoutPickleball"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://brandblackout.com/#website",
+          "url": "https://brandblackout.com",
+          "name": "Blackout",
+          "publisher": { "@id": "https://brandblackout.com/#organization" }
+        }
+      ]
+    })} />
+
     <!-- Google Fonts: Urbanist (headings) + Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
