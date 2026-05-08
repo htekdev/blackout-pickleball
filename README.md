@@ -36,6 +36,14 @@ PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
 SITE_URL=https://brandblackout.com
 ```
 
+### SITE_URL Note
+
+The `SITE_URL` env var is used for Stripe Checkout redirect URLs (success/cancel).
+- **Vercel**: Set in Vercel Dashboard → Settings → Environment Variables
+- **When connecting a custom domain** (brandblackout.com): Update `SITE_URL` in Vercel to the custom domain
+- Current Vercel URL: `https://blackout-pickleball.vercel.app`
+- Production domain: `https://brandblackout.com` (pending DNS transfer)
+
 ## Deployment
 
 Pushes to `main` auto-deploy to Vercel.
