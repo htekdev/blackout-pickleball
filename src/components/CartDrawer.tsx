@@ -23,6 +23,14 @@ export default function CartDrawer() {
 
   const handleCheckout = async () => {
     if (cart.length === 0) return;
+
+    // Client-side check: detect fake demo price IDs before hitting API
+    const hasFakePrices = cart.some((item) => !item.priceId.startsWith('price_'));
+    if (hasFakePrices) {
+      setError('Your cart contains items from preview mode. Please clear your cart and re-add items from the shop.');
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     try {

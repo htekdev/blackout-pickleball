@@ -12,13 +12,17 @@ interface Props {
   productName: string;
   productImage: string;
   prices: PriceOption[];
+  /** When true, cart/checkout is disabled (fake price IDs) */
+  isDemo?: boolean;
 }
 
-export default function AddToCartButton({ productId, productName, productImage, prices }: Props) {
+export default function AddToCartButton({ productId, productName, productImage, prices, isDemo }: Props) {
   const [selectedPrice, setSelectedPrice] = useState(prices[0]);
   const [added, setAdded] = useState(false);
 
   const handleAdd = () => {
+    if (isDemo) return; // Don't add fake prices to cart
+
     addToCart({
       priceId: selectedPrice.id,
       productId,
@@ -56,16 +60,26 @@ export default function AddToCartButton({ productId, productName, productImage, 
       )}
 
       {/* Add to cart button */}
-      <button
-        onClick={handleAdd}
-        class={`mt-3 w-full py-2.5 rounded-lg font-bold text-sm uppercase tracking-wider transition-all ${
-          added
-            ? 'bg-green-500 text-white'
-            : 'bg-blackout hover:bg-blackout-light text-white'
-        }`}
-      >
-        {added ? '✓ Added!' : `Add to Cart — $${(selectedPrice.amount / 100).toFixed(2)}`}
-      </button>
+      {isDemo ? (
+        <button
+          disabled
+          class="mt-3 w-full py-2.5 rounded-lg font-bold text-sm uppercase tracking-wider bg-gray-300 text-gray-500 cursor-not-allowed"
+          title="Checkout unavailable in preview mode"
+        >
+          Preview Only — ${ (selectedPrice.amount / 100).toFixed(2)}
+        </button>
+      ) : (
+        <button
+          onClick={handleAdd}
+          class={`mt-3 w-full py-2.5 rounded-lg font-bold text-sm uppercase tracking-wider transition-all ${
+            added
+              ? 'bg-green-500 text-white'
+              : 'bg-blackout hover:bg-blackout-light text-white'
+          }`}
+        >
+          {added ? '✓ Added!' : `Add to Cart — $${(selectedPrice.amount / 100).toFixed(2)}`}
+        </button>
+      )}
     </div>
   );
 }

@@ -257,6 +257,8 @@ export function toCatalogItem(p: Product) {
     colorName: p.colorName,
     colorHex: p.colorHex,
     category: p.category,
+    // Demo mode — these are FAKE price IDs that won't work with Stripe
+    isLive: false,
     prices: p.prices,
   };
 }

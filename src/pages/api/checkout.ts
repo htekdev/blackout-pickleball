@@ -2,7 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
-import { stripe } from '../../lib/stripe';
+import { stripe, isRealPriceId } from '../../lib/stripe';
 
 /**
  * Shipping rate options for Stripe Checkout.
@@ -66,6 +66,24 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
+    // Validate all price IDs are real Stripe prices (not fake demo IDs)
+    const invalidPrices = items.filter(
+      (item: { priceId: string }) => !isRealPriceId(item.priceId)
+    );
+    if (invalidPrices.length > 0) {
+      console.error(
+        'Checkout blocked: fake price IDs detected:',
+        invalidPrices.map((i: { priceId: string }) => i.priceId)
+      );
+      return new Response(
+        JSON.stringify({
+          error: 'Your cart contains items from preview mode. Please clear your cart and re-add items from the shop.',
+          code: 'DEMO_PRICES',
+        }),
+        { status: 400, headers }
+      );
+    }
+
     const origin = import.meta.env.SITE_URL || 'https://brandblackout.com';
 
     const session = await stripe.checkout.sessions.create({
@@ -94,13 +112,28 @@ export const POST: APIRoute = async ({ request }) => {
       error?.type === 'StripeAuthenticationError' ||
       error?.statusCode === 401;
 
-    const message = isAuthError
-      ? 'Payment processing is temporarily unavailable. Please try again shortly.'
-      : 'Something went wrong creating your checkout session. Please try again.';
+    // Friendly message for invalid price errors
+    const isPriceError =
+      error?.type === 'StripeInvalidRequestError' &&
+      error?.message?.includes('price');
+
+    let message: string;
+    let status: number;
+
+    if (isAuthError) {
+      message = 'Payment processing is temporarily unavailable. Please try again shortly.';
+      status = 503;
+    } else if (isPriceError) {
+      message = 'One or more items in your cart are no longer available. Please clear your cart and try again.';
+      status = 400;
+    } else {
+      message = 'Something went wrong creating your checkout session. Please try again.';
+      status = 500;
+    }
 
     return new Response(
       JSON.stringify({ error: message }),
-      { status: isAuthError ? 503 : 500, headers }
+      { status, headers }
     );
   }
 };
