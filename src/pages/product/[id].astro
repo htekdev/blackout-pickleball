@@ -140,10 +140,10 @@ const hasPriceRange = lowestPrice !== highestPrice;
                   class="w-full h-full object-cover"
                 />
               ) : (
-                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a]">
+                <div class="w-full h-full flex items-center justify-center bg-surface-dark">
                   <div class="text-center">
                     <span class="text-8xl block mb-4">🏓</span>
-                    <p class="text-white/40 text-sm">Product image coming soon</p>
+                    <p class="text-text-light text-sm">Product image coming soon</p>
                   </div>
                 </div>
               )}
@@ -156,7 +156,7 @@ const hasPriceRange = lowestPrice !== highestPrice;
           <h1 class="text-3xl sm:text-4xl font-black tracking-tight">{product.name}</h1>
           
           <div class="mt-4">
-            <span class="text-2xl font-black text-amber-600">
+            <span class="text-2xl font-black text-blackout">
               {hasPriceRange
                 ? `$${(lowestPrice / 100).toFixed(2)} – $${(highestPrice / 100).toFixed(2)}`
                 : `$${(lowestPrice / 100).toFixed(2)}`}

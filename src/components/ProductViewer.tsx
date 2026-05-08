@@ -103,7 +103,7 @@ export default function ProductViewer({ images, productName }: Props) {
             key={i}
             onClick={() => setCurrentIndex(i)}
             class={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-              i === currentIndex ? 'border-amber-400 ring-2 ring-amber-400/30' : 'border-transparent opacity-60 hover:opacity-100'
+              i === currentIndex ? 'border-blackout ring-2 ring-blackout/20' : 'border-transparent opacity-60 hover:opacity-100'
             }`}
           >
             <img src={img} alt={`Angle ${i + 1}`} class="w-full h-full object-cover" />
