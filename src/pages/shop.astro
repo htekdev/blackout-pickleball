@@ -26,6 +26,10 @@ try {
     throw new Error('Stripe key not configured');
   }
   catalog = await getCatalog();
+  // If Stripe returned 0 products, fall back to demo
+  if (catalog.length === 0) {
+    throw new Error('No products found in Stripe');
+  }
 } catch (e) {
   isDemo = true;
   // Real product catalog with 12 items and local 360° images
@@ -94,6 +98,15 @@ function formatPrice(cents: number): string {
 
       {/* Preview mode banner removed — real product photos are live */}
 
+      {/* Demo mode warning — prices won't work at checkout */}
+      {isDemo && (
+        <div class="mb-8 p-4 bg-amber-50 border border-amber-200 rounded-xl text-center">
+          <p class="text-amber-800 font-semibold text-sm">
+            🏓 Preview Mode — Products shown with demo pricing. Checkout is disabled until Stripe catalog is configured.
+          </p>
+        </div>
+      )}
+
       <!-- Product Grid -->
       <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         {filteredCatalog.map((product) => (
@@ -153,6 +166,7 @@ function formatPrice(cents: number): string {
                 productId={product.id}
                 productName={product.name}
                 productImage={product.images[0] || ''}
+                isDemo={isDemo || !product.isLive}
                 prices={product.prices.map(p => ({
                   id: p.id,
                   amount: p.amount,
