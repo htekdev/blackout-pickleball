@@ -36,7 +36,7 @@ const MEN_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
 const WOMEN_SIZES = ['XS', 'S', 'M', 'L', 'XL'];
 
 function makeAngles(slug: string): ProductImage {
-  const base = `/images/products/${slug}`;
+  const base = `/products/${slug}`;
   return {
     thumbnail: `${base}/angle-1.webp`,
     angles: Array.from({ length: 8 }, (_, i) => `${base}/angle-${i + 1}.webp`),
