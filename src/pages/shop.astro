@@ -4,10 +4,12 @@ export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AddToCartButton from '../components/AddToCartButton';
 import { getCatalog, type CatalogItem } from '../lib/stripe';
+import { PRODUCT_CATALOG, toCatalogItem } from '../lib/products';
 
 // Read category filter from query param
 const url = new URL(Astro.request.url);
 const activeCategory = (url.searchParams.get('category') || 'all').toLowerCase();
+const activeGarment = url.searchParams.get('type') || 'all';
 
 // Sport categories config
 const categories = [
@@ -16,7 +18,14 @@ const categories = [
   { id: 'tennis', label: 'Tennis', active: false, comingSoon: true },
 ];
 
-let catalog: CatalogItem[] = [];
+// Garment type filter
+const garmentTypes = [
+  { id: 'all', label: 'All Styles' },
+  { id: 'mens-crew-tee', label: "Men's Tees" },
+  { id: 'womens-racerback-tank', label: "Women's Tanks" },
+];
+
+let catalog: (CatalogItem & { colorName?: string; colorHex?: string; category?: string })[] = [];
 let isDemo = false;
 
 try {
@@ -27,65 +36,18 @@ try {
   catalog = await getCatalog();
 } catch (e) {
   isDemo = true;
-  // Demo products for development/preview — all tagged with sport metadata
-  catalog = [
-    {
-      id: 'demo_tee',
-      name: 'Blackout Performance Tee',
-      description: 'Premium court-ready tee — 85% Polyester / 15% Spandex. Breathable 4-way stretch, moisture-wicking.',
-      images: [],
-      sport: 'pickleball',
-      prices: [
-        { id: 'demo_tee_s', amount: 3500, currency: 'usd', size: 'S' },
-        { id: 'demo_tee_m', amount: 3500, currency: 'usd', size: 'M' },
-        { id: 'demo_tee_l', amount: 3500, currency: 'usd', size: 'L' },
-        { id: 'demo_tee_xl', amount: 3500, currency: 'usd', size: 'XL' },
-        { id: 'demo_tee_xxl', amount: 3500, currency: 'usd', size: 'XXL' },
-      ],
-    },
-    {
-      id: 'demo_hoodie',
-      name: 'Blackout Hoodie',
-      description: 'Warm-up in style. Premium cotton blend hoodie with Blackout Pickleball branding.',
-      images: [],
-      sport: 'pickleball',
-      prices: [
-        { id: 'demo_hoodie_s', amount: 5500, currency: 'usd', size: 'S' },
-        { id: 'demo_hoodie_m', amount: 5500, currency: 'usd', size: 'M' },
-        { id: 'demo_hoodie_l', amount: 5500, currency: 'usd', size: 'L' },
-        { id: 'demo_hoodie_xl', amount: 5500, currency: 'usd', size: 'XL' },
-      ],
-    },
-    {
-      id: 'demo_cap',
-      name: 'Blackout Cap',
-      description: 'Rep the brand on and off the court. Adjustable snapback with embroidered logo.',
-      images: [],
-      sport: 'pickleball',
-      prices: [
-        { id: 'demo_cap_one', amount: 2500, currency: 'usd', size: 'One Size' },
-      ],
-    },
-    {
-      id: 'demo_shorts',
-      name: 'Blackout Performance Shorts',
-      description: 'Lightweight performance shorts with side pockets. Perfect for tournament play.',
-      images: [],
-      sport: 'pickleball',
-      prices: [
-        { id: 'demo_shorts_s', amount: 4000, currency: 'usd', size: 'S' },
-        { id: 'demo_shorts_m', amount: 4000, currency: 'usd', size: 'M' },
-        { id: 'demo_shorts_l', amount: 4000, currency: 'usd', size: 'L' },
-        { id: 'demo_shorts_xl', amount: 4000, currency: 'usd', size: 'XL' },
-      ],
-    },
-  ];
+  // Real product catalog with 12 items and local 360° images
+  catalog = PRODUCT_CATALOG.map(toCatalogItem);
 }
 
-// Filter catalog by selected category
-const filteredCatalog = activeCategory === 'all'
+// Filter catalog by sport + garment type
+let filteredCatalog = activeCategory === 'all'
   ? catalog
   : catalog.filter(p => p.sport === activeCategory);
+
+if (activeGarment !== 'all') {
+  filteredCatalog = filteredCatalog.filter(p => p.category === activeGarment);
+}
 
 function getLowestPrice(prices: CatalogItem['prices']): number {
   return Math.min(...prices.map(p => p.amount));
