@@ -14,7 +14,7 @@ export default function ProductViewer({ images, productName }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const totalFrames = images.length;
-  const sensitivity = 40; // pixels per frame — higher for 4-frame rotation
+  const sensitivity = 15; // pixels per frame — tuned for smooth 8-frame rotation
 
   const advanceFrame = useCallback((delta: number) => {
     accumulatorRef.current += delta;
@@ -138,7 +138,7 @@ export default function ProductViewer({ images, productName }: Props) {
       </div>
 
       {/* Thumbnail strip */}
-      <div class="grid grid-cols-4 gap-2">
+      <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
         {images.map((img, i) => (
           <button
             key={i}

@@ -39,7 +39,7 @@ function makeAngles(slug: string): ProductImage {
   const base = `/images/products/${slug}`;
   return {
     thumbnail: `${base}/angle-1.webp`,
-    angles: Array.from({ length: 4 }, (_, i) => `${base}/angle-${i + 1}.webp`),
+    angles: Array.from({ length: 8 }, (_, i) => `${base}/angle-${i + 1}.webp`),
   };
 }
 
