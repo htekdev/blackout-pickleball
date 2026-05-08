@@ -1,23 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Community gallery — re-curated for VARIETY and COMMUNITY feel
-// Prioritizes: group shots > multi-person > diverse settings > unique individual shots
-// Went from 29 repetitive individual shots to 14 diverse, carefully selected photos
+// Community gallery — Jonathan's curated selection (10 photos from Google Photos album)
+// Mix of group shots, individual portraits, product showcases, and creative angles
+// community-07 used as hero (full team group shot), remaining 9 in gallery
 const galleryImages = [
-  { src: '/images/community/community-02.webp', alt: 'Community members watching courtside — multiple people in Blackout gear', category: 'community' },
-  { src: '/images/community/community-03.webp', alt: 'Fans cheering and socializing at the fence during a Blackout event', category: 'community' },
-  { src: '/images/community/community-04.webp', alt: 'Athlete relaxing courtside in Blackout tee and cap — candid moment', category: 'lifestyle' },
-  { src: '/images/community/community-12.webp', alt: 'Athlete standing on the pickleball court in Blackout performance tee', category: 'lifestyle' },
-  { src: '/images/community/community-05.webp', alt: 'Confident portrait — Blackout Pickleball athlete seated on court', category: 'lifestyle' },
-  { src: '/images/community/community-13.webp', alt: 'Female athlete in Blackout long-sleeve — urban portrait against brick', category: 'lifestyle' },
-  { src: '/images/community/community-06.webp', alt: 'I Am Black History tee — colorful back design on the court', category: 'product' },
-  { src: '/images/community/community-07.webp', alt: 'Female athlete in Blackout long-sleeve performance top', category: 'lifestyle' },
-  { src: '/images/community/community-08.webp', alt: 'I Am Black History back design — female athlete seated at venue', category: 'product' },
-  { src: '/images/community/community-09.webp', alt: 'Side profile showing I Am Black History design on long-sleeve', category: 'product' },
-  { src: '/images/community/community-11.webp', alt: 'Athlete close-up — Blackout Pickleball tee with gold chain', category: 'lifestyle' },
-  { src: '/images/community/community-10.webp', alt: 'Blackout Pickleball logo detail — tee and shorts branding', category: 'product' },
-  { src: '/images/community/community-14.webp', alt: 'Blackout Pickleball performance tee — front logo detail on court', category: 'product' },
+  { src: '/images/community/community-05.webp', alt: 'Three Blackout athletes crouching at the net with paddles and pickleballs — squad goals', category: 'community' },
+  { src: '/images/community/community-01.webp', alt: 'Blackout Pickleball athlete portrait — confident pose in long-sleeve', category: 'lifestyle' },
+  { src: '/images/community/community-02.webp', alt: 'Blackout Pickleball athlete in branded gear — portrait on the court', category: 'lifestyle' },
+  { src: '/images/community/community-06.webp', alt: 'Creative close-up — athlete with paddle and pickleballs in Blackout long-sleeve', category: 'product' },
+  { src: '/images/community/community-03.webp', alt: 'Blackout Pickleball athlete styled portrait — court vibes', category: 'lifestyle' },
+  { src: '/images/community/community-08.webp', alt: 'Blackout Pickleball individual portrait — repping the brand', category: 'lifestyle' },
+  { src: '/images/community/community-04.webp', alt: 'Athlete portrait in Blackout gear — on the pickleball court', category: 'lifestyle' },
+  { src: '/images/community/community-09.webp', alt: 'Blackout community member portrait — pickleball lifestyle', category: 'lifestyle' },
+  { src: '/images/community/community-10.webp', alt: 'Blackout Pickleball athlete — styled portrait with paddle', category: 'lifestyle' },
 ];
 
 const socialPlatforms = [
@@ -94,8 +90,8 @@ const socialPlatforms = [
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="relative group overflow-hidden rounded-2xl shadow-xl">
         <img
-          src="/images/community/community-01.webp"
-          alt="The Blackout Pickleball community — 15+ athletes, diverse backgrounds, all repping Blackout gear on the court"
+          src="/images/community/community-07.webp"
+          alt="The Blackout Pickleball team — seven athletes standing together at the net, all repping Blackout gear on the court"
           loading="eager"
           decoding="async"
           class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
@@ -142,7 +138,7 @@ const socialPlatforms = [
       </div>
 
       <p class="mt-8 text-center text-sm text-gray-400">
-        {galleryImages.length + 1} photos curated from our collection — community first, maximum variety
+        {galleryImages.length + 1} photos from Jonathan's curated collection — community first
       </p>
     </div>
   </section>
