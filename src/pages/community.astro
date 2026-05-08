@@ -1,37 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Community gallery images from Jonathan's Google Photos album
+// Community gallery images — curated from 142-photo album (duplicates removed, best of each set)
+// Categories: action (court shots), product (merch showcase), community (group shots), lifestyle (casual/urban)
 const galleryImages = [
-  { src: '/images/community/community-01.webp', alt: 'Blackout Pickleball community members on the court' },
-  { src: '/images/community/community-02.webp', alt: 'Players warming up before a Blackout event' },
-  { src: '/images/community/community-03.webp', alt: 'Community members celebrating a point' },
-  { src: '/images/community/community-04.webp', alt: 'Blackout Pickleball group photo at event' },
-  { src: '/images/community/community-05.webp', alt: 'Players competing in doubles match' },
-  { src: '/images/community/community-06.webp', alt: 'Community event action shot on the court' },
-  { src: '/images/community/community-07.webp', alt: 'Blackout athletes showing team spirit' },
-  { src: '/images/community/community-08.webp', alt: 'Post-match celebration with the community' },
-  { src: '/images/community/community-09.webp', alt: 'Players connecting between games' },
-  { src: '/images/community/community-10.webp', alt: 'Blackout Pickleball event atmosphere' },
-  { src: '/images/community/community-11.webp', alt: 'Community members enjoying the day party vibes' },
-  { src: '/images/community/community-12.webp', alt: 'Diverse group of players on the pickleball court' },
-  { src: '/images/community/community-13.webp', alt: 'Action shot during competitive play' },
-  { src: '/images/community/community-14.webp', alt: 'Blackout community members networking' },
-  { src: '/images/community/community-15.webp', alt: 'Players repping Blackout gear on court' },
-  { src: '/images/community/community-16.webp', alt: 'Community event candid moment' },
-  { src: '/images/community/community-17.webp', alt: 'Blackout Pickleball inclusivity in action' },
-  { src: '/images/community/community-18.webp', alt: 'Fun moment captured at a Blackout event' },
-  { src: '/images/community/community-19.webp', alt: 'Players sharing tips between matches' },
-  { src: '/images/community/community-20.webp', alt: 'Community spirit at a Blackout gathering' },
-  { src: '/images/community/community-21.webp', alt: 'Blackout Pickleball court energy' },
-  { src: '/images/community/community-22.webp', alt: 'Group shot of Blackout community athletes' },
-  { src: '/images/community/community-23.webp', alt: 'Competitive rally during Blackout event' },
-  { src: '/images/community/community-24.webp', alt: 'Players having fun at Blackout Pickleball' },
-  { src: '/images/community/community-25.webp', alt: 'Community bonding over pickleball' },
-  { src: '/images/community/community-26.webp', alt: 'Blackout athletes between sets' },
-  { src: '/images/community/community-27.webp', alt: 'Event recap — community at its best' },
-  { src: '/images/community/community-28.webp', alt: 'Players embracing the Blackout movement' },
-  { src: '/images/community/community-29.webp', alt: 'Blackout Pickleball — where sport meets community' },
+  { src: '/images/community/community-01.webp', alt: 'Two athletes on pickleball court wearing Blackout gear', category: 'action' },
+  { src: '/images/community/community-09.webp', alt: 'Two Blackout athletes sitting together on pickleball court', category: 'community' },
+  { src: '/images/community/community-02.webp', alt: 'Male model wearing I Am Black History hoodie - front view on court', category: 'product' },
+  { src: '/images/community/community-22.webp', alt: 'Full-body athletic look in Blackout gear against brick wall', category: 'lifestyle' },
+  { src: '/images/community/community-07.webp', alt: 'Female athlete in Blackout gear - dynamic pose on court', category: 'action' },
+  { src: '/images/community/community-15.webp', alt: 'Male model in gray Blackout long-sleeve crewneck - brick wall', category: 'product' },
+  { src: '/images/community/community-11.webp', alt: 'Athletes in matching Blackout merch taking a break courtside', category: 'community' },
+  { src: '/images/community/community-12.webp', alt: 'Male model close-up wearing Blackout tee with gold chain', category: 'lifestyle' },
+  { src: '/images/community/community-03.webp', alt: 'Back of I Am Black History hoodie showing colorful logo design', category: 'product' },
+  { src: '/images/community/community-23.webp', alt: 'Dynamic athletic pose in full Blackout outfit', category: 'action' },
+  { src: '/images/community/community-19.webp', alt: 'Woman in Blackout crew posing against brick wall', category: 'lifestyle' },
+  { src: '/images/community/community-05.webp', alt: 'Female model in Blackout tee standing on pickleball court', category: 'product' },
+  { src: '/images/community/community-10.webp', alt: 'Community members in Blackout gear relaxing on court', category: 'community' },
+  { src: '/images/community/community-04.webp', alt: 'Athlete in Blackout hoodie on pickleball court - side angle', category: 'action' },
+  { src: '/images/community/community-17.webp', alt: 'Man in Blackout crewneck - casual urban style', category: 'lifestyle' },
+  { src: '/images/community/community-26.webp', alt: 'I Am Black History full back design - colorful block letters', category: 'product' },
+  { src: '/images/community/community-20.webp', alt: 'Athletic pose in Blackout long-sleeve top', category: 'action' },
+  { src: '/images/community/community-14.webp', alt: 'Athlete portrait in BLACKOUT text tee', category: 'lifestyle' },
+  { src: '/images/community/community-25.webp', alt: 'Model stretching in Blackout activewear', category: 'action' },
+  { src: '/images/community/community-18.webp', alt: 'Female model in dark Blackout long-sleeve - front view', category: 'product' },
+  { src: '/images/community/community-06.webp', alt: 'Woman wearing Black History tee - front logo detail on court', category: 'product' },
+  { src: '/images/community/community-24.webp', alt: 'Blackout athletic wear full outfit - relaxed stance', category: 'lifestyle' },
+  { src: '/images/community/community-29.webp', alt: 'I Am Black History logo closeup - red yellow green letters on black', category: 'product' },
+  { src: '/images/community/community-08.webp', alt: 'Woman modeling Blackout tee with pickleball court backdrop', category: 'action' },
 ];
 
 const socialPlatforms = [
@@ -114,7 +110,7 @@ const socialPlatforms = [
         </p>
       </div>
 
-      <!-- Masonry-style photo grid -->
+      <!-- Masonry-style photo grid (curated — no duplicates, max variety) -->
       <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
         {galleryImages.map((image, index) => (
           <div class="break-inside-avoid group relative overflow-hidden rounded-xl cursor-pointer">
@@ -132,6 +128,10 @@ const socialPlatforms = [
           </div>
         ))}
       </div>
+
+      <p class="mt-8 text-center text-sm text-gray-400">
+        {galleryImages.length} photos curated from our collection — shot on location at courts and studios
+      </p>
     </div>
   </section>
 
