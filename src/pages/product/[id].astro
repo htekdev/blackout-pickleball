@@ -18,6 +18,7 @@ const demoProducts: Record<string, CatalogItem> = {
     name: 'Blackout Performance Tee',
     description: 'Premium court-ready tee — 85% Polyester / 15% Spandex. Breathable 4-way stretch fabric designed to release heat and wick moisture. Perfect shape recovery and extreme freedom of movement on the court.\n\nFeatures:\n• Moisture-wicking technology\n• 4-way stretch for unrestricted movement\n• Anti-odor treatment\n• Tagless comfort\n• Available in S through XXL',
     images: [],
+    sport: 'pickleball',
     prices: [
       { id: 'demo_tee_s', amount: 3500, currency: 'usd', size: 'S' },
       { id: 'demo_tee_m', amount: 3500, currency: 'usd', size: 'M' },
@@ -31,6 +32,7 @@ const demoProducts: Record<string, CatalogItem> = {
     name: 'Blackout Hoodie',
     description: 'Warm-up in style with our premium cotton blend hoodie. Featuring the Blackout Pickleball logo, adjustable drawstring hood, and kangaroo pocket.\n\nFeatures:\n• Premium cotton-poly blend\n• Adjustable drawstring hood\n• Kangaroo pocket\n• Ribbed cuffs and hem\n• Embroidered logo',
     images: [],
+    sport: 'pickleball',
     prices: [
       { id: 'demo_hoodie_s', amount: 5500, currency: 'usd', size: 'S' },
       { id: 'demo_hoodie_m', amount: 5500, currency: 'usd', size: 'M' },
@@ -43,6 +45,7 @@ const demoProducts: Record<string, CatalogItem> = {
     name: 'Blackout Cap',
     description: 'Rep the brand on and off the court. Adjustable snapback with embroidered Blackout Pickleball logo.\n\nFeatures:\n• Structured mid-profile fit\n• Adjustable snapback closure\n• Embroidered logo\n• Curved brim\n• One size fits most',
     images: [],
+    sport: 'pickleball',
     prices: [
       { id: 'demo_cap_one', amount: 2500, currency: 'usd', size: 'One Size' },
     ],
@@ -52,6 +55,7 @@ const demoProducts: Record<string, CatalogItem> = {
     name: 'Blackout Performance Shorts',
     description: 'Lightweight performance shorts built for tournament play. Deep side pockets for ball storage.\n\nFeatures:\n• Lightweight moisture-wicking fabric\n• Elastic waistband with drawstring\n• Deep side pockets\n• 7-inch inseam\n• Blackout logo print',
     images: [],
+    sport: 'pickleball',
     prices: [
       { id: 'demo_shorts_s', amount: 4000, currency: 'usd', size: 'S' },
       { id: 'demo_shorts_m', amount: 4000, currency: 'usd', size: 'M' },
@@ -78,6 +82,7 @@ try {
     name: stripeProduct.name,
     description: stripeProduct.description,
     images: stripeProduct.images,
+    sport: (stripeProduct.metadata?.sport || 'pickleball').toLowerCase(),
     prices: prices.data
       .map(p => ({
         id: p.id,
