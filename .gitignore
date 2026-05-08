@@ -5,3 +5,6 @@ dist/
 .env
 .env.*
 !.env.example
+screenshot-*.png
+scripts/reprocess*.py
+scripts/screenshots.py
