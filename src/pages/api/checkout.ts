@@ -3,9 +3,11 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
 
-const STRIPE_KEY = import.meta.env.STRIPE_SECRET_KEY || '';
+// Use process.env for runtime access in Vercel serverless functions.
+// import.meta.env may be empty if the var wasn't available at build time.
+const STRIPE_KEY = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || '';
 const PLACEHOLDER_KEYS = ['', 'sk_test_placeholder', 'sk_test_xxx'];
-const isStripeConfigured = !PLACEHOLDER_KEYS.includes(STRIPE_KEY);
+const isStripeConfigured = STRIPE_KEY.startsWith('sk_') && STRIPE_KEY.length > 30;
 
 /**
  * Shipping rate options for Stripe Checkout.

@@ -21,7 +21,7 @@ let catalog: CatalogItem[] = [];
 let isDemo = false;
 
 try {
-  const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
+  const stripeKey = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY;
   if (!stripeKey || stripeKey === 'sk_test_placeholder' || stripeKey === 'sk_test_xxx') {
     throw new Error('Stripe key not configured');
   }

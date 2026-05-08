@@ -1,8 +1,10 @@
 import Stripe from 'stripe';
 import { findProduct, type Product } from './products';
 
-// Server-only — never import this on the client
-export const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || 'sk_test_placeholder');
+// Server-only — never import this on the client.
+// Use process.env for Vercel serverless runtime access.
+const stripeKey = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || 'sk_test_placeholder';
+export const stripe = new Stripe(stripeKey);
 
 export async function getActiveProducts() {
   const products = await stripe.products.list({ active: true, limit: 100 });
