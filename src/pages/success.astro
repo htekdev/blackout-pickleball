@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Order Confirmed" description="Thank you for your Blackout Pickleball purchase!">
+
+  <section class="py-24 sm:py-32 bg-surface">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+      <div class="text-6xl mb-6">🎉</div>
+      <h1 class="text-4xl sm:text-5xl font-black tracking-tight">Thank You!</h1>
+      <p class="mt-4 text-lg text-text-light">
+        Your order has been placed successfully. You'll receive a confirmation email from Stripe shortly.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/shop" class="inline-flex items-center justify-center px-8 py-3 bg-accent hover:bg-accent-dark text-blackout font-bold rounded-lg transition-colors text-sm uppercase tracking-wider">
+          Continue Shopping
+        </a>
+        <a href="/" class="inline-flex items-center justify-center px-8 py-3 border-2 border-gray-200 hover:border-accent text-text hover:text-accent font-bold rounded-lg transition-colors text-sm uppercase tracking-wider">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // Clear cart after successful checkout
+  import { clearCart } from '../stores/cart';
+  clearCart();
+</script>
