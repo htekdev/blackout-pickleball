@@ -1,13 +1,13 @@
 """
-Product Image Re-Centering v6 — Zero-wobble approach
-Each angle's garment is INDEPENDENTLY centered on the canvas.
-All angles share the SAME scale factor (from union bbox), so garment
-appears the same size but is always perfectly centered — zero shift.
+Product Image Re-Centering v7 — Fix clipped edges
+Previous v6 had 8% padding which cut off sleeve tips and text edges
+on 3/4 angle photos. Increased to 20% padding + higher threshold (250)
+to capture all edge pixels including shadows and fading fabric.
 
-Issues fixed:
-1. Garment wobbles 30-60px between angles → independent centering per angle
-2. Images too zoomed in → scale to ~60% canvas height
-3. Vertical centering off → true center
+Also:
+- Uses threshold 250 (was 235) to catch light-colored edges
+- Padding 20% (was 8%) to prevent any edge clipping
+- Maintains zero-wobble independent centering approach from v6
 """
 from PIL import Image
 import numpy as np
@@ -15,8 +15,9 @@ import os
 
 PRODUCTS_DIR = 'public/images/products'
 OUTPUT_W, OUTPUT_H = 800, 1000
-TARGET_FILL_H = 0.65  # garment height as fraction of canvas (increased from 0.62)
-PADDING_FRAC = 0.08   # breathing room
+TARGET_FILL_H = 0.72  # garment height as fraction of canvas
+PADDING_FRAC = 0.20   # 20% padding — generous to prevent any clipping
+THRESHOLD = 250        # higher threshold catches lighter edges/shadows
 
 results = []
 
@@ -34,7 +35,7 @@ for slug in sorted(os.listdir(PRODUCTS_DIR)):
             continue
         img = Image.open(img_path).convert('RGB')
         arr = np.array(img)
-        non_white = np.any(arr < 235, axis=2)
+        non_white = np.any(arr < THRESHOLD, axis=2)
         rows = np.any(non_white, axis=1)
         cols = np.any(non_white, axis=0)
         if rows.any() and cols.any():
@@ -99,7 +100,7 @@ for slug in sorted(os.listdir(PRODUCTS_DIR)):
     # Verify centering of first angle
     verify_img = Image.open(os.path.join(product_path, 'angle-1.webp'))
     varr = np.array(verify_img)
-    nw = np.any(varr < 235, axis=2)
+    nw = np.any(varr < THRESHOLD, axis=2)
     vrows = np.any(nw, axis=1)
     vcols = np.any(nw, axis=0)
     if vcols.any() and vrows.any():
@@ -123,7 +124,7 @@ for slug in sorted(os.listdir(PRODUCTS_DIR)):
     for i in range(len(angles)):
         vimg = Image.open(os.path.join(product_path, f'angle-{i + 1}.webp'))
         va = np.array(vimg)
-        vnw = np.any(va < 235, axis=2)
+        vnw = np.any(va < THRESHOLD, axis=2)
         vr2 = np.any(vnw, axis=1)
         vc2 = np.any(vnw, axis=0)
         if vc2.any() and vr2.any():
