@@ -13,7 +13,7 @@ interface Props {
 const {
   title,
   description = 'Blackout — Celebrate Diversity. Play with Purpose. A multi-sport movement for diversity and inclusivity, starting with pickleball.',
-  ogImage = '/og-default.jpg',
+  ogImage = '/assets/logo/og-light-1200x630.png',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -29,8 +29,14 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Favicon -->
+    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/assets/logo/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/assets/logo/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/assets/logo/favicon-64.png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/assets/logo/favicon-180.png" />
+    <link rel="icon" type="image/png" href="/assets/logo/favicon-192.png" sizes="192x192" />
+    <link rel="icon" type="image/png" href="/assets/logo/favicon-512.png" sizes="512x512" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
