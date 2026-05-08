@@ -1,33 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Community gallery images — curated from 142-photo album (duplicates removed, best of each set)
-// Categories: action (court shots), product (merch showcase), community (group shots), lifestyle (casual/urban)
+// Community gallery — re-curated for VARIETY and COMMUNITY feel
+// Prioritizes: group shots > multi-person > diverse settings > unique individual shots
+// Went from 29 repetitive individual shots to 14 diverse, carefully selected photos
 const galleryImages = [
-  { src: '/images/community/community-01.webp', alt: 'Two athletes on pickleball court wearing Blackout gear', category: 'action' },
-  { src: '/images/community/community-09.webp', alt: 'Two Blackout athletes sitting together on pickleball court', category: 'community' },
-  { src: '/images/community/community-02.webp', alt: 'Male model wearing I Am Black History hoodie - front view on court', category: 'product' },
-  { src: '/images/community/community-22.webp', alt: 'Full-body athletic look in Blackout gear against brick wall', category: 'lifestyle' },
-  { src: '/images/community/community-07.webp', alt: 'Female athlete in Blackout gear - dynamic pose on court', category: 'action' },
-  { src: '/images/community/community-15.webp', alt: 'Male model in gray Blackout long-sleeve crewneck - brick wall', category: 'product' },
-  { src: '/images/community/community-11.webp', alt: 'Athletes in matching Blackout merch taking a break courtside', category: 'community' },
-  { src: '/images/community/community-12.webp', alt: 'Male model close-up wearing Blackout tee with gold chain', category: 'lifestyle' },
-  { src: '/images/community/community-03.webp', alt: 'Back of I Am Black History hoodie showing colorful logo design', category: 'product' },
-  { src: '/images/community/community-23.webp', alt: 'Dynamic athletic pose in full Blackout outfit', category: 'action' },
-  { src: '/images/community/community-19.webp', alt: 'Woman in Blackout crew posing against brick wall', category: 'lifestyle' },
-  { src: '/images/community/community-05.webp', alt: 'Female model in Blackout tee standing on pickleball court', category: 'product' },
-  { src: '/images/community/community-10.webp', alt: 'Community members in Blackout gear relaxing on court', category: 'community' },
-  { src: '/images/community/community-04.webp', alt: 'Athlete in Blackout hoodie on pickleball court - side angle', category: 'action' },
-  { src: '/images/community/community-17.webp', alt: 'Man in Blackout crewneck - casual urban style', category: 'lifestyle' },
-  { src: '/images/community/community-26.webp', alt: 'I Am Black History full back design - colorful block letters', category: 'product' },
-  { src: '/images/community/community-20.webp', alt: 'Athletic pose in Blackout long-sleeve top', category: 'action' },
-  { src: '/images/community/community-14.webp', alt: 'Athlete portrait in BLACKOUT text tee', category: 'lifestyle' },
-  { src: '/images/community/community-25.webp', alt: 'Model stretching in Blackout activewear', category: 'action' },
-  { src: '/images/community/community-18.webp', alt: 'Female model in dark Blackout long-sleeve - front view', category: 'product' },
-  { src: '/images/community/community-06.webp', alt: 'Woman wearing Black History tee - front logo detail on court', category: 'product' },
-  { src: '/images/community/community-24.webp', alt: 'Blackout athletic wear full outfit - relaxed stance', category: 'lifestyle' },
-  { src: '/images/community/community-29.webp', alt: 'I Am Black History logo closeup - red yellow green letters on black', category: 'product' },
-  { src: '/images/community/community-08.webp', alt: 'Woman modeling Blackout tee with pickleball court backdrop', category: 'action' },
+  { src: '/images/community/community-02.webp', alt: 'Community members watching courtside — multiple people in Blackout gear', category: 'community' },
+  { src: '/images/community/community-03.webp', alt: 'Fans cheering and socializing at the fence during a Blackout event', category: 'community' },
+  { src: '/images/community/community-04.webp', alt: 'Athlete relaxing courtside in Blackout tee and cap — candid moment', category: 'lifestyle' },
+  { src: '/images/community/community-12.webp', alt: 'Athlete standing on the pickleball court in Blackout performance tee', category: 'lifestyle' },
+  { src: '/images/community/community-05.webp', alt: 'Confident portrait — Blackout Pickleball athlete seated on court', category: 'lifestyle' },
+  { src: '/images/community/community-13.webp', alt: 'Female athlete in Blackout long-sleeve — urban portrait against brick', category: 'lifestyle' },
+  { src: '/images/community/community-06.webp', alt: 'I Am Black History tee — colorful back design on the court', category: 'product' },
+  { src: '/images/community/community-07.webp', alt: 'Female athlete in Blackout long-sleeve performance top', category: 'lifestyle' },
+  { src: '/images/community/community-08.webp', alt: 'I Am Black History back design — female athlete seated at venue', category: 'product' },
+  { src: '/images/community/community-09.webp', alt: 'Side profile showing I Am Black History design on long-sleeve', category: 'product' },
+  { src: '/images/community/community-11.webp', alt: 'Athlete close-up — Blackout Pickleball tee with gold chain', category: 'lifestyle' },
+  { src: '/images/community/community-10.webp', alt: 'Blackout Pickleball logo detail — tee and shorts branding', category: 'product' },
+  { src: '/images/community/community-14.webp', alt: 'Blackout Pickleball performance tee — front logo detail on court', category: 'product' },
 ];
 
 const socialPlatforms = [
@@ -88,7 +78,7 @@ const socialPlatforms = [
 
 <BaseLayout title="Community" description="Join the Blackout community — follow us on Instagram, TikTok, YouTube, and Facebook. Stay connected with events, gear drops, and the movement.">
 
-  <!-- Hero Section -->
+  <!-- Hero Section with Featured Group Photo -->
   <section class="py-16 sm:py-24 bg-white">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-gray-500 font-semibold text-sm uppercase tracking-widest mb-3">Join the Movement</p>
@@ -99,25 +89,47 @@ const socialPlatforms = [
     </div>
   </section>
 
+  <!-- Featured Community Photo — Full Width -->
+  <section class="bg-white pb-8 sm:pb-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="relative group overflow-hidden rounded-2xl shadow-xl">
+        <img
+          src="/images/community/community-01.webp"
+          alt="The Blackout Pickleball community — 15+ athletes, diverse backgrounds, all repping Blackout gear on the court"
+          loading="eager"
+          decoding="async"
+          class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
+          <p class="text-white/80 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-2">Blackout Chicago</p>
+          <p class="text-white text-lg sm:text-2xl font-bold max-w-2xl">
+            This is what community looks like. Athletes from all walks of life, united by the love of the game.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Community Photo Gallery -->
-  <section class="py-16 sm:py-24 bg-white">
+  <section class="py-12 sm:py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <p class="text-gray-500 font-semibold text-sm uppercase tracking-widest mb-3">Real People. Real Energy.</p>
-        <h2 class="text-3xl sm:text-4xl font-black text-black">From the Courts</h2>
+        <h2 class="text-3xl sm:text-4xl font-black text-black">From the Courts & Beyond</h2>
         <p class="mt-3 text-gray-600 max-w-xl mx-auto">
-          Our community in action — events, day parties, competitive play, and the connections that make Blackout special.
+          Events, day parties, photoshoots, and the everyday moments that make Blackout special.
         </p>
       </div>
 
-      <!-- Masonry-style photo grid (curated — no duplicates, max variety) -->
-      <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+      <!-- Masonry-style photo grid (curated for variety — max 1 photo per look/setting) -->
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
         {galleryImages.map((image, index) => (
           <div class="break-inside-avoid group relative overflow-hidden rounded-xl cursor-pointer">
             <img
               src={image.src}
               alt={image.alt}
-              loading={index < 8 ? 'eager' : 'lazy'}
+              loading={index < 6 ? 'eager' : 'lazy'}
               decoding="async"
               class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
             />
@@ -130,7 +142,7 @@ const socialPlatforms = [
       </div>
 
       <p class="mt-8 text-center text-sm text-gray-400">
-        {galleryImages.length} photos curated from our collection — shot on location at courts and studios
+        {galleryImages.length + 1} photos curated from our collection — community first, maximum variety
       </p>
     </div>
   </section>
