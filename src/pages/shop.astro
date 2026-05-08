@@ -97,7 +97,7 @@ function formatPrice(cents: number): string {
       <!-- Product Grid -->
       <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         {filteredCatalog.map((product) => (
-          <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border">
+          <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border flex flex-col">
             {/* Product Image */}
             <a href={`/product/${product.id}`} class="block">
               <div class="aspect-[4/5] bg-white overflow-hidden relative">
@@ -134,7 +134,7 @@ function formatPrice(cents: number): string {
             </a>
 
             {/* Product Info */}
-            <div class="p-3 sm:p-4">
+            <div class="p-3 sm:p-4 flex flex-col flex-grow">
               <a href={`/product/${product.id}`} class="block">
                 <h3 class="font-bold text-sm sm:text-base group-hover:text-blackout transition-colors line-clamp-2">{product.name}</h3>
               </a>
@@ -146,7 +146,8 @@ function formatPrice(cents: number): string {
                 </span>
               </div>
 
-              {/* Add to Cart (Preact island) */}
+              {/* Add to Cart (Preact island) — pinned to bottom */}
+              <div class="mt-auto pt-2">
               <AddToCartButton
                 client:load
                 productId={product.id}
@@ -158,6 +159,7 @@ function formatPrice(cents: number): string {
                   size: p.size,
                 }))}
               />
+              </div>
             </div>
           </div>
         ))}
