@@ -95,7 +95,7 @@ function formatPrice(cents: number): string {
       {isDemo && (
         <div class="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-xl text-center">
           <p class="text-gray-700 text-sm font-medium">
-            🏗️ Preview Mode — Real product photos coming soon. 360° viewer active on product pages.
+            🏗️ Preview Mode — Real product photos coming soon. Multi-angle viewer active on product pages.
           </p>
         </div>
       )}
@@ -129,10 +129,11 @@ function formatPrice(cents: number): string {
                     <span class="text-[10px] font-medium text-gray-600">{product.colorName}</span>
                   </div>
                 )}
-                {/* 360° badge */}
+                {/* Multi-angle badge */}
                 {product.images.length > 1 && (
-                  <div class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded-full">
-                    360°
+                  <div class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" /></svg>
+                    {product.images.length}
                   </div>
                 )}
               </div>

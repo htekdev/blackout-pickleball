@@ -128,13 +128,12 @@ export default function ProductViewer({ images, productName }: Props) {
           </div>
         )}
 
-        {/* 360° indicator */}
+        {/* View indicator */}
         <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 text-gray-700 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 backdrop-blur-sm border border-gray-200 shadow-sm">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
-            <path d="M12 6v6l4 2" />
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
           </svg>
-          {isDragging ? 'Rotating...' : 'Drag to rotate'} • {currentIndex + 1}/{totalFrames}
+          {isDragging ? 'Browsing...' : 'Swipe to browse'} • {currentIndex + 1}/{totalFrames}
         </div>
       </div>
 

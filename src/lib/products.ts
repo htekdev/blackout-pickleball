@@ -9,7 +9,7 @@
 export interface ProductImage {
   /** Path to front-facing hero image (angle 1) */
   thumbnail: string;
-  /** Paths to all 8 360° angle images */
+  /** Paths to all multi-angle images */
   angles: string[];
 }
 
