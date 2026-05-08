@@ -3,7 +3,7 @@ import { findProduct, type Product } from './products';
 
 // Server-only — never import this on the client.
 // Use process.env for Vercel serverless runtime access.
-const stripeKey = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || 'sk_test_placeholder';
+const stripeKey = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || '';
 export const stripe = new Stripe(stripeKey);
 
 export async function getActiveProducts() {

@@ -2,20 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
-
-// CRITICAL: Vite statically replaces `process.env.X` with '' at build time.
-// Using globalThis.process?.env prevents Vite's static analysis from inlining
-// the value, ensuring the env var is read at RUNTIME in Vercel serverless.
-const _rtenv = (globalThis as any).process?.env ?? {};
-const _SK = 'STRIPE_SECRET' + '_KEY'; // split defeats remaining static analysis
-
-function getStripeKey(): string {
-  return _rtenv[_SK] || '';
-}
-
-function isStripeReady(key: string): boolean {
-  return key.startsWith('sk_') && key.length > 30;
-}
+import { stripe } from '../../lib/stripe';
 
 /**
  * Shipping rate options for Stripe Checkout.
@@ -72,20 +59,6 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
 export const POST: APIRoute = async ({ request }) => {
   const headers = { 'Content-Type': 'application/json' };
 
-  // Evaluate Stripe key fresh per-request (not module-level cache)
-  const stripeKey = getStripeKey();
-
-  // Guard: Stripe not configured yet
-  if (!isStripeReady(stripeKey)) {
-    return new Response(
-      JSON.stringify({
-        error: 'Checkout is temporarily unavailable. Please try again in a moment.',
-        code: 'STRIPE_NOT_CONFIGURED',
-      }),
-      { status: 503, headers }
-    );
-  }
-
   try {
     const { items } = await request.json();
 
@@ -96,8 +69,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const stripe = new Stripe(stripeKey);
-    const origin = _rtenv['SITE_URL'] || 'https://brandblackout.com';
+    const origin = import.meta.env.SITE_URL || 'https://brandblackout.com';
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
@@ -126,7 +98,7 @@ export const POST: APIRoute = async ({ request }) => {
       error?.statusCode === 401;
 
     const message = isAuthError
-      ? 'Checkout is temporarily unavailable. Please try again in a moment.'
+      ? 'Payment processing is temporarily unavailable. Please try again shortly.'
       : 'Something went wrong creating your checkout session. Please try again.';
 
     return new Response(

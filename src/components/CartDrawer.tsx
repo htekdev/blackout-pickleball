@@ -9,7 +9,11 @@ export default function CartDrawer() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const handler = () => setIsOpen((prev) => !prev);
+    const handler = () => setIsOpen((prev) => {
+      const next = !prev;
+      if (next) setError(null); // Clear stale errors when opening
+      return next;
+    });
     document.addEventListener('toggle-cart', handler);
     return () => document.removeEventListener('toggle-cart', handler);
   }, []);
