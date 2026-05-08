@@ -7,13 +7,46 @@ const stripeKey = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET
 export const stripe = new Stripe(stripeKey);
 
 export async function getActiveProducts() {
-  const products = await stripe.products.list({ active: true, limit: 100 });
-  return products.data;
+  // With per-size products, we may have 60+ active products
+  const allProducts: Stripe.Product[] = [];
+  let hasMore = true;
+  let startingAfter: string | undefined;
+
+  while (hasMore) {
+    const batch = await stripe.products.list({
+      active: true,
+      limit: 100,
+      ...(startingAfter ? { starting_after: startingAfter } : {}),
+    });
+    allProducts.push(...batch.data);
+    hasMore = batch.has_more;
+    if (batch.data.length > 0) {
+      startingAfter = batch.data[batch.data.length - 1].id;
+    }
+  }
+
+  return allProducts;
 }
 
 export async function getActivePrices() {
-  const prices = await stripe.prices.list({ active: true, limit: 100 });
-  return prices.data;
+  const allPrices: Stripe.Price[] = [];
+  let hasMore = true;
+  let startingAfter: string | undefined;
+
+  while (hasMore) {
+    const batch = await stripe.prices.list({
+      active: true,
+      limit: 100,
+      ...(startingAfter ? { starting_after: startingAfter } : {}),
+    });
+    allPrices.push(...batch.data);
+    hasMore = batch.has_more;
+    if (batch.data.length > 0) {
+      startingAfter = batch.data[batch.data.length - 1].id;
+    }
+  }
+
+  return allPrices;
 }
 
 export interface CatalogItem {
@@ -96,12 +129,17 @@ function findLocalByName(stripeName: string): Product | undefined {
 /**
  * Fetch the live Stripe catalog and merge with local product data.
  *
- * Matching strategy (in order of priority):
- *   1. metadata.slug → findProduct(slug) — canonical match
- *   2. Name-based fuzzy matching — fallback for products without slug metadata
+ * Architecture: Each size variant is a SEPARATE Stripe product so Jonathan
+ * sees the exact size in his Stripe dashboard (e.g. "Gold Men's Crew Tee - L").
+ *
+ * Grouping strategy:
+ *   1. Products with metadata.base_slug are grouped into one CatalogItem
+ *      per base_slug (e.g. all "gold-crew-tee-*" → one display product)
+ *   2. Legacy products (metadata.slug, no base_slug) matched 1:1 as before
+ *   3. Name-based fuzzy matching as final fallback
  *
  * This merge gives us:
- *   - REAL Stripe price IDs (for checkout)
+ *   - REAL Stripe price IDs from per-size products (for checkout)
  *   - LOCAL images (for 360° viewer)
  *   - LOCAL color info (for swatches)
  *   - Slug-based IDs (for stable URLs)
@@ -112,26 +150,87 @@ export async function getCatalog(): Promise<CatalogItem[]> {
     getActivePrices(),
   ]);
 
-  // Track which local products have been matched (avoid double-matching)
+  // ── Group per-size products by base_slug ──────────────────────────────
+  // Products with metadata.base_slug are per-size variants that should be
+  // grouped into a single display product with multiple price options.
+
+  const perSizeGroups = new Map<string, {
+    products: Stripe.Product[];
+    prices: Stripe.Price[];
+  }>();
+
+  const legacyProducts: Stripe.Product[] = [];
+
+  for (const product of products) {
+    const baseSlug = product.metadata?.base_slug;
+    if (baseSlug) {
+      // Per-size product — group by base_slug
+      if (!perSizeGroups.has(baseSlug)) {
+        perSizeGroups.set(baseSlug, { products: [], prices: [] });
+      }
+      const group = perSizeGroups.get(baseSlug)!;
+      group.products.push(product);
+      // Collect prices for this per-size product
+      const productPrices = prices.filter((p) => p.product === product.id);
+      group.prices.push(...productPrices);
+    } else {
+      // Legacy product (no base_slug) — handle individually
+      legacyProducts.push(product);
+    }
+  }
+
+  const catalogItems: CatalogItem[] = [];
   const matchedLocalIds = new Set<string>();
 
-  return products.map((product) => {
-    // Strategy 1: Look up by metadata.slug (canonical)
+  // ── Build catalog items from per-size groups ──────────────────────────
+  for (const [baseSlug, group] of perSizeGroups) {
+    // Find local product by base_slug
+    const local = findProduct(baseSlug);
+    if (local) matchedLocalIds.add(local.id);
+
+    // Use the first product for shared metadata (description, etc.)
+    const firstProduct = group.products[0];
+
+    // Strip " - SIZE" suffix from the product name for display
+    const displayName = firstProduct.name.replace(/\s*-\s*\S+$/, '');
+
+    const stripePrices = group.prices
+      .map((p) => ({
+        id: p.id,
+        amount: p.unit_amount || 0,
+        currency: p.currency,
+        size: p.metadata?.size || 'One Size',
+      }))
+      .sort((a, b) => SIZE_ORDER.indexOf(a.size) - SIZE_ORDER.indexOf(b.size));
+
+    catalogItems.push({
+      id: baseSlug,
+      stripeProductId: firstProduct.id, // representative product ID
+      name: local?.name || displayName,
+      description: firstProduct.description,
+      images: local ? local.images.angles : firstProduct.images,
+      sport: (firstProduct.metadata?.sport || 'pickleball').toLowerCase(),
+      colorName: local?.colorName || firstProduct.metadata?.color_name,
+      colorHex: local?.colorHex || firstProduct.metadata?.color_hex,
+      category: local?.category || firstProduct.metadata?.category,
+      isLive: stripePrices.length > 0,
+      prices: stripePrices,
+    });
+  }
+
+  // ── Handle legacy products (no base_slug) ─────────────────────────────
+  for (const product of legacyProducts) {
     const slug = product.metadata?.slug;
     let local: Product | undefined = slug ? findProduct(slug) : undefined;
 
-    // Strategy 2: Name-based fallback matching
     if (!local) {
       local = findLocalByName(product.name);
-      // Don't reuse a local that's already matched to another Stripe product
       if (local && matchedLocalIds.has(local.id)) {
         local = undefined;
       }
     }
 
-    if (local) {
-      matchedLocalIds.add(local.id);
-    }
+    if (local) matchedLocalIds.add(local.id);
 
     const stripePrices = prices
       .filter((p) => p.product === product.id)
@@ -143,34 +242,86 @@ export async function getCatalog(): Promise<CatalogItem[]> {
       }))
       .sort((a, b) => SIZE_ORDER.indexOf(a.size) - SIZE_ORDER.indexOf(b.size));
 
-    return {
-      // Use slug or local slug as ID (keeps URLs stable), fall back to Stripe ID
+    catalogItems.push({
       id: slug || local?.slug || product.id,
       stripeProductId: product.id,
       name: product.name,
       description: product.description,
-      // Prefer local images (360° photos) over Stripe images
       images: local ? local.images.angles : product.images,
       sport: (product.metadata?.sport || 'pickleball').toLowerCase(),
       colorName: local?.colorName || product.metadata?.color_name,
       colorHex: local?.colorHex || product.metadata?.color_hex,
       category: local?.category || product.metadata?.category,
-      // These are REAL Stripe price IDs — checkout will work
       isLive: stripePrices.length > 0,
       prices: stripePrices,
-    };
-  });
+    });
+  }
+
+  return catalogItems;
 }
 
 /**
  * Fetch a single product from Stripe by slug.
- * Searches by metadata.slug first, then falls back to name matching.
+ *
+ * For per-size products: searches by metadata.base_slug, collects all
+ * size variants, and returns a single CatalogItem with multiple prices.
+ * Falls back to metadata.slug search for legacy products.
  */
 export async function getProductBySlug(slug: string): Promise<CatalogItem | null> {
-  // Try local product for images
   const local = findProduct(slug);
 
-  // Strategy 1: Search Stripe by metadata.slug
+  // Strategy 1: Search for per-size products by base_slug
+  let perSizeProducts: Stripe.Product[] = [];
+  try {
+    const result = await stripe.products.search({
+      query: `metadata['base_slug']:'${slug}'`,
+      limit: 100,
+    });
+    perSizeProducts = result.data.filter((p) => p.active);
+  } catch {
+    // Search API might not be available — fall back below
+  }
+
+  if (perSizeProducts.length > 0) {
+    // Collect prices from all per-size products
+    const allPrices: Stripe.Price[] = [];
+    for (const product of perSizeProducts) {
+      const productPrices = await stripe.prices.list({
+        product: product.id,
+        active: true,
+        limit: 10,
+      });
+      allPrices.push(...productPrices.data);
+    }
+
+    const stripePrices = allPrices
+      .map((p) => ({
+        id: p.id,
+        amount: p.unit_amount || 0,
+        currency: p.currency,
+        size: p.metadata?.size || 'One Size',
+      }))
+      .sort((a, b) => SIZE_ORDER.indexOf(a.size) - SIZE_ORDER.indexOf(b.size));
+
+    const firstProduct = perSizeProducts[0];
+    const displayName = firstProduct.name.replace(/\s*-\s*\S+$/, '');
+
+    return {
+      id: slug,
+      stripeProductId: firstProduct.id,
+      name: local?.name || displayName,
+      description: firstProduct.description,
+      images: local ? local.images.angles : firstProduct.images,
+      sport: (firstProduct.metadata?.sport || 'pickleball').toLowerCase(),
+      colorName: local?.colorName || firstProduct.metadata?.color_name,
+      colorHex: local?.colorHex || firstProduct.metadata?.color_hex,
+      category: local?.category || firstProduct.metadata?.category,
+      isLive: stripePrices.length > 0,
+      prices: stripePrices,
+    };
+  }
+
+  // Strategy 2: Legacy — search by metadata.slug
   let stripeProduct: Stripe.Product | undefined;
   try {
     const products = await stripe.products.search({
@@ -179,10 +330,10 @@ export async function getProductBySlug(slug: string): Promise<CatalogItem | null
     });
     stripeProduct = products.data[0];
   } catch {
-    // Search API might not be available — fall back to listing
+    // Search API might not be available
   }
 
-  // Strategy 2: If no slug match, search by name
+  // Strategy 3: Name-based fallback
   if (!stripeProduct && local) {
     const allProducts = await getActiveProducts();
     stripeProduct = allProducts.find((p) => {

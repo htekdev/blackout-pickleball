@@ -41,8 +41,6 @@ export default function CartDrawer() {
           items: cart.map((item) => ({
             priceId: item.priceId,
             quantity: item.quantity,
-            size: item.size,
-            name: item.name,
           })),
         }),
       });

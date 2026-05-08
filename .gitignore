@@ -13,3 +13,4 @@ scripts/verify.py
 keys
 .vercel
 .env*.local
+temp-photos/
