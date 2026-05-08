@@ -1,0 +1,90 @@
+---
+/**
+ * Sticky event promotion banner — shows upcoming event with countdown.
+ * Automatically hides after the event date passes.
+ */
+
+interface Props {
+  eventDate: string;    // ISO date string
+  eventName: string;
+  eventCity: string;
+  ticketUrl: string;
+  ticketLabel?: string;
+}
+
+const { eventDate, eventName, eventCity, ticketUrl, ticketLabel = 'Get Tickets' } = Astro.props;
+
+// Don't render if event has passed
+const eventTime = new Date(eventDate).getTime();
+const now = Date.now();
+const daysUntil = Math.ceil((eventTime - now) / (1000 * 60 * 60 * 24));
+const showBanner = daysUntil > 0 && daysUntil <= 30;
+
+// Format date
+const eventDateFormatted = new Date(eventDate).toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+{showBanner && (
+  <div
+    id="event-banner"
+    class="bg-blackout text-white relative z-40"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between gap-4 py-2.5 text-sm">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="hidden sm:inline-flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0">
+            <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+            {daysUntil === 1 ? 'Tomorrow' : `${daysUntil} days`}
+          </span>
+          <span class="sm:hidden inline-flex items-center gap-1.5 bg-white/20 px-2 py-0.5 rounded-full text-xs font-bold shrink-0">
+            {daysUntil === 1 ? 'Tomorrow' : `${daysUntil}d`}
+          </span>
+          <span class="font-semibold truncate">
+            <span class="hidden sm:inline">{eventName} · {eventCity} · {eventDateFormatted}</span>
+            <span class="sm:hidden">{eventCity} · {eventDateFormatted}</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <a
+            href={ticketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3 py-1 bg-white text-blackout font-bold text-xs uppercase tracking-wider rounded-md hover:bg-white/90 transition-colors"
+          >
+            {ticketLabel}
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </a>
+          <button
+            id="close-event-banner"
+            class="p-1 hover:bg-white/10 rounded transition-colors"
+            aria-label="Dismiss banner"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+<script>
+  const banner = document.getElementById('event-banner');
+  const closeBtn = document.getElementById('close-event-banner');
+  if (banner && closeBtn) {
+    // Check if user previously dismissed
+    if (sessionStorage.getItem('event-banner-dismissed')) {
+      banner.remove();
+    }
+    closeBtn.addEventListener('click', () => {
+      banner.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
+      banner.style.maxHeight = '0';
+      banner.style.opacity = '0';
+      banner.style.overflow = 'hidden';
+      sessionStorage.setItem('event-banner-dismissed', 'true');
+      setTimeout(() => banner.remove(), 300);
+    });
+  }
+</script>

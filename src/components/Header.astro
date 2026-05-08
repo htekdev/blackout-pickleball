@@ -62,8 +62,8 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <!-- Mobile Nav -->
-    <nav id="mobile-menu" class="md:hidden hidden pb-4">
-      <div class="flex flex-col gap-2">
+    <nav id="mobile-menu" class="md:hidden overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+      <div class="flex flex-col gap-2 pb-4">
         {navLinks.map(({ href, label }) => (
           <a
             href={href}
@@ -87,7 +87,15 @@ const currentPath = Astro.url.pathname;
     toggle.addEventListener('click', () => {
       const expanded = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!expanded));
-      menu.classList.toggle('hidden');
+      if (!expanded) {
+        // Open: animate to full height
+        menu.style.maxHeight = menu.scrollHeight + 'px';
+        menu.style.opacity = '1';
+      } else {
+        // Close: animate to 0
+        menu.style.maxHeight = '0';
+        menu.style.opacity = '0';
+      }
     });
   }
 </script>

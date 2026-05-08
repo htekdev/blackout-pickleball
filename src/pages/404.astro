@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found" description="The page you're looking for doesn't exist.">
+
+  <section class="py-24 sm:py-40 bg-white">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+      <p class="text-8xl sm:text-9xl font-black text-blackout/10 font-display leading-none select-none">404</p>
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight font-display -mt-4 sm:-mt-6">Page Not Found</h1>
+      <p class="mt-4 text-lg text-text-light max-w-md mx-auto">
+        Looks like this page went out of bounds. Let's get you back on the court.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="inline-flex items-center justify-center px-8 py-3 bg-blackout hover:bg-accent-light text-white font-bold rounded-lg transition-colors text-sm uppercase tracking-wider">
+          Back to Home
+        </a>
+        <a href="/shop" class="inline-flex items-center justify-center px-8 py-3 border-2 border-black/20 hover:border-blackout text-blackout font-bold rounded-lg transition-all text-sm uppercase tracking-wider">
+          Shop Merch
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
