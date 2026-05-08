@@ -35,11 +35,15 @@ export interface Product {
 const MEN_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
 const WOMEN_SIZES = ['XS', 'S', 'M', 'L', 'XL'];
 
+// Cache-bust version — increment when product photos change
+const IMG_VERSION = 2;
+
 function makeAngles(slug: string): ProductImage {
   const base = `/images/products/${slug}`;
+  const v = `?v=${IMG_VERSION}`;
   return {
-    thumbnail: `${base}/angle-1.webp`,
-    angles: Array.from({ length: 8 }, (_, i) => `${base}/angle-${i + 1}.webp`),
+    thumbnail: `${base}/angle-1.webp${v}`,
+    angles: Array.from({ length: 8 }, (_, i) => `${base}/angle-${i + 1}.webp${v}`),
   };
 }
 
