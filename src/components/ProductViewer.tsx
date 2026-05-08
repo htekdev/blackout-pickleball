@@ -63,21 +63,23 @@ export default function ProductViewer({ images, productName }: Props) {
     advanceFrame(diff);
   };
 
-  // Preload all images
+  // Preload all images with timeout fallback
   useEffect(() => {
     let loaded = 0;
+    const total = images.length;
+    const markLoaded = () => {
+      loaded++;
+      if (loaded >= total) setIsLoaded(true);
+    };
     images.forEach((src) => {
       const img = new Image();
-      img.onload = () => {
-        loaded++;
-        if (loaded === images.length) setIsLoaded(true);
-      };
-      img.onerror = () => {
-        loaded++;
-        if (loaded === images.length) setIsLoaded(true);
-      };
+      img.onload = markLoaded;
+      img.onerror = markLoaded;
       img.src = src;
     });
+    // Fallback: show content after 3s even if images haven't loaded
+    const timeout = setTimeout(() => setIsLoaded(true), 3000);
+    return () => clearTimeout(timeout);
   }, [images]);
 
   return (
