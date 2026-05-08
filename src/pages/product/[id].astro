@@ -9,7 +9,7 @@ import { findProduct, toCatalogItem, PRODUCT_CATALOG } from '../../lib/products'
 
 const { id } = Astro.params;
 
-let product: (CatalogItem & { colorName?: string; colorHex?: string; category?: string }) | null = null;
+let product: CatalogItem | null = null;
 let isDemo = false;
 let fullDescription = '';
 
@@ -19,28 +19,15 @@ try {
     throw new Error('Stripe key not configured');
   }
 
-  const { stripe } = await import('../../lib/stripe');
-  const stripeProduct = await stripe.products.retrieve(id!);
-  const prices = await stripe.prices.list({ product: id!, active: true, limit: 100 });
+  // Look up by slug in Stripe (products have metadata.slug)
+  const { getProductBySlug } = await import('../../lib/stripe');
+  product = await getProductBySlug(id!);
 
-  const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '2XL', '3XL'];
-
-  product = {
-    id: stripeProduct.id,
-    name: stripeProduct.name,
-    description: stripeProduct.description?.split('\n')[0] || null,
-    images: stripeProduct.images,
-    sport: (stripeProduct.metadata?.sport || 'pickleball').toLowerCase(),
-    prices: prices.data
-      .map(p => ({
-        id: p.id,
-        amount: p.unit_amount || 0,
-        currency: p.currency,
-        size: p.metadata?.size || p.nickname || 'One Size',
-      }))
-      .sort((a, b) => sizeOrder.indexOf(a.size) - sizeOrder.indexOf(b.size)),
-  };
-  fullDescription = stripeProduct.description || '';
+  if (product) {
+    // Get full description from local catalog (richer than Stripe's)
+    const local = findProduct(id!);
+    fullDescription = local?.description || product.description || '';
+  }
 } catch (e) {
   isDemo = true;
   const found = findProduct(id!);

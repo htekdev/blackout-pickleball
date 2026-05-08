@@ -17,7 +17,7 @@ const categories = [
   { id: 'tennis', label: 'Tennis', active: false, comingSoon: true },
 ];
 
-let catalog: (CatalogItem & { colorName?: string; colorHex?: string; category?: string })[] = [];
+let catalog: CatalogItem[] = [];
 let isDemo = false;
 
 try {
