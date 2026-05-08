@@ -201,4 +201,40 @@ const hasPriceRange = lowestPrice !== highestPrice;
       </div>
     </div>
   </section>
+
+  <!-- Related Products -->
+  <section class="py-16 sm:py-20 bg-surface-warm border-t border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-black tracking-tight mb-8">You May Also Like</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {PRODUCT_CATALOG
+          .filter(p => p.slug !== id)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 4)
+          .map((rp) => (
+            <a href={`/product/${rp.slug}`} class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border hover:-translate-y-0.5">
+              <div class="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden relative">
+                <img
+                  src={rp.images.thumbnail}
+                  alt={rp.name}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <div class="absolute top-2 left-2">
+                  <span
+                    class="inline-block w-4 h-4 rounded-full border-2 border-white shadow-sm"
+                    style={`background-color: ${rp.colorHex}`}
+                    title={rp.colorName}
+                  ></span>
+                </div>
+              </div>
+              <div class="p-3 sm:p-4">
+                <h3 class="font-bold text-xs sm:text-sm group-hover:text-blackout transition-colors leading-tight line-clamp-2">{rp.name}</h3>
+                <span class="text-sm font-black text-blackout mt-1 block">${(rp.prices[0].amount / 100).toFixed(2)}</span>
+              </div>
+            </a>
+          ))}
+      </div>
+    </div>
+  </section>
 </BaseLayout>

@@ -43,19 +43,23 @@ function makeAngles(slug: string): ProductImage {
   };
 }
 
-function menPrices(id: string, amount: number) {
+// Real pricing from Jonathan (May 8, 2026)
+const MEN_TEE_PRICE = 3999; // $39.99
+const WOMEN_TANK_PRICE = 3499; // $34.99
+
+function menPrices(id: string) {
   return MEN_SIZES.map((size) => ({
     id: `${id}_${size.toLowerCase()}`,
-    amount,
+    amount: MEN_TEE_PRICE,
     currency: 'usd',
     size,
   }));
 }
 
-function womenPrices(id: string, amount: number) {
+function womenPrices(id: string) {
   return WOMEN_SIZES.map((size) => ({
     id: `${id}_${size.toLowerCase()}`,
-    amount,
+    amount: WOMEN_TANK_PRICE,
     currency: 'usd',
     size,
   }));
@@ -90,7 +94,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#C8A951',
     sport: 'pickleball',
     images: makeAngles('gold-crew-tee'),
-    prices: menPrices('gold_crew_tee', 3500),
+    prices: menPrices('gold_crew_tee'),
   },
   {
     id: 'black_holo_crew_tee',
@@ -102,7 +106,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#1A1A1A',
     sport: 'pickleball',
     images: makeAngles('black-holographic-crew-tee'),
-    prices: menPrices('black_holo_crew_tee', 3800),
+    prices: menPrices('black_holo_crew_tee'),
   },
   {
     id: 'black_racerback_tank',
@@ -114,7 +118,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#1A1A1A',
     sport: 'pickleball',
     images: makeAngles('black-racerback-tank'),
-    prices: womenPrices('black_racerback_tank', 3200),
+    prices: womenPrices('black_racerback_tank'),
   },
   {
     id: 'tan_crew_tee',
@@ -126,7 +130,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#C2AD8D',
     sport: 'pickleball',
     images: makeAngles('tan-crew-tee'),
-    prices: menPrices('tan_crew_tee', 3500),
+    prices: menPrices('tan_crew_tee'),
   },
   {
     id: 'black_white_crew_tee',
@@ -138,7 +142,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#111111',
     sport: 'pickleball',
     images: makeAngles('black-white-crew-tee'),
-    prices: menPrices('black_white_crew_tee', 3500),
+    prices: menPrices('black_white_crew_tee'),
   },
   {
     id: 'gray_crew_tee',
@@ -150,7 +154,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#8C8C8C',
     sport: 'pickleball',
     images: makeAngles('gray-crew-tee'),
-    prices: menPrices('gray_crew_tee', 3500),
+    prices: menPrices('gray_crew_tee'),
   },
   {
     id: 'steel_blue_tank',
@@ -162,7 +166,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#5B7FA5',
     sport: 'pickleball',
     images: makeAngles('steel-blue-racerback-tank'),
-    prices: womenPrices('steel_blue_tank', 3200),
+    prices: womenPrices('steel_blue_tank'),
   },
   {
     id: 'olive_crew_tee',
@@ -174,7 +178,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#5C6B3C',
     sport: 'pickleball',
     images: makeAngles('olive-crew-tee'),
-    prices: menPrices('olive_crew_tee', 3500),
+    prices: menPrices('olive_crew_tee'),
   },
   {
     id: 'maroon_tank',
@@ -186,7 +190,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#6B2D3E',
     sport: 'pickleball',
     images: makeAngles('maroon-racerback-tank'),
-    prices: womenPrices('maroon_tank', 3200),
+    prices: womenPrices('maroon_tank'),
   },
   {
     id: 'navy_crew_tee',
@@ -198,7 +202,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#1B2A4A',
     sport: 'pickleball',
     images: makeAngles('navy-crew-tee'),
-    prices: menPrices('navy_crew_tee', 3800),
+    prices: menPrices('navy_crew_tee'),
   },
   {
     id: 'red_crew_tee',
@@ -210,7 +214,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#C0392B',
     sport: 'pickleball',
     images: makeAngles('red-crew-tee'),
-    prices: menPrices('red_crew_tee', 3500),
+    prices: menPrices('red_crew_tee'),
   },
   {
     id: 'charcoal_tank',
@@ -222,7 +226,7 @@ export const PRODUCT_CATALOG: Product[] = [
     colorHex: '#4A4A4A',
     sport: 'pickleball',
     images: makeAngles('charcoal-racerback-tank'),
-    prices: womenPrices('charcoal_tank', 3200),
+    prices: womenPrices('charcoal_tank'),
   },
 ];
 
