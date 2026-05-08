@@ -1,5 +1,79 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AddToCartButton from '../components/AddToCartButton';
+import { getCatalog, type CatalogItem } from '../lib/stripe';
+
+let catalog: CatalogItem[] = [];
+let isDemo = false;
+
+try {
+  const stripeKey = import.meta.env.STRIPE_SECRET_KEY;
+  if (!stripeKey || stripeKey === 'sk_test_placeholder' || stripeKey === 'sk_test_xxx') {
+    throw new Error('Stripe key not configured');
+  }
+  catalog = await getCatalog();
+} catch (e) {
+  isDemo = true;
+  // Demo products for development/preview
+  catalog = [
+    {
+      id: 'demo_tee',
+      name: 'Blackout Performance Tee',
+      description: 'Premium court-ready tee — 85% Polyester / 15% Spandex. Breathable 4-way stretch, moisture-wicking.',
+      images: [],
+      prices: [
+        { id: 'demo_tee_s', amount: 3500, currency: 'usd', size: 'S' },
+        { id: 'demo_tee_m', amount: 3500, currency: 'usd', size: 'M' },
+        { id: 'demo_tee_l', amount: 3500, currency: 'usd', size: 'L' },
+        { id: 'demo_tee_xl', amount: 3500, currency: 'usd', size: 'XL' },
+        { id: 'demo_tee_xxl', amount: 3500, currency: 'usd', size: 'XXL' },
+      ],
+    },
+    {
+      id: 'demo_hoodie',
+      name: 'Blackout Hoodie',
+      description: 'Warm-up in style. Premium cotton blend hoodie with Blackout Pickleball branding.',
+      images: [],
+      prices: [
+        { id: 'demo_hoodie_s', amount: 5500, currency: 'usd', size: 'S' },
+        { id: 'demo_hoodie_m', amount: 5500, currency: 'usd', size: 'M' },
+        { id: 'demo_hoodie_l', amount: 5500, currency: 'usd', size: 'L' },
+        { id: 'demo_hoodie_xl', amount: 5500, currency: 'usd', size: 'XL' },
+      ],
+    },
+    {
+      id: 'demo_cap',
+      name: 'Blackout Cap',
+      description: 'Rep the brand on and off the court. Adjustable snapback with embroidered logo.',
+      images: [],
+      prices: [
+        { id: 'demo_cap_one', amount: 2500, currency: 'usd', size: 'One Size' },
+      ],
+    },
+    {
+      id: 'demo_shorts',
+      name: 'Blackout Performance Shorts',
+      description: 'Lightweight performance shorts with side pockets. Perfect for tournament play.',
+      images: [],
+      prices: [
+        { id: 'demo_shorts_s', amount: 4000, currency: 'usd', size: 'S' },
+        { id: 'demo_shorts_m', amount: 4000, currency: 'usd', size: 'M' },
+        { id: 'demo_shorts_l', amount: 4000, currency: 'usd', size: 'L' },
+        { id: 'demo_shorts_xl', amount: 4000, currency: 'usd', size: 'XL' },
+      ],
+    },
+  ];
+}
+
+function getLowestPrice(prices: CatalogItem['prices']): number {
+  return Math.min(...prices.map(p => p.amount));
+}
+
+function formatPrice(cents: number): string {
+  return `$${(cents / 100).toFixed(2)}`;
+}
 ---
 
 <BaseLayout title="Shop" description="Shop Blackout Pickleball performance gear — tees, hoodies, hats and more.">
@@ -12,14 +86,78 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="mt-4 text-text-light text-lg max-w-xl mx-auto">Engineered for the heat of the game. Browse our full collection of performance pickleball gear.</p>
       </div>
 
-      <!-- Product grid placeholder — will be replaced with Stripe API data -->
-      <div class="bg-blackout/5 rounded-2xl p-12 text-center">
-        <span class="text-5xl mb-4 block">🏓</span>
-        <h2 class="text-2xl font-bold mb-2">Products Coming Soon</h2>
-        <p class="text-text-light max-w-md mx-auto">
-          Our merch store is being set up! Products will appear here automatically once connected to Stripe.
-        </p>
+      {isDemo && (
+        <div class="mb-8 p-4 bg-amber-50 border border-amber-200 rounded-xl text-center">
+          <p class="text-amber-800 text-sm font-medium">
+            🏗️ Preview Mode — These are demo products. Real products will appear once the store is connected to Stripe.
+          </p>
+        </div>
+      )}
+
+      <!-- Product Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {catalog.map((product) => (
+          <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
+            {/* Product Image */}
+            <a href={isDemo ? '#' : `/product/${product.id}`} class="block">
+              <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+                {product.images.length > 0 ? (
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a]">
+                    <span class="text-5xl opacity-60">🏓</span>
+                  </div>
+                )}
+              </div>
+            </a>
+
+            {/* Product Info */}
+            <div class="p-4">
+              <a href={isDemo ? '#' : `/product/${product.id}`} class="block">
+                <h3 class="font-bold text-base group-hover:text-amber-600 transition-colors">{product.name}</h3>
+              </a>
+              {product.description && (
+                <p class="text-sm text-text-light mt-1 line-clamp-2">{product.description}</p>
+              )}
+              <div class="mt-2">
+                <span class="text-lg font-black text-amber-600">
+                  {product.prices.length > 1 && getLowestPrice(product.prices) !== Math.max(...product.prices.map(p => p.amount))
+                    ? `From ${formatPrice(getLowestPrice(product.prices))}`
+                    : formatPrice(getLowestPrice(product.prices))}
+                </span>
+              </div>
+
+              {/* Add to Cart (Preact island) */}
+              <AddToCartButton
+                client:load
+                productId={product.id}
+                productName={product.name}
+                productImage={product.images[0] || ''}
+                prices={product.prices.map(p => ({
+                  id: p.id,
+                  amount: p.amount,
+                  size: p.size,
+                }))}
+              />
+            </div>
+          </div>
+        ))}
       </div>
+
+      {catalog.length === 0 && !isDemo && (
+        <div class="bg-blackout/5 rounded-2xl p-12 text-center">
+          <span class="text-5xl mb-4 block">🏓</span>
+          <h2 class="text-2xl font-bold mb-2">No Products Yet</h2>
+          <p class="text-text-light max-w-md mx-auto">
+            Products will appear here automatically once they're added to the Stripe catalog.
+          </p>
+        </div>
+      )}
     </div>
   </section>
 

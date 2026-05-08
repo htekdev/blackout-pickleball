@@ -1,9 +1,7 @@
 import Stripe from 'stripe';
 
 // Server-only — never import this on the client
-export const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
-  apiVersion: '2025-04-30.basil',
-});
+export const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || 'sk_test_placeholder');
 
 export async function getActiveProducts() {
   const products = await stripe.products.list({ active: true, limit: 100 });
