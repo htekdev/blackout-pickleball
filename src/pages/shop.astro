@@ -99,7 +99,7 @@ function formatPrice(cents: number): string {
         {catalog.map((product) => (
           <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
             {/* Product Image */}
-            <a href={isDemo ? '#' : `/product/${product.id}`} class="block">
+            <a href={`/product/${product.id}`} class="block">
               <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
                 {product.images.length > 0 ? (
                   <img
@@ -118,7 +118,7 @@ function formatPrice(cents: number): string {
 
             {/* Product Info */}
             <div class="p-4">
-              <a href={isDemo ? '#' : `/product/${product.id}`} class="block">
+              <a href={`/product/${product.id}`} class="block">
                 <h3 class="font-bold text-base group-hover:text-amber-600 transition-colors">{product.name}</h3>
               </a>
               {product.description && (
