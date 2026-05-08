@@ -3,8 +3,8 @@
  *
  * Creates 8 angle images per product using sharp — each shows
  * the product color with Blackout branding and angle indicator.
- * These serve as production-ready placeholders until Jonathan
- * sends the real multi-angle product photos.
+ * These serve as production-ready placeholders until
+ * real multi-angle product photos are provided.
  *
  * Usage: node scripts/generate-placeholders.mjs
  */

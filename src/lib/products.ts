@@ -47,7 +47,7 @@ function makeAngles(slug: string): ProductImage {
   };
 }
 
-// Real pricing from Jonathan (May 8, 2026)
+// Real pricing (confirmed May 8, 2026)
 const MEN_TEE_PRICE = 3999; // $39.99
 const WOMEN_TANK_PRICE = 3499; // $34.99
 
