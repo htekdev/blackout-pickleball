@@ -9,20 +9,12 @@ import { PRODUCT_CATALOG, toCatalogItem } from '../lib/products';
 // Read category filter from query param
 const url = new URL(Astro.request.url);
 const activeCategory = (url.searchParams.get('category') || 'all').toLowerCase();
-const activeGarment = url.searchParams.get('type') || 'all';
 
 // Sport categories config
 const categories = [
   { id: 'all', label: 'All', active: true },
   { id: 'pickleball', label: 'Pickleball', active: true },
   { id: 'tennis', label: 'Tennis', active: false, comingSoon: true },
-];
-
-// Garment type filter
-const garmentTypes = [
-  { id: 'all', label: 'All Styles' },
-  { id: 'mens-crew-tee', label: "Men's Tees" },
-  { id: 'womens-racerback-tank', label: "Women's Tanks" },
 ];
 
 let catalog: (CatalogItem & { colorName?: string; colorHex?: string; category?: string })[] = [];
@@ -40,14 +32,10 @@ try {
   catalog = PRODUCT_CATALOG.map(toCatalogItem);
 }
 
-// Filter catalog by sport + garment type
+// Filter catalog by sport category
 let filteredCatalog = activeCategory === 'all'
   ? catalog
   : catalog.filter(p => p.sport === activeCategory);
-
-if (activeGarment !== 'all') {
-  filteredCatalog = filteredCatalog.filter(p => p.category === activeGarment);
-}
 
 function getLowestPrice(prices: CatalogItem['prices']): number {
   return Math.min(...prices.map(p => p.amount));
@@ -69,7 +57,7 @@ function formatPrice(cents: number): string {
       </div>
 
       {/* Sport Category Filter Pills */}
-      <div class="flex justify-center mb-4">
+      <div class="flex justify-center mb-10">
         <nav class="inline-flex items-center gap-2 p-1.5 bg-gray-100 rounded-full" aria-label="Filter by sport">
           {categories.map((cat) => {
             const isActive = activeCategory === cat.id;
@@ -98,59 +86,6 @@ function formatPrice(cents: number): string {
                 aria-current={isActive ? 'page' : undefined}
               >
                 {cat.label}
-              </a>
-            );
-          })}
-        </nav>
-      </div>
-
-      {/* Garment Type Filter */}
-      <div class="flex justify-center mb-10">
-        <nav class="inline-flex items-center gap-1" aria-label="Filter by style">
-          {garmentTypes.map((gt) => {
-            const isActive = activeGarment === gt.id;
-            const href = gt.id === 'all'
-              ? (activeCategory === 'all' ? '/shop' : `/shop?category=${activeCategory}`)
-              : (activeCategory === 'all' ? `/shop?type=${gt.id}` : `/shop?category=${activeCategory}&type=${gt.id}`);
-            return (
-              <a
-                href={href}
-                class:list={[
-                  'px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border',
-                  isActive
-                    ? 'bg-gray-900 text-white border-gray-900'
-                    : 'text-gray-500 border-gray-200 hover:border-gray-400 hover:text-gray-800',
-                ]}
-              >
-                {gt.label}
-              </a>
-            );
-          })}
-        </nav>
-      </div>
-
-      {/* Garment Type Filter */}
-      <div class="flex justify-center mb-10">
-        <nav class="inline-flex items-center gap-2 p-1 bg-white border border-border rounded-full" aria-label="Filter by style">
-          {garmentTypes.map((gt) => {
-            const isActive = activeGarment === gt.id;
-            const params = new URLSearchParams();
-            if (activeCategory !== 'all') params.set('category', activeCategory);
-            if (gt.id !== 'all') params.set('type', gt.id);
-            const href = params.toString() ? `/shop?${params.toString()}` : '/shop';
-
-            return (
-              <a
-                href={href}
-                class:list={[
-                  'px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200',
-                  isActive
-                    ? 'bg-gray-900 text-white shadow-sm'
-                    : 'text-gray-500 hover:text-blackout hover:bg-gray-50',
-                ]}
-                aria-current={isActive ? 'page' : undefined}
-              >
-                {gt.label}
               </a>
             );
           })}
