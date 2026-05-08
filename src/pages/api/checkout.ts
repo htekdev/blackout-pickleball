@@ -22,8 +22,7 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
     shipping_rate_data: {
       type: 'fixed_amount',
       fixed_amount: { amount: 599, currency: 'usd' },
-      display_name: 'Standard Shipping',
-      description: 'Estimated 5–7 business days',
+      display_name: 'Standard Shipping (5–7 business days)',
       delivery_estimate: {
         minimum: { unit: 'business_day', value: 5 },
         maximum: { unit: 'business_day', value: 7 },
@@ -34,8 +33,7 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
     shipping_rate_data: {
       type: 'fixed_amount',
       fixed_amount: { amount: 999, currency: 'usd' },
-      display_name: 'Priority Shipping',
-      description: 'Estimated 2–3 business days',
+      display_name: 'Priority Shipping (2–3 business days)',
       delivery_estimate: {
         minimum: { unit: 'business_day', value: 2 },
         maximum: { unit: 'business_day', value: 3 },
@@ -46,8 +44,7 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
     shipping_rate_data: {
       type: 'fixed_amount',
       fixed_amount: { amount: 1499, currency: 'usd' },
-      display_name: 'Express Shipping',
-      description: 'Estimated 1–2 business days',
+      display_name: 'Express Shipping (1–2 business days)',
       delivery_estimate: {
         minimum: { unit: 'business_day', value: 1 },
         maximum: { unit: 'business_day', value: 2 },
@@ -102,7 +99,7 @@ export const POST: APIRoute = async ({ request }) => {
       : 'Something went wrong creating your checkout session. Please try again.';
 
     return new Response(
-      JSON.stringify({ error: message, debug: error?.message || 'unknown' }),
+      JSON.stringify({ error: message }),
       { status: isAuthError ? 503 : 500, headers }
     );
   }
