@@ -6,6 +6,7 @@ export default function CartDrawer() {
   const cart = useStore($cart);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const handler = () => setIsOpen((prev) => !prev);
@@ -19,6 +20,7 @@ export default function CartDrawer() {
   const handleCheckout = async () => {
     if (cart.length === 0) return;
     setIsLoading(true);
+    setError(null);
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
@@ -31,12 +33,16 @@ export default function CartDrawer() {
         }),
       });
       const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
+
+      if (!res.ok || !data.url) {
+        setError(data.error || 'Unable to start checkout. Please try again.');
+        return;
       }
+
+      window.location.href = data.url;
     } catch (err) {
       console.error('Checkout error:', err);
-      alert('Something went wrong. Please try again.');
+      setError('Network error — please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -142,6 +148,12 @@ export default function CartDrawer() {
           {/* Footer — Checkout */}
           {cart.length > 0 && (
             <div class="border-t border-border-light p-4 space-y-3">
+              {error && (
+                <div class="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded-lg px-3 py-2.5 flex items-start gap-2">
+                  <span class="flex-shrink-0 mt-0.5">⚠️</span>
+                  <span>{error}</span>
+                </div>
+              )}
               <div class="flex items-center justify-between text-lg font-bold">
                 <span>Total</span>
                 <span>${(total / 100).toFixed(2)}</span>

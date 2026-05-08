@@ -3,19 +3,35 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY || 'sk_test_placeholder');
+const STRIPE_KEY = import.meta.env.STRIPE_SECRET_KEY || '';
+const PLACEHOLDER_KEYS = ['', 'sk_test_placeholder', 'sk_test_xxx'];
+const isStripeConfigured = !PLACEHOLDER_KEYS.includes(STRIPE_KEY);
 
 export const POST: APIRoute = async ({ request }) => {
+  const headers = { 'Content-Type': 'application/json' };
+
+  // Guard: Stripe not configured yet
+  if (!isStripeConfigured) {
+    return new Response(
+      JSON.stringify({
+        error: 'Store coming soon! Payments are not yet enabled. Check back shortly.',
+        code: 'STRIPE_NOT_CONFIGURED',
+      }),
+      { status: 503, headers }
+    );
+  }
+
   try {
     const { items } = await request.json();
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return new Response(JSON.stringify({ error: 'No items provided' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers,
       });
     }
 
+    const stripe = new Stripe(STRIPE_KEY);
     const origin = import.meta.env.SITE_URL || 'https://brandblackout.com';
 
     const session = await stripe.checkout.sessions.create({
@@ -33,13 +49,23 @@ export const POST: APIRoute = async ({ request }) => {
 
     return new Response(JSON.stringify({ url: session.url }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers,
     });
   } catch (error: any) {
     console.error('Checkout error:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+
+    // Friendly message for Stripe authentication failures
+    const isAuthError =
+      error?.type === 'StripeAuthenticationError' ||
+      error?.statusCode === 401;
+
+    const message = isAuthError
+      ? 'Store coming soon! Payments are not yet enabled. Check back shortly.'
+      : 'Something went wrong creating your checkout session. Please try again.';
+
+    return new Response(
+      JSON.stringify({ error: message }),
+      { status: isAuthError ? 503 : 500, headers }
+    );
   }
 };
