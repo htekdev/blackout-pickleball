@@ -12,7 +12,7 @@ interface Props {
 
 const {
   title,
-  description = 'Blackout Pickleball — Celebrate Diversity. Play with Purpose. Performance gear and community events for pickleball players who play bold.',
+  description = 'Blackout — Celebrate Diversity. Play with Purpose. A multi-sport movement for diversity and inclusivity, starting with pickleball.',
   ogImage = '/og-default.jpg',
 } = Astro.props;
 
@@ -25,7 +25,7 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} | Blackout Pickleball</title>
+    <title>{title} | Blackout</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
@@ -35,23 +35,23 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={`${title} | Blackout Pickleball`} />
+    <meta property="og:title" content={`${title} | Blackout`} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${title} | Blackout Pickleball`} />
+    <meta name="twitter:title" content={`${title} | Blackout`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
     <!-- Theme color -->
-    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="theme-color" content="#ffffff" />
 
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Urbanist (headings) + Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Urbanist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col bg-surface text-text font-sans antialiased">
     <Header />

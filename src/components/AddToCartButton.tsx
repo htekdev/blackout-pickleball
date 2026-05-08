@@ -61,7 +61,7 @@ export default function AddToCartButton({ productId, productName, productImage, 
         class={`mt-3 w-full py-2.5 rounded-lg font-bold text-sm uppercase tracking-wider transition-all ${
           added
             ? 'bg-green-500 text-white'
-            : 'bg-amber-400 hover:bg-amber-500 text-[#0a0a0a]'
+            : 'bg-blackout hover:bg-accent-light text-white'
         }`}
       >
         {added ? '✓ Added!' : `Add to Cart — $${(selectedPrice.amount / 100).toFixed(2)}`}

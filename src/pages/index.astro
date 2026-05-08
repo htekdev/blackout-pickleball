@@ -2,22 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Home" description="Blackout Pickleball — Celebrate Diversity. Play with Purpose. Performance gear and community events for pickleball players who play bold.">
+<BaseLayout title="Home" description="Blackout — Celebrate Diversity. Play with Purpose. A multi-sport movement for diversity and inclusivity in sports, starting with pickleball.">
 
-  <!-- Hero Section -->
+  <!-- Hero Section — Blackout Parent Brand -->
   <section class="relative bg-blackout text-text-inverse overflow-hidden min-h-[80vh] flex items-center">
     <!-- Animated gradient background -->
     <div class="absolute inset-0 bg-gradient-to-br from-blackout via-blackout-light to-blackout"></div>
     
     <!-- Decorative elements -->
     <div class="absolute inset-0 overflow-hidden">
-      <!-- Pickleball-inspired circles -->
       <div class="absolute -right-20 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-accent/10 animate-spin-slow"></div>
       <div class="absolute -right-10 top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-accent/5"></div>
       <div class="absolute right-10 top-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-accent/[0.03]"></div>
-      <!-- Accent glow -->
       <div class="absolute right-0 top-1/3 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
-      <!-- Court line accents -->
       <div class="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent"></div>
       <div class="absolute right-1/3 top-0 w-px h-full bg-gradient-to-b from-transparent via-white/[0.03] to-transparent"></div>
     </div>
@@ -29,19 +26,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Celebrate Diversity. Play with Purpose.
         </p>
         <h1 class="text-5xl sm:text-6xl lg:text-8xl font-black leading-[0.9] tracking-tight">
-          Play Bold.<br />
-          <span class="text-accent">Play Blackout.</span>
+          This Is<br />
+          <span class="text-accent">Blackout.</span>
         </h1>
         <p class="mt-8 text-lg sm:text-xl text-white/60 max-w-xl leading-relaxed">
-          Performance gear engineered for the heat of the game. Premium fabrics, bold designs, built for the court.
+          A movement for diversity and inclusivity across sports. We're increasing Black representation — one sport at a time — and welcoming everyone to play.
         </p>
         <div class="mt-10 flex flex-col sm:flex-row gap-4">
           <a href="/shop" class="group inline-flex items-center justify-center px-8 py-4 bg-accent hover:bg-accent-dark text-blackout font-bold rounded-lg transition-all text-sm uppercase tracking-wider shadow-lg shadow-accent/20 hover:shadow-accent/30">
             Shop Merch
             <svg class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
           </a>
-          <a href="/about" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white/20 hover:border-accent text-white hover:text-accent font-bold rounded-lg transition-all text-sm uppercase tracking-wider backdrop-blur-sm">
-            Join the Tribe
+          <a href="/pickleball" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white/20 hover:border-accent text-white hover:text-accent font-bold rounded-lg transition-all text-sm uppercase tracking-wider backdrop-blur-sm">
+            Explore Pickleball
           </a>
         </div>
       </div>
@@ -54,8 +51,67 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- Featured Products -->
+  <!-- Sport Sections Preview -->
   <section class="py-20 sm:py-28 bg-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-accent font-semibold text-sm uppercase tracking-[0.2em] mb-3">Our Sports</p>
+        <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight">One Brand. Many Courts.</h2>
+        <p class="mt-4 text-text-light max-w-xl mx-auto">Blackout is building a multi-sport movement — bringing diversity and energy to every game.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Pickleball — Active -->
+        <a href="/pickleball" class="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
+          <div class="aspect-[4/3] bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] flex flex-col items-center justify-center relative overflow-hidden p-8">
+            <div class="absolute inset-0 bg-gradient-to-t from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <span class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-500">🏓</span>
+            <span class="bg-accent text-blackout text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Active</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl group-hover:text-accent-dark transition-colors">Blackout Pickleball</h3>
+            <p class="text-sm text-text-light mt-2">Our flagship sport — celebrating diversity on the pickleball court. Community events, performance gear, and a movement that's growing fast.</p>
+            <div class="mt-4 text-sm font-semibold text-accent group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+              Explore Pickleball
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Tennis — Coming Soon -->
+        <div class="group relative bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 opacity-75">
+          <div class="aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300 flex flex-col items-center justify-center relative overflow-hidden p-8">
+            <span class="text-6xl mb-4 grayscale">🎾</span>
+            <span class="bg-gray-500 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Coming Soon</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl text-gray-400">Blackout Tennis</h3>
+            <p class="text-sm text-gray-400 mt-2">Bringing the Blackout movement to the tennis court. Diversity, inclusivity, and bold representation — on every surface.</p>
+            <div class="mt-4 text-sm font-semibold text-gray-400 inline-flex items-center gap-1">
+              Stay Tuned
+            </div>
+          </div>
+        </div>
+
+        <!-- More Sports — Coming Soon -->
+        <div class="group relative bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 opacity-75">
+          <div class="aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300 flex flex-col items-center justify-center relative overflow-hidden p-8">
+            <span class="text-6xl mb-4 grayscale">🏅</span>
+            <span class="bg-gray-500 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Coming Soon</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl text-gray-400">More Sports</h3>
+            <p class="text-sm text-gray-400 mt-2">The Blackout movement doesn't stop at two sports. We're expanding diversity and inclusivity across the athletic world.</p>
+            <div class="mt-4 text-sm font-semibold text-gray-400 inline-flex items-center gap-1">
+              Stay Tuned
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="py-20 sm:py-28 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
         <p class="text-accent font-semibold text-sm uppercase tracking-[0.2em] mb-3">Shop the Collection</p>
@@ -90,9 +146,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- Brand Story Snippet -->
+  <!-- Brand Story / Mission -->
   <section class="py-20 sm:py-28 bg-blackout text-text-inverse relative overflow-hidden">
-    <!-- Subtle background pattern -->
     <div class="absolute inset-0">
       <div class="absolute left-1/4 top-0 w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent"></div>
       <div class="absolute right-1/4 top-0 w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent"></div>
@@ -100,9 +155,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl mx-auto text-center">
         <p class="text-accent font-semibold text-sm uppercase tracking-[0.2em] mb-4">Our Mission</p>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">A Vibrant Space for Everyone</h2>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">Diversity in Every Sport</h2>
         <p class="mt-8 text-lg sm:text-xl text-white/60 leading-relaxed">
-          We celebrate diversity and inclusivity at Blackout Pickleball. We're dedicated to increasing Black representation in the sport while welcoming everyone — regardless of background — to join us in playing, supporting, and sharing the game.
+          Blackout exists to celebrate diversity and inclusivity in sports. Starting with pickleball — a sport that originated from a less diverse community — we're dedicated to increasing Black representation while welcoming everyone, regardless of background, to play together.
+        </p>
+        <p class="mt-4 text-lg text-white/40 leading-relaxed">
+          This isn't just one sport. It's a movement. As Blackout grows, we're bringing the same energy, representation, and community to tennis and beyond.
         </p>
         <a href="/about" class="inline-flex items-center mt-10 text-accent hover:text-accent-light font-semibold transition-colors gap-2 group">
           Learn Our Story
@@ -131,12 +189,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- Community CTA -->
+  <!-- Upcoming Event Banner -->
   <section class="py-20 sm:py-28 bg-surface">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="bg-gradient-to-r from-blackout to-blackout-light p-8 text-text-inverse">
+          <span class="text-accent text-sm font-semibold uppercase tracking-widest">Next Event</span>
+          <h2 class="text-2xl sm:text-3xl font-black mt-2">Blackout Community Events</h2>
+          <p class="text-white/70 mt-2">Join us on the court — all skill levels welcome.</p>
+        </div>
+        <div class="p-8">
+          <p class="text-text-light text-lg">
+            We host community mixers, tournaments, and social play sessions. Follow us on social media for event announcements and registration details.
+          </p>
+          <div class="mt-6">
+            <a href="/events" class="inline-flex items-center px-6 py-3 bg-blackout text-white font-bold rounded-lg hover:bg-accent hover:text-blackout transition-all text-sm uppercase tracking-wider">
+              View All Events
+              <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community CTA -->
+  <section class="py-20 sm:py-28 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight">Join the Community</h2>
+      <h2 class="text-3xl sm:text-4xl font-black text-text tracking-tight">Join the Movement</h2>
       <p class="mt-4 text-text-light max-w-xl mx-auto text-lg">
-        Real players. Real performance. Join the community that's bringing diversity and vibrant energy to the court.
+        Blackout is more than gear — it's a community bringing diversity and representation to sports everywhere.
       </p>
       <div class="mt-10 flex justify-center gap-6">
         <a href="https://www.instagram.com/blackoutpickleball" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 bg-blackout text-white rounded-full hover:bg-accent hover:text-blackout transition-all text-sm font-medium">

@@ -83,7 +83,7 @@ export default function CartDrawer() {
                 <p class="text-gray-500 font-medium">Your cart is empty</p>
                 <a
                   href="/shop"
-                  class="inline-block mt-4 text-amber-600 hover:text-amber-700 font-semibold text-sm"
+                  class="inline-block mt-4 text-blackout hover:text-accent-light font-semibold text-sm"
                   onClick={() => setIsOpen(false)}
                 >
                   Browse our merch →
@@ -106,7 +106,7 @@ export default function CartDrawer() {
                     <div class="flex-1 min-w-0">
                       <h3 class="font-semibold text-sm truncate">{item.name}</h3>
                       <p class="text-xs text-gray-500 mt-0.5">Size: {item.size}</p>
-                      <p class="text-sm font-bold text-amber-600 mt-1">
+                      <p class="text-sm font-bold text-blackout mt-1">
                         ${(item.price / 100).toFixed(2)}
                       </p>
 
