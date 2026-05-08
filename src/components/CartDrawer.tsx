@@ -94,9 +94,9 @@ export default function CartDrawer() {
                 {cart.map((item) => (
                   <div key={item.priceId} class="flex gap-4 bg-surface-warm border border-border-light rounded-xl p-3">
                     {/* Image */}
-                    <div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
+                    <div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                       {item.image ? (
-                        <img src={item.image} alt={item.name} class="w-full h-full object-cover" />
+                        <img src={item.image} alt={item.name} class="w-full h-full object-contain" />
                       ) : (
                         <div class="w-full h-full flex items-center justify-center text-2xl">🏓</div>
                       )}
