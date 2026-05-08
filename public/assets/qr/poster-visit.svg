@@ -37,7 +37,7 @@
 
   <!-- Headline above QR -->
   <text
-    x="425" y="148"
+    x="425" y="140"
     text-anchor="middle"
     font-family="'Urbanist', 'Inter', system-ui, sans-serif"
     font-size="52"
@@ -48,7 +48,7 @@
 
   <!-- Subtext -->
   <text
-    x="425" y="185"
+    x="425" y="195"
     text-anchor="middle"
     font-family="'Inter', system-ui, sans-serif"
     font-size="18"
