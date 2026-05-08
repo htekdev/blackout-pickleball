@@ -12,17 +12,11 @@ export default function ProductViewer({ images, productName }: Props) {
   const startXRef = useRef(0);
   const accumulatorRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const lastFrameTime = useRef(0);
 
   const totalFrames = images.length;
-  const sensitivity = 8; // pixels per frame — slightly higher for smoother feel
+  const sensitivity = 40; // pixels per frame — higher for 4-frame rotation
 
   const advanceFrame = useCallback((delta: number) => {
-    // Throttle to ~30fps for smooth visual updates
-    const now = performance.now();
-    if (now - lastFrameTime.current < 33) return;
-    lastFrameTime.current = now;
-
     accumulatorRef.current += delta;
     const frameDiff = Math.trunc(accumulatorRef.current / sensitivity);
     if (frameDiff !== 0) {
@@ -91,7 +85,7 @@ export default function ProductViewer({ images, productName }: Props) {
       {/* Main viewer */}
       <div
         ref={containerRef}
-        class="relative aspect-[3/4] rounded-2xl overflow-hidden bg-gray-50 cursor-grab active:cursor-grabbing select-none"
+        class="relative aspect-[4/5] rounded-2xl overflow-hidden bg-white cursor-grab active:cursor-grabbing select-none"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -115,10 +109,10 @@ export default function ProductViewer({ images, productName }: Props) {
 
         {/* Loading shimmer */}
         {!isLoaded && (
-          <div class="absolute inset-0 flex items-center justify-center bg-gray-50">
+          <div class="absolute inset-0 flex items-center justify-center bg-white">
             <div class="flex flex-col items-center gap-3">
               <div class="w-8 h-8 border-2 border-gray-300 border-t-blackout rounded-full animate-spin" />
-              <span class="text-xs text-gray-400 font-medium">Loading 360° view...</span>
+              <span class="text-xs text-gray-400 font-medium">Loading views...</span>
             </div>
           </div>
         )}
@@ -145,12 +139,12 @@ export default function ProductViewer({ images, productName }: Props) {
       </div>
 
       {/* Thumbnail strip */}
-      <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+      <div class="grid grid-cols-4 gap-2">
         {images.map((img, i) => (
           <button
             key={i}
             onClick={() => setCurrentIndex(i)}
-            class={`flex-shrink-0 w-14 h-[4.5rem] rounded-lg overflow-hidden border-2 transition-all bg-gray-50 ${
+            class={`aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all bg-white ${
               i === currentIndex ? 'border-blackout ring-2 ring-blackout/10 scale-105' : 'border-gray-200 opacity-60 hover:opacity-100 hover:border-gray-300'
             }`}
           >

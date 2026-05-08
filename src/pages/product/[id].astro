@@ -90,7 +90,7 @@ const hasPriceRange = lowestPrice !== highestPrice;
           {product.images.length > 1 ? (
             <ProductViewer client:load images={product.images} productName={product.name} />
           ) : (
-            <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-50">
+            <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-white">
               {product.images.length === 1 ? (
                 <img
                   src={product.images[0]}
@@ -213,7 +213,7 @@ const hasPriceRange = lowestPrice !== highestPrice;
           .slice(0, 4)
           .map((rp) => (
             <a href={`/product/${rp.slug}`} class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border hover:-translate-y-0.5">
-              <div class="aspect-[3/4] bg-gray-50 overflow-hidden relative">
+              <div class="aspect-[4/5] bg-white overflow-hidden relative">
                 <img
                   src={rp.images.thumbnail}
                   alt={rp.name}
