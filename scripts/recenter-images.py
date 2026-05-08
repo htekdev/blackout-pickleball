@@ -1,13 +1,13 @@
 """
-Product Image Re-Centering v7 — Fix clipped edges
-Previous v6 had 8% padding which cut off sleeve tips and text edges
-on 3/4 angle photos. Increased to 20% padding + higher threshold (250)
-to capture all edge pixels including shadows and fading fabric.
+Product Image Re-Centering v8 — Bigger garments, less white space
+v7 had garments filling only 30% width × 50% height — too small on mobile.
+Hector: "cropping the left and right too aggressively" (garment too small).
 
-Also:
-- Uses threshold 250 (was 235) to catch light-colored edges
-- Padding 20% (was 8%) to prevent any edge clipping
-- Maintains zero-wobble independent centering approach from v6
+v8 changes:
+- TARGET_FILL_H 0.72 → 0.88 — garment fills more vertical space
+- Max width cap 55% → 70% — allows wider garments
+- PADDING_FRAC 0.20 → 0.12 — still prevents edge clipping but less empty space
+- Result: ~45% width fill (was 30%), garment much more prominent
 """
 from PIL import Image
 import numpy as np
@@ -15,8 +15,8 @@ import os
 
 PRODUCTS_DIR = 'public/images/products'
 OUTPUT_W, OUTPUT_H = 800, 1000
-TARGET_FILL_H = 0.72  # garment height as fraction of canvas
-PADDING_FRAC = 0.20   # 20% padding — generous to prevent any clipping
+TARGET_FILL_H = 0.88  # garment height as fraction of canvas (was 0.72)
+PADDING_FRAC = 0.12   # 12% padding — prevents clipping without excess white space
 THRESHOLD = 250        # higher threshold catches lighter edges/shadows
 
 results = []
@@ -63,7 +63,7 @@ for slug in sorted(os.listdir(PRODUCTS_DIR)):
 
     # Step 3: Calculate scale factor — one scale for ALL angles
     scale_h = (OUTPUT_H * TARGET_FILL_H) / padded_h
-    scale_w = (OUTPUT_W * 0.55) / padded_w  # max 55% width
+    scale_w = (OUTPUT_W * 0.70) / padded_w  # max 70% width (was 55%)
     scale = min(scale_h, scale_w)
 
     # Step 4: Process each angle — CENTER each garment INDEPENDENTLY
