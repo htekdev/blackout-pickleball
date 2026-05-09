@@ -31,15 +31,16 @@ const eventDateFormatted = new Date(eventDate).toLocaleDateString('en-US', {
   <div
     id="event-banner"
     class="bg-blackout text-white relative z-40"
+    data-event-date={eventDate}
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between gap-4 py-2.5 text-sm">
         <div class="flex items-center gap-3 min-w-0">
-          <span class="hidden sm:inline-flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0">
+          <span id="event-countdown-desktop" class="hidden sm:inline-flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider shrink-0">
             <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
             {daysUntil === 1 ? 'Tomorrow' : `${daysUntil} days`}
           </span>
-          <span class="sm:hidden inline-flex items-center gap-1.5 bg-white/20 px-2 py-0.5 rounded-full text-xs font-bold shrink-0">
+          <span id="event-countdown-mobile" class="sm:hidden inline-flex items-center gap-1.5 bg-white/20 px-2 py-0.5 rounded-full text-xs font-bold shrink-0">
             {daysUntil === 1 ? 'Tomorrow' : `${daysUntil}d`}
           </span>
           <span class="font-semibold truncate">
@@ -77,6 +78,25 @@ const eventDateFormatted = new Date(eventDate).toLocaleDateString('en-US', {
     // Check if user previously dismissed
     if (sessionStorage.getItem('event-banner-dismissed')) {
       banner.remove();
+    } else {
+      // Hydrate countdown with live client-side calculation
+      const eventDate = banner.dataset.eventDate;
+      if (eventDate) {
+        const days = Math.ceil((new Date(eventDate).getTime() - Date.now()) / 86400000);
+        if (days <= 0) {
+          banner.remove();
+        } else {
+          const desktopEl = document.getElementById('event-countdown-desktop');
+          const mobileEl = document.getElementById('event-countdown-mobile');
+          const label = days === 1 ? 'Tomorrow' : `${days} days`;
+          const labelShort = days === 1 ? 'Tomorrow' : `${days}d`;
+          if (desktopEl) {
+            const textNode = desktopEl.lastChild;
+            if (textNode) textNode.textContent = ` ${label}`;
+          }
+          if (mobileEl) mobileEl.textContent = labelShort;
+        }
+      }
     }
     closeBtn.addEventListener('click', () => {
       banner.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
