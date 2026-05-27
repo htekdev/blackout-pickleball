@@ -85,7 +85,7 @@ const events = [
   },
 ];
 
-// Sort by date
+// Sort events by date (earliest first)
 events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTime());
 ---
 
