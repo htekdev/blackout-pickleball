@@ -26,7 +26,7 @@ const events = [
     refundPolicy: 'No refunds',
     duration: '4 hours',
     format: 'In person',
-    status: 'on-sale', // on-sale, sold-out, coming-soon
+    status: 'past', // on-sale, sold-out, coming-soon, past
   },
   {
     id: 'juneteenth-pb-celebration-2026',
@@ -83,7 +83,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
       {events.map((event, index) => (
-        <article class="group bg-white rounded-2xl shadow-sm border border-border hover:shadow-lg transition-all duration-300 overflow-hidden">
+        <article class:list={["group bg-white rounded-2xl shadow-sm border border-border hover:shadow-lg transition-all duration-300 overflow-hidden", event.status === 'past' && "opacity-70 grayscale-[30%]"]}>
           <div class="grid md:grid-cols-5 gap-0">
 
             {/* Image Column */}
@@ -118,6 +118,11 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
               {event.status === 'sold-out' && (
                 <div class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
                   Sold Out
+                </div>
+              )}
+              {event.status === 'past' && (
+                <div class="absolute top-4 right-4 bg-black/60 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                  Past Event
                 </div>
               )}
             </div>
@@ -195,12 +200,12 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                   rel="noopener noreferrer"
                   class:list={[
                     'inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm tracking-wide transition-all duration-200 shadow-sm',
-                    event.status === 'sold-out'
+                    event.status === 'sold-out' || event.status === 'past'
                       ? 'bg-gray-200 text-gray-500 cursor-not-allowed pointer-events-none'
                       : 'bg-blackout text-white hover:bg-blackout-light hover:shadow-md',
                   ]}
                 >
-                  {event.ticketLabel}
+                  {event.status === 'past' ? 'Event Passed' : event.ticketLabel}
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
