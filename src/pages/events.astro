@@ -16,17 +16,72 @@ const events = [
     price: '$37.05',
     ticketUrl: 'https://www.eventbrite.com/e/blackout-pickleball-chicago-tickets-1988527028873',
     ticketLabel: 'Get Tickets',
-    description: 'Chicago — we\'re bringing the heat to the court. Blackout Pickleball is taking over for a high-energy daytime experience you don\'t want to miss. This is where sport meets vibes — think competition, music, content, and community all in one.',
+    description: "Chicago — we're bringing the heat to the court. Blackout Pickleball is taking over for a high-energy daytime experience you don't want to miss. This is where sport meets vibes — think competition, music, content, and community all in one.",
     highlights: [
       'Open play + competitive rotations + pro players',
       'Music & high-energy atmosphere',
       'Content-worthy moments all day',
-      'A crowd that\'s here to connect & have fun',
+      "A crowd that's here to connect & have fun",
     ],
     refundPolicy: 'No refunds',
     duration: '4 hours',
     format: 'In person',
-    status: 'past', // on-sale, sold-out, coming-soon, past
+    status: 'past',
+  },
+  {
+    id: 'juneteenth-chicago-2025',
+    title: 'Juneteenth Pickleball Celebration: Chicago',
+    subtitle: 'Celebrate Freedom, Culture & Community 🎉',
+    date: 'Thursday, June 19, 2025',
+    time: '8:00 PM – 11:00 PM',
+    dateISO: '2025-06-19T20:00:00-05:00',
+    venue: 'SPF',
+    address: '2121 N. Clybourn Ave',
+    city: 'Chicago, IL',
+    image: '/images/events/juneteenth-chicago-2025.png',
+    price: '$28 GA',
+    ticketUrl: 'https://events.eventnoire.com/e/blackout-pickleball-presents-juneteenth-pickleball',
+    ticketLabel: 'Get Tickets',
+    description: "CHICAGO! The turnout, the energy, the vibes at our last event were so unreal… we had NO choice but to run it back. This Juneteenth, we're bringing the community together again for another unforgettable night of pickleball, culture, and celebration. Whether you came to the last one or missed out — this is your chance to experience what everyone's been talking about.",
+    highlights: [
+      'Live DJ spinning all night',
+      'Prizes & giveaways',
+      'Drinks & food available',
+      'All skill levels welcome',
+      'Coaching for beginners',
+      'Early Bird pricing (first 50 people)',
+    ],
+    refundPolicy: 'All items are non-refundable, all sales are final',
+    duration: '3 hours',
+    format: 'In person',
+    status: 'past',
+  },
+  {
+    id: 'juneteenth-indianapolis-2025',
+    title: 'Juneteenth Pickleball Celebration: Indianapolis',
+    subtitle: 'Celebrate Freedom, Culture & Community 🎉',
+    date: 'Thursday, June 19, 2025',
+    time: 'TBA',
+    dateISO: '2025-06-19T00:00:00-05:00',
+    venue: 'TBA',
+    address: '',
+    city: 'Indianapolis, IN',
+    image: '/images/events/juneteenth-indianapolis-2025.png',
+    price: '$28 GA',
+    ticketUrl: 'https://events.eventnoire.com/e/blackout-pickleball-presents-juneteenth-pickleba-2/tickets',
+    ticketLabel: 'Get Tickets',
+    description: "This Juneteenth, we're bringing the community together for an unforgettable celebration of pickleball, culture, and community in Indianapolis. Join us for a night of play, connection, and celebration. More details coming soon!",
+    highlights: [
+      'Live DJ & entertainment',
+      'Prizes & giveaways',
+      'All skill levels welcome',
+      'Coaching for beginners',
+      'Food & drinks available',
+    ],
+    refundPolicy: 'All items are non-refundable, all sales are final',
+    duration: 'TBA',
+    format: 'In person',
+    status: 'past',
   },
   {
     id: 'juneteenth-pb-celebration-2026',
@@ -55,7 +110,7 @@ const events = [
   },
 ];
 
-// Sort by date
+// Sort events by date (earliest first)
 events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTime());
 ---
 
@@ -114,7 +169,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                   {new Date(event.dateISO).getDate()}
                 </p>
               </div>
-              {/* Status badge */}
+              {/* Status badges */}
               {event.status === 'sold-out' && (
                 <div class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
                   Sold Out
@@ -161,7 +216,7 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span>{event.venue !== 'TBA' ? `${event.venue} · ${event.city}` : 'Location TBA'}</span>
+                    <span>{event.venue !== 'TBA' ? `${event.venue} · ${event.city}` : `${event.city}`}</span>
                   </div>
                 </div>
 
