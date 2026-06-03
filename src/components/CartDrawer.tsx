@@ -8,6 +8,18 @@ export default function CartDrawer() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Promo code state
+  const [promoInput, setPromoInput] = useState('');
+  const [promoLoading, setPromoLoading] = useState(false);
+  const [promoError, setPromoError] = useState<string | null>(null);
+  const [appliedPromo, setAppliedPromo] = useState<{
+    promoCodeId: string;
+    code: string;
+    discountLabel: string;
+    discountPercent: number | null;
+    discountAmount: number | null;
+  } | null>(null);
+
   useEffect(() => {
     const handler = () => setIsOpen((prev) => {
       const next = !prev;
@@ -20,6 +32,61 @@ export default function CartDrawer() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Calculate discounted total
+  let discountedTotal = total;
+  let savingsAmount = 0;
+  if (appliedPromo) {
+    if (appliedPromo.discountPercent) {
+      savingsAmount = Math.round(total * (appliedPromo.discountPercent / 100));
+    } else if (appliedPromo.discountAmount) {
+      savingsAmount = appliedPromo.discountAmount;
+    }
+    discountedTotal = Math.max(0, total - savingsAmount);
+  }
+
+  const handleApplyPromo = async () => {
+    const code = promoInput.trim();
+    if (!code) {
+      setPromoError('Please enter a promo code.');
+      return;
+    }
+
+    setPromoLoading(true);
+    setPromoError(null);
+
+    try {
+      const res = await fetch('/api/validate-promo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      const data = await res.json();
+
+      if (data.valid) {
+        setAppliedPromo({
+          promoCodeId: data.promoCodeId,
+          code: data.code,
+          discountLabel: data.discountLabel,
+          discountPercent: data.discountPercent,
+          discountAmount: data.discountAmount,
+        });
+        setPromoError(null);
+        setPromoInput('');
+      } else {
+        setPromoError(data.error || 'Invalid promo code.');
+      }
+    } catch {
+      setPromoError('Unable to validate code. Please try again.');
+    } finally {
+      setPromoLoading(false);
+    }
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoError(null);
+  };
 
   const handleCheckout = async () => {
     if (cart.length === 0) return;
@@ -42,6 +109,7 @@ export default function CartDrawer() {
             priceId: item.priceId,
             quantity: item.quantity,
           })),
+          ...(appliedPromo ? { promoCodeId: appliedPromo.promoCodeId } : {}),
         }),
       });
       const data = await res.json();
@@ -157,7 +225,7 @@ export default function CartDrawer() {
             )}
           </div>
 
-          {/* Footer — Checkout */}
+          {/* Footer — Promo + Checkout */}
           {cart.length > 0 && (
             <div class="border-t border-border-light p-4 space-y-3">
               {error && (
@@ -166,10 +234,79 @@ export default function CartDrawer() {
                   <span>{error}</span>
                 </div>
               )}
-              <div class="flex items-center justify-between text-lg font-bold">
-                <span>Total</span>
-                <span>${(total / 100).toFixed(2)}</span>
+
+              {/* Promo Code Section */}
+              {!appliedPromo ? (
+                <div class="space-y-2">
+                  <div class="flex gap-2">
+                    <input
+                      type="text"
+                      value={promoInput}
+                      onInput={(e) => {
+                        setPromoInput((e.target as HTMLInputElement).value);
+                        if (promoError) setPromoError(null);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          handleApplyPromo();
+                        }
+                      }}
+                      placeholder="Promo code"
+                      disabled={promoLoading}
+                      class="flex-1 px-3 py-2 text-sm border border-border-light rounded-lg bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blackout/20 focus:border-blackout disabled:opacity-50 transition-colors"
+                    />
+                    <button
+                      onClick={handleApplyPromo}
+                      disabled={promoLoading || !promoInput.trim()}
+                      class="px-4 py-2 text-sm font-semibold border border-blackout text-blackout rounded-lg hover:bg-blackout hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {promoLoading ? '...' : 'Apply'}
+                    </button>
+                  </div>
+                  {promoError && (
+                    <p class="text-xs text-red-500 pl-1">{promoError}</p>
+                  )}
+                </div>
+              ) : (
+                <div class="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-green-600 text-sm">✓</span>
+                    <span class="text-sm font-medium text-green-800">
+                      {appliedPromo.code}
+                    </span>
+                    <span class="text-xs text-green-600">
+                      ({appliedPromo.discountLabel})
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleRemovePromo}
+                    class="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                    aria-label="Remove promo code"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+
+              {/* Order Summary */}
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-sm text-gray-600">
+                  <span>Subtotal</span>
+                  <span>${(total / 100).toFixed(2)}</span>
+                </div>
+                {appliedPromo && savingsAmount > 0 && (
+                  <div class="flex items-center justify-between text-sm text-green-600">
+                    <span>Discount</span>
+                    <span>-${(savingsAmount / 100).toFixed(2)}</span>
+                  </div>
+                )}
+                <div class="flex items-center justify-between text-lg font-bold pt-1">
+                  <span>Total</span>
+                  <span>${(discountedTotal / 100).toFixed(2)}</span>
+                </div>
               </div>
+
               <button
                 onClick={handleCheckout}
                 disabled={isLoading}

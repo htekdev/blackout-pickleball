@@ -60,11 +60,16 @@ interface CheckoutItem {
   name?: string;
 }
 
+interface CheckoutBody {
+  items: CheckoutItem[];
+  promoCodeId?: string;
+}
+
 export const POST: APIRoute = async ({ request }) => {
   const headers = { 'Content-Type': 'application/json' };
 
   try {
-    const { items } = await request.json();
+    const { items, promoCodeId } = (await request.json()) as CheckoutBody;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return new Response(JSON.stringify({ error: 'No items provided' }), {
@@ -103,6 +108,8 @@ export const POST: APIRoute = async ({ request }) => {
         price: item.priceId,
         quantity: item.quantity,
       })),
+      // Apply promotion code if provided and validated client-side
+      ...(promoCodeId ? { discounts: [{ promotion_code: promoCodeId }] } : { allow_promotion_codes: true }),
       shipping_address_collection: {
         allowed_countries: ['US'],
       },
