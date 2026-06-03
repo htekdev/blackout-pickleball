@@ -1,0 +1,472 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Ambassadors" description="Join the Blackout Ambassador Program — represent your city, grow our community, and earn exclusive perks while celebrating diversity in sports.">
+
+  <!-- Hero Banner -->
+  <section class="relative bg-blackout text-white py-20 sm:py-28 overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.04]">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-white"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full border border-white"></div>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-white/60 font-semibold text-sm uppercase tracking-[0.2em] mb-4">Join the Movement</p>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight font-display">Become a Blackout Ambassador.</h1>
+      <p class="mt-6 text-lg sm:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
+        Help us bring diversity and inclusion to every court in your city. Represent Blackout, grow the community, and earn exclusive perks along the way.
+      </p>
+    </div>
+  </section>
+
+  <!-- Two Ambassador Types -->
+  <section class="py-16 sm:py-24 bg-surface">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <span class="w-10 h-px bg-blackout"></span>
+          <span class="text-muted font-semibold text-xs uppercase tracking-[0.2em]">Two Ways to Represent</span>
+          <span class="w-10 h-px bg-blackout"></span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight font-display">Choose Your Path</h2>
+        <p class="mt-4 text-text-light text-lg max-w-2xl mx-auto">
+          Whether you're building community on the ground or inspiring people online, there's a place for you in the Blackout family.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- City Ambassador -->
+        <div class="bg-white border border-border rounded-2xl p-8 sm:p-10 hover:shadow-lg transition-shadow">
+          <div class="w-14 h-14 bg-blackout rounded-xl flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-black font-display mb-3">City Ambassador</h3>
+          <p class="text-text-light leading-relaxed mb-6">
+            Be the face of Blackout in your city. Organize local events, build community on the courts, and help us expand to new markets. You're the boots on the ground.
+          </p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blackout mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span class="text-text-light">Organize & host local Blackout events</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blackout mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span class="text-text-light">Manage your city's Blackout community</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blackout mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span class="text-text-light">Recruit players & grow local membership</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blackout mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span class="text-text-light">Event management tools & support from HQ</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Influencer Ambassador -->
+        <div class="bg-white border border-border rounded-2xl p-8 sm:p-10 hover:shadow-lg transition-shadow">
+          <div class="w-14 h-14 bg-blackout rounded-xl flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-black font-display mb-3">Influencer Ambassador</h3>
+          <p class="text-text-light leading-relaxed mb-6">
+            Use your platform to amplify Blackout's mission. Create content, share your story, and inspire your audience to join the movement — all while earning commissions on merch sales.
+          </p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blackout mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span class="text-text-light">Personal discount code for your followers</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blackout mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span class="text-text-light">Commission on every sale through your code</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blackout mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span class="text-text-light">Create & share content featuring Blackout</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blackout mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span class="text-text-light">Free merch drops & early access to new products</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="py-16 sm:py-24 bg-surface-dark">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <span class="w-10 h-px bg-blackout"></span>
+          <span class="text-muted font-semibold text-xs uppercase tracking-[0.2em]">Ambassador Perks</span>
+          <span class="w-10 h-px bg-blackout"></span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight font-display">What You Get</h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white border border-border rounded-xl p-6 text-center">
+          <div class="text-3xl mb-4">🎽</div>
+          <h3 class="font-bold text-lg mb-2">Free Merch</h3>
+          <p class="text-text-light text-sm">Exclusive ambassador gear plus early access to every new collection drop.</p>
+        </div>
+        <div class="bg-white border border-border rounded-xl p-6 text-center">
+          <div class="text-3xl mb-4">💰</div>
+          <h3 class="font-bold text-lg mb-2">Earn Commissions</h3>
+          <p class="text-text-light text-sm">Get paid for every sale made through your personal discount code.</p>
+        </div>
+        <div class="bg-white border border-border rounded-xl p-6 text-center">
+          <div class="text-3xl mb-4">🎟️</div>
+          <h3 class="font-bold text-lg mb-2">VIP Event Access</h3>
+          <p class="text-text-light text-sm">Free entry to all Blackout events plus VIP perks and networking.</p>
+        </div>
+        <div class="bg-white border border-border rounded-xl p-6 text-center">
+          <div class="text-3xl mb-4">📣</div>
+          <h3 class="font-bold text-lg mb-2">Brand Spotlight</h3>
+          <p class="text-text-light text-sm">Get featured on our social media, website, and event marketing materials.</p>
+        </div>
+        <div class="bg-white border border-border rounded-xl p-6 text-center">
+          <div class="text-3xl mb-4">🤝</div>
+          <h3 class="font-bold text-lg mb-2">Community Leadership</h3>
+          <p class="text-text-light text-sm">Shape the future of diversity in sports and build meaningful connections.</p>
+        </div>
+        <div class="bg-white border border-border rounded-xl p-6 text-center">
+          <div class="text-3xl mb-4">📈</div>
+          <h3 class="font-bold text-lg mb-2">Growth Support</h3>
+          <p class="text-text-light text-sm">Marketing resources, event toolkits, and direct support from the Blackout team.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Requirements -->
+  <section class="py-16 sm:py-24 bg-surface">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <span class="w-10 h-px bg-blackout"></span>
+          <span class="text-muted font-semibold text-xs uppercase tracking-[0.2em]">What We Look For</span>
+          <span class="w-10 h-px bg-blackout"></span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight font-display">Requirements & Expectations</h2>
+        <p class="mt-4 text-text-light text-lg max-w-2xl mx-auto">
+          We're looking for passionate people who believe in our mission and are ready to put in the work.
+        </p>
+      </div>
+
+      <div class="bg-white border border-border rounded-2xl p-8 sm:p-10">
+        <div class="grid sm:grid-cols-2 gap-8">
+          <div>
+            <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 bg-blackout text-white rounded-full flex items-center justify-center text-sm font-bold">✓</span>
+              Must Have
+            </h3>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Passion for diversity & inclusion in sports</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Active in your local pickleball or sports community</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Reliable, self-motivated, and professional</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Active social media presence (any platform)</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">18+ years old</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 bg-blackout text-white rounded-full flex items-center justify-center text-sm font-bold">⚡</span>
+              Expectations
+            </h3>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Post about Blackout at least 2x per month</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Represent the brand positively at all times</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Attend or host at least 1 event per quarter</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Respond to team communications within 48 hours</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-blackout rounded-full mt-2 flex-shrink-0"></span>
+                <span class="text-text-light">Share honest feedback to help us grow</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application Form -->
+  <section class="py-16 sm:py-24 bg-blackout text-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight font-display">Apply Now</h2>
+        <p class="mt-4 text-white/70 text-lg max-w-xl mx-auto">
+          Ready to represent? Fill out the form below and we'll be in touch within a week.
+        </p>
+      </div>
+
+      <form
+        id="ambassador-form"
+        action="https://formspree.io/f/xpwzgjka"
+        method="POST"
+        class="space-y-6"
+      >
+        <input type="hidden" name="_subject" value="New Blackout Ambassador Application" />
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label for="firstName" class="block text-sm font-medium text-white/80 mb-2">First Name *</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              required
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors"
+              placeholder="Your first name"
+            />
+          </div>
+          <div>
+            <label for="lastName" class="block text-sm font-medium text-white/80 mb-2">Last Name *</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              required
+              class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors"
+              placeholder="Your last name"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-white/80 mb-2">Email *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors"
+            placeholder="you@email.com"
+          />
+        </div>
+
+        <div>
+          <label for="phone" class="block text-sm font-medium text-white/80 mb-2">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors"
+            placeholder="(555) 123-4567"
+          />
+        </div>
+
+        <div>
+          <label for="city" class="block text-sm font-medium text-white/80 mb-2">City & State *</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            required
+            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors"
+            placeholder="Chicago, IL"
+          />
+        </div>
+
+        <div>
+          <label for="type" class="block text-sm font-medium text-white/80 mb-2">Ambassador Type *</label>
+          <select
+            id="type"
+            name="ambassadorType"
+            required
+            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors"
+          >
+            <option value="" class="bg-blackout">Select a type...</option>
+            <option value="city" class="bg-blackout">City Ambassador — I want to organize events locally</option>
+            <option value="influencer" class="bg-blackout">Influencer Ambassador — I want to create content & promote</option>
+            <option value="both" class="bg-blackout">Both — I want to do it all</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="social" class="block text-sm font-medium text-white/80 mb-2">Social Media Links *</label>
+          <input
+            type="text"
+            id="social"
+            name="socialMedia"
+            required
+            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors"
+            placeholder="Instagram, TikTok, YouTube, etc."
+          />
+          <p class="mt-1 text-xs text-white/40">Share your most active profile(s)</p>
+        </div>
+
+        <div>
+          <label for="why" class="block text-sm font-medium text-white/80 mb-2">Why do you want to be a Blackout Ambassador? *</label>
+          <textarea
+            id="why"
+            name="whyJoin"
+            required
+            rows="4"
+            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors resize-none"
+            placeholder="Tell us about yourself and what you'd bring to the Blackout community..."
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="experience" class="block text-sm font-medium text-white/80 mb-2">Relevant Experience</label>
+          <textarea
+            id="experience"
+            name="experience"
+            rows="3"
+            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-colors resize-none"
+            placeholder="Event organizing, content creation, community leadership, brand partnerships, etc."
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-white text-blackout font-bold text-lg py-4 px-8 rounded-lg hover:bg-white/90 transition-colors tracking-wide uppercase"
+        >
+          Submit Application
+        </button>
+
+        <p class="text-center text-white/40 text-sm">
+          We review applications weekly and will reach out via email if you're a fit.
+        </p>
+      </form>
+
+      <!-- Success message (hidden by default) -->
+      <div id="form-success" class="hidden text-center py-12">
+        <div class="text-5xl mb-4">🎉</div>
+        <h3 class="text-2xl font-black font-display mb-3">Application Submitted!</h3>
+        <p class="text-white/70 text-lg">
+          Thank you for your interest in becoming a Blackout Ambassador. We'll review your application and get back to you within a week.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 sm:py-24 bg-surface">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight font-display">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="space-y-6">
+        <details class="group bg-white border border-border rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer font-bold hover:bg-surface-dark transition-colors">
+            <span>How long is the ambassador commitment?</span>
+            <svg class="w-5 h-5 text-muted group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-text-light">
+            The initial ambassador term is 6 months. If everything's going well, we'll renew for another term. Either party can end the partnership with 2 weeks notice.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-border rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer font-bold hover:bg-surface-dark transition-colors">
+            <span>Do I need to be a pro pickleball player?</span>
+            <svg class="w-5 h-5 text-muted group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-text-light">
+            Not at all! We're looking for community builders, not pro athletes. If you love the sport and believe in our mission of diversity and inclusion, you're exactly who we're looking for.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-border rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer font-bold hover:bg-surface-dark transition-colors">
+            <span>How much can I earn as an influencer ambassador?</span>
+            <svg class="w-5 h-5 text-muted group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-text-light">
+            Commission rates vary based on your reach and engagement. We'll discuss specifics during the onboarding process. Top ambassadors earn meaningful monthly income through their discount codes.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-border rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer font-bold hover:bg-surface-dark transition-colors">
+            <span>Can I be an ambassador if there's no Blackout events in my city yet?</span>
+            <svg class="w-5 h-5 text-muted group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-text-light">
+            Absolutely — that's exactly what city ambassadors do! You'd be the one to bring Blackout to your area. We provide the playbook, materials, and support to help you launch events from scratch.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-border rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer font-bold hover:bg-surface-dark transition-colors">
+            <span>What cities are you expanding to?</span>
+            <svg class="w-5 h-5 text-muted group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-text-light">
+            We're currently in Chicago and Indianapolis, with plans to expand to 5+ cities this year. If your city has a strong pickleball or sports community, we want to hear from you — you could be the one to bring Blackout there.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // Form submission handling
+  const form = document.getElementById('ambassador-form');
+  const successMsg = document.getElementById('form-success');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form as HTMLFormElement);
+
+      try {
+        const response = await fetch((form as HTMLFormElement).action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' },
+        });
+
+        if (response.ok) {
+          form.classList.add('hidden');
+          successMsg?.classList.remove('hidden');
+        } else {
+          alert('Something went wrong. Please try again or email us directly.');
+        }
+      } catch {
+        alert('Something went wrong. Please try again or email us directly.');
+      }
+    });
+  }
+</script>
