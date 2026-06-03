@@ -2,7 +2,7 @@
 export const prerender = false;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import AddToCartButton from '../components/AddToCartButton';
+import ShopFilterGrid from '../components/ShopFilterGrid';
 import { getCatalog, type CatalogItem } from '../lib/stripe';
 import { PRODUCT_CATALOG, toCatalogItem } from '../lib/products';
 
@@ -107,77 +107,23 @@ function formatPrice(cents: number): string {
         </div>
       )}
 
-      <!-- Product Grid -->
-      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-        {filteredCatalog.map((product) => (
-          <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border flex flex-col">
-            {/* Product Image */}
-            <a href={`/product/${product.id}`} class="block">
-              <div class="aspect-[4/5] bg-white overflow-hidden relative">
-                {product.images.length > 0 ? (
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="w-full h-full flex items-center justify-center bg-surface-dark">
-                    <span class="text-5xl opacity-60">🏓</span>
-                  </div>
-                )}
-                {/* Color swatch badge */}
-                {product.colorHex && (
-                  <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
-                    <span
-                      class="w-3 h-3 rounded-full border border-gray-300 inline-block"
-                      style={`background-color: ${product.colorHex}`}
-                    />
-                    <span class="text-[10px] font-medium text-gray-600">{product.colorName}</span>
-                  </div>
-                )}
-                {/* Multi-angle badge */}
-                {product.images.length > 1 && (
-                  <div class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
-                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" /></svg>
-                    {product.images.length}
-                  </div>
-                )}
-              </div>
-            </a>
-
-            {/* Product Info */}
-            <div class="p-3 sm:p-4 flex flex-col flex-grow">
-              <a href={`/product/${product.id}`} class="block">
-                <h3 class="font-bold text-sm sm:text-base group-hover:text-blackout transition-colors line-clamp-2">{product.name}</h3>
-              </a>
-              <div class="mt-1.5">
-                <span class="text-base sm:text-lg font-black text-blackout">
-                  {product.prices.length > 1 && getLowestPrice(product.prices) !== Math.max(...product.prices.map(p => p.amount))
-                    ? `From ${formatPrice(getLowestPrice(product.prices))}`
-                    : formatPrice(getLowestPrice(product.prices))}
-                </span>
-              </div>
-
-              {/* Add to Cart (Preact island) — pinned to bottom */}
-              <div class="mt-auto pt-2">
-              <AddToCartButton
-                client:load
-                productId={product.id}
-                productName={product.name}
-                productImage={product.images[0] || ''}
-                isDemo={isDemo || !product.isLive}
-                prices={product.prices.map(p => ({
-                  id: p.id,
-                  amount: p.amount,
-                  size: p.size,
-                }))}
-              />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Gender-filtered product grid (client-side Preact island) */}
+      <ShopFilterGrid
+        client:load
+        products={filteredCatalog.map(p => ({
+          id: p.id,
+          name: p.name,
+          description: p.description,
+          images: p.images,
+          sport: p.sport,
+          colorName: p.colorName,
+          colorHex: p.colorHex,
+          category: p.category,
+          isLive: p.isLive,
+          prices: p.prices.map(pr => ({ id: pr.id, amount: pr.amount, size: pr.size })),
+        }))}
+        isDemo={isDemo}
+      />
 
       {filteredCatalog.length === 0 && !isDemo && (
         <div class="bg-blackout/5 rounded-2xl p-12 text-center">

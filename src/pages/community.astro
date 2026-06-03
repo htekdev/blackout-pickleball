@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CommunityCarousel from '../components/CommunityCarousel.astro';
 
 // Community gallery — Jonathan's curated selection (10 photos from Google Photos album)
 // Mix of group shots, individual portraits, product showcases, and creative angles
@@ -107,41 +108,19 @@ const socialPlatforms = [
     </div>
   </section>
 
-  <!-- Community Photo Gallery -->
-  <section class="py-12 sm:py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <p class="text-gray-500 font-semibold text-sm uppercase tracking-widest mb-3">Real People. Real Energy.</p>
-        <h2 class="text-3xl sm:text-4xl font-black text-black">From the Courts & Beyond</h2>
-        <p class="mt-3 text-gray-600 max-w-xl mx-auto">
-          Events, day parties, photoshoots, and the everyday moments that make Blackout special.
-        </p>
-      </div>
-
-      <!-- Masonry-style photo grid (curated for variety — max 1 photo per look/setting) -->
-      <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-        {galleryImages.map((image, index) => (
-          <div class="break-inside-avoid group relative overflow-hidden rounded-xl cursor-pointer">
-            <img
-              src={image.src}
-              alt={image.alt}
-              loading={index < 6 ? 'eager' : 'lazy'}
-              decoding="async"
-              class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-xl"></div>
-            <div class="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <p class="text-white text-sm font-medium drop-shadow-lg">{image.alt}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <p class="mt-8 text-center text-sm text-gray-400">
-        {galleryImages.length + 1} photos from Jonathan's curated collection — community first
-      </p>
-    </div>
-  </section>
+  <!-- Community Photo Carousel -->
+  <CommunityCarousel
+    photos={galleryImages.map(img => ({
+      src: img.src,
+      alt: img.alt,
+      caption: img.alt,
+    }))}
+    title="From the Courts & Beyond"
+    subtitle="Real People. Real Energy."
+    autoPlay={true}
+    interval={4000}
+    showDots={true}
+  />
 
   <!-- Instagram Feature — Primary Platform -->
   <section class="py-16 bg-gray-50">
