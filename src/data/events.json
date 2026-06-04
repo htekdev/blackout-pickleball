@@ -87,6 +87,36 @@
     "visible": true
   },
   {
+    "id": "juneteenth-chicago-2026",
+    "title": "Juneteenth Pickleball Celebration: Chicago",
+    "subtitle": "Celebrate Freedom, Culture & Community 🎉🏓",
+    "date": "Thursday, June 19, 2026",
+    "time": "TBA",
+    "dateISO": "2026-06-19T20:00:00-05:00",
+    "venue": "TBA",
+    "address": "",
+    "city": "Chicago, IL",
+    "image": "/images/events/juneteenth-chicago-2025.png",
+    "price": "Early Bird Available",
+    "ticketUrl": "https://events.eventnoire.com/e/blackout-pickleball-presents-juneteenth-pickleball",
+    "ticketLabel": "Get Tickets",
+    "description": "CHICAGO — we're back for Juneteenth 2026! Join Blackout Pickleball for an unforgettable night celebrating freedom, culture, and community on the courts. The vibes were unreal last year — this year we're doing it even bigger.",
+    "highlights": [
+      "Live DJ spinning all night",
+      "Prizes & giveaways",
+      "Drinks & food available",
+      "All skill levels welcome",
+      "Coaching for beginners",
+      "Early Bird registration available"
+    ],
+    "refundPolicy": "All items are non-refundable, all sales are final",
+    "duration": "3 hours",
+    "format": "In person",
+    "status": "on-sale",
+    "featured": false,
+    "visible": true
+  },
+  {
     "id": "juneteenth-pb-celebration-2026",
     "title": "Juneteenth PB Celebration",
     "subtitle": "Celebrate Freedom on the Court 🎉",
