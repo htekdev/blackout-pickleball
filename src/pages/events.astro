@@ -62,6 +62,14 @@ const events = [
 
 // Sort events by date (earliest first)
 events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTime());
+
+// Parse local date from ISO string directly — avoids UTC timezone offset shifting the day
+// e.g. "2026-06-19T20:00:00-05:00" → { month: 'Jun', day: 19 }
+const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function localDateBadge(isoString: string) {
+  const [year, month, day] = isoString.split('T')[0].split('-').map(Number);
+  return { month: MONTH_ABBR[month - 1], day };
+}
 ---
 
 <BaseLayout title="Events" description="Upcoming Blackout events ΓÇö pickleball tournaments, community mixers, and celebrations. Join the movement.">
@@ -101,8 +109,8 @@ events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTim
                 </div>
               )}
               <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 text-center shadow-md">
-                <p class="text-xs font-bold uppercase text-text-light leading-none">{new Date(event.dateISO).toLocaleDateString('en-US', { month: 'short' })}</p>
-                <p class="text-2xl font-black text-blackout leading-none mt-0.5">{new Date(event.dateISO).getDate()}</p>
+                <p class="text-xs font-bold uppercase text-text-light leading-none">{localDateBadge(event.dateISO).month}</p>
+                <p class="text-2xl font-black text-blackout leading-none mt-0.5">{localDateBadge(event.dateISO).day}</p>
               </div>
               {event.status === 'sold-out' && (
                 <div class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Sold Out</div>
