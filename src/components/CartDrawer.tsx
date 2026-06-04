@@ -54,7 +54,7 @@ export default function CartDrawer() {
       window.location.href = data.url;
     } catch (err) {
       console.error('Checkout error:', err);
-      setError('Network error ΓÇö please check your connection and try again.');
+      setError('Network error — please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -157,7 +157,7 @@ export default function CartDrawer() {
             )}
           </div>
 
-          {/* Footer ΓÇö Checkout */}
+          {/* Footer — Checkout */}
           {cart.length > 0 && (
             <div class="border-t border-border-light p-4 space-y-3">
               {error && (

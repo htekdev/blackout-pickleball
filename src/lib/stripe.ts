@@ -1,7 +1,7 @@
 ﻿import Stripe from 'stripe';
 import { findProduct, PRODUCT_CATALOG, type Product } from './products';
 
-// Server-only ΓÇö never import this on the client.
+// Server-only — never import this on the client.
 // Use process.env for Vercel serverless runtime access.
 const stripeKey = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || '';
 export const stripe = new Stripe(stripeKey);
@@ -164,7 +164,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
   for (const product of products) {
     const baseSlug = product.metadata?.base_slug;
     if (baseSlug) {
-      // Per-size product ΓÇö group by base_slug
+      // Per-size product — group by base_slug
       if (!perSizeGroups.has(baseSlug)) {
         perSizeGroups.set(baseSlug, { products: [], prices: [] });
       }
@@ -174,7 +174,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
       const productPrices = prices.filter((p) => p.product === product.id);
       group.prices.push(...productPrices);
     } else {
-      // Legacy product (no base_slug) ΓÇö handle individually
+      // Legacy product (no base_slug) — handle individually
       legacyProducts.push(product);
     }
   }
@@ -279,7 +279,7 @@ export async function getProductBySlug(slug: string): Promise<CatalogItem | null
     });
     perSizeProducts = result.data.filter((p) => p.active);
   } catch {
-    // Search API might not be available ΓÇö fall back below
+    // Search API might not be available — fall back below
   }
 
   if (perSizeProducts.length > 0) {
@@ -321,7 +321,7 @@ export async function getProductBySlug(slug: string): Promise<CatalogItem | null
     };
   }
 
-  // Strategy 2: Legacy ΓÇö search by metadata.slug
+  // Strategy 2: Legacy — search by metadata.slug
   let stripeProduct: Stripe.Product | undefined;
   try {
     const products = await stripe.products.search({
@@ -376,7 +376,7 @@ export async function getProductBySlug(slug: string): Promise<CatalogItem | null
 
 /**
  * Validate that a price ID is a real Stripe price (starts with "price_").
- * Fake/demo IDs look like "gold_crew_tee_m" ΓÇö these will fail at checkout.
+ * Fake/demo IDs look like "gold_crew_tee_m" — these will fail at checkout.
  */
 export function isRealPriceId(priceId: string): boolean {
   return priceId.startsWith('price_');
