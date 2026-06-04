@@ -1,6 +1,5 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CommunityCarousel from '../components/CommunityCarousel.astro';
 import { PRODUCT_CATALOG } from '../lib/products';
 
 // Pick 4 visually distinct featured products (2 tees + 1 tank + 1 premium)
@@ -136,19 +135,19 @@ const featured = featuredSlugs
             Next Event
           </p>
           <h2 class="text-3xl sm:text-4xl font-black tracking-tight font-display text-blackout">Juneteenth PB Celebration: Chicago</h2>
-          <p class="mt-2 text-text-light text-lg">Celebrate Freedom, Culture & Community 🎉</p>
+          <p class="mt-2 text-text-light text-lg">Celebrate Freedom, Culture & Community ≡ƒÄë</p>
           <div class="mt-4 space-y-2 text-sm text-text-light">
             <div class="flex items-center gap-2">
               <svg class="w-4 h-4 text-blackout shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-              <span>Thursday, June 19, 2025 · 8:00 PM – 11:00 PM</span>
+              <span>Thursday, June 19, 2025 ┬╖ 8:00 PM ΓÇô 11:00 PM</span>
             </div>
             <div class="flex items-center gap-2">
               <svg class="w-4 h-4 text-blackout shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-              <span>SPF · Chicago, IL</span>
+              <span>SPF ┬╖ Chicago, IL</span>
             </div>
           </div>
           <p class="mt-4 text-text-light leading-relaxed">
-            The turnout, the energy, the vibes at our last event were unreal… we're running it back! Live DJ, prizes, drinks, food, and coaching for beginners. All levels welcome.
+            The turnout, the energy, the vibes at our last event were unrealΓÇª we're running it back! Live DJ, prizes, drinks, food, and coaching for beginners. All levels welcome.
           </p>
         </div>
         <div class="flex flex-col items-center md:items-end gap-4">
@@ -166,7 +165,7 @@ const featured = featuredSlugs
             <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </a>
           <a href="/events" class="text-sm text-text-light hover:text-blackout transition-colors font-medium">
-            View all events →
+            View all events ΓåÆ
           </a>
         </div>
       </div>
@@ -199,29 +198,23 @@ const featured = featuredSlugs
       <p class="mt-4 text-text-light max-w-xl mx-auto text-lg">
         Real players. Real performance. Join the community that's bringing diversity and vibrant energy to the court.
       </p>
-    </div>
-  </section>
 
-  <!-- Community Photo Carousel -->
-  <CommunityCarousel
-    photos={[
-      { src: '/images/community/community-01.webp', alt: 'Blackout Pickleball athlete portrait in long-sleeve gear', caption: 'Rep the brand on and off the court' },
-      { src: '/images/community/community-05.webp', alt: 'Three Blackout athletes at the net with paddles and pickleballs', caption: 'Squad goals at the net' },
-      { src: '/images/community/community-03.webp', alt: 'Blackout Pickleball athlete styled portrait on the court', caption: 'Court-ready confidence' },
-      { src: '/images/community/community-07.webp', alt: 'The Blackout Pickleball team — seven athletes at the net', caption: 'The whole crew, united by the game' },
-      { src: '/images/community/community-02.webp', alt: 'Blackout Pickleball athlete in branded gear', caption: 'Bold designs for bold players' },
-      { src: '/images/community/community-06.webp', alt: 'Creative close-up with paddle and pickleballs', caption: 'Every detail matters' },
-      { src: '/images/community/community-08.webp', alt: 'Blackout Pickleball individual portrait', caption: 'Celebrating every player' },
-    ]}
-    autoPlay={true}
-    interval={3500}
-    showDots={true}
-  />
-
-  <!-- Social Links -->
-  <section class="pb-20 pt-8 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="flex justify-center gap-4 flex-wrap">
+      <!-- Community Photo Strip -->
+      <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto">
+        <div class="aspect-square overflow-hidden rounded-xl">
+          <img src="/images/community/community-01.webp" alt="Blackout Pickleball athlete portrait in long-sleeve gear" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+        </div>
+        <div class="aspect-square overflow-hidden rounded-xl">
+          <img src="/images/community/community-05.webp" alt="Three Blackout athletes at the net with paddles and pickleballs" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+        </div>
+        <div class="aspect-square overflow-hidden rounded-xl">
+          <img src="/images/community/community-03.webp" alt="Blackout Pickleball athlete styled portrait on the court" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+        </div>
+        <div class="aspect-square overflow-hidden rounded-xl">
+          <img src="/images/community/community-07.webp" alt="The Blackout Pickleball team ΓÇö seven athletes at the net" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+        </div>
+      </div>
+      <div class="mt-10 flex justify-center gap-4 flex-wrap">
         <a href="https://www.instagram.com/blackoutpickleball" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 bg-white text-blackout border border-border rounded-full hover:bg-surface-dark transition-all text-sm font-medium">
           <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           Instagram

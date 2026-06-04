@@ -1,8 +1,8 @@
----
+﻿---
 export const prerender = false;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ShopFilterGrid from '../components/ShopFilterGrid';
+import AddToCartButton from '../components/AddToCartButton';
 import { getCatalog, type CatalogItem } from '../lib/stripe';
 import { PRODUCT_CATALOG, toCatalogItem } from '../lib/products';
 
@@ -32,7 +32,7 @@ try {
   }
 } catch (e) {
   isDemo = true;
-  // Real product catalog with 12 items and local 360° images
+  // Real product catalog with 12 items and local 360┬░ images
   catalog = PRODUCT_CATALOG.map(toCatalogItem);
 }
 
@@ -50,7 +50,7 @@ function formatPrice(cents: number): string {
 }
 ---
 
-<BaseLayout title="Shop" description="Shop Blackout performance gear — tees, hoodies, hats and more across all sports.">
+<BaseLayout title="Shop" description="Shop Blackout performance gear ΓÇö tees, hoodies, hats and more across all sports.">
 
   <section class="py-16 sm:py-24 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,38 +96,92 @@ function formatPrice(cents: number): string {
         </nav>
       </div>
 
-      {/* Preview mode banner removed — real product photos are live */}
+      {/* Preview mode banner removed ΓÇö real product photos are live */}
 
-      {/* Demo mode warning — prices won't work at checkout */}
+      {/* Demo mode warning ΓÇö prices won't work at checkout */}
       {isDemo && (
         <div class="mb-8 p-4 bg-amber-50 border border-amber-200 rounded-xl text-center">
           <p class="text-amber-800 font-semibold text-sm">
-            🏓 Preview Mode — Products shown with demo pricing. Checkout is disabled until Stripe catalog is configured.
+            ≡ƒÅô Preview Mode ΓÇö Products shown with demo pricing. Checkout is disabled until Stripe catalog is configured.
           </p>
         </div>
       )}
 
-      {/* Gender-filtered product grid (client-side Preact island) */}
-      <ShopFilterGrid
-        client:load
-        products={filteredCatalog.map(p => ({
-          id: p.id,
-          name: p.name,
-          description: p.description,
-          images: p.images,
-          sport: p.sport,
-          colorName: p.colorName,
-          colorHex: p.colorHex,
-          category: p.category,
-          isLive: p.isLive,
-          prices: p.prices.map(pr => ({ id: pr.id, amount: pr.amount, size: pr.size })),
-        }))}
-        isDemo={isDemo}
-      />
+      <!-- Product Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        {filteredCatalog.map((product) => (
+          <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border flex flex-col">
+            {/* Product Image */}
+            <a href={`/product/${product.id}`} class="block">
+              <div class="aspect-[4/5] bg-white overflow-hidden relative">
+                {product.images.length > 0 ? (
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full flex items-center justify-center bg-surface-dark">
+                    <span class="text-5xl opacity-60">≡ƒÅô</span>
+                  </div>
+                )}
+                {/* Color swatch badge */}
+                {product.colorHex && (
+                  <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
+                    <span
+                      class="w-3 h-3 rounded-full border border-gray-300 inline-block"
+                      style={`background-color: ${product.colorHex}`}
+                    />
+                    <span class="text-[10px] font-medium text-gray-600">{product.colorName}</span>
+                  </div>
+                )}
+                {/* Multi-angle badge */}
+                {product.images.length > 1 && (
+                  <div class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" /></svg>
+                    {product.images.length}
+                  </div>
+                )}
+              </div>
+            </a>
+
+            {/* Product Info */}
+            <div class="p-3 sm:p-4 flex flex-col flex-grow">
+              <a href={`/product/${product.id}`} class="block">
+                <h3 class="font-bold text-sm sm:text-base group-hover:text-blackout transition-colors line-clamp-2">{product.name}</h3>
+              </a>
+              <div class="mt-1.5">
+                <span class="text-base sm:text-lg font-black text-blackout">
+                  {product.prices.length > 1 && getLowestPrice(product.prices) !== Math.max(...product.prices.map(p => p.amount))
+                    ? `From ${formatPrice(getLowestPrice(product.prices))}`
+                    : formatPrice(getLowestPrice(product.prices))}
+                </span>
+              </div>
+
+              {/* Add to Cart (Preact island) ΓÇö pinned to bottom */}
+              <div class="mt-auto pt-2">
+              <AddToCartButton
+                client:load
+                productId={product.id}
+                productName={product.name}
+                productImage={product.images[0] || ''}
+                isDemo={isDemo || !product.isLive}
+                prices={product.prices.map(p => ({
+                  id: p.id,
+                  amount: p.amount,
+                  size: p.size,
+                }))}
+              />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {filteredCatalog.length === 0 && !isDemo && (
         <div class="bg-blackout/5 rounded-2xl p-12 text-center">
-          <span class="text-5xl mb-4 block">🏓</span>
+          <span class="text-5xl mb-4 block">≡ƒÅô</span>
           {activeCategory !== 'all' ? (
             <>
               <h2 class="text-2xl font-bold mb-2">No {activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} Products Yet</h2>
@@ -151,8 +205,8 @@ function formatPrice(cents: number): string {
 
       {filteredCatalog.length === 0 && isDemo && activeCategory !== 'all' && activeCategory !== 'pickleball' && (
         <div class="bg-blackout/5 rounded-2xl p-12 text-center">
-          <span class="text-5xl mb-4 block">🎾</span>
-          <h2 class="text-2xl font-bold mb-2">{activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} — Coming Soon</h2>
+          <span class="text-5xl mb-4 block">≡ƒÄ╛</span>
+          <h2 class="text-2xl font-bold mb-2">{activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} ΓÇö Coming Soon</h2>
           <p class="text-text-light max-w-md mx-auto mb-4">
             We're expanding to new sports. Stay tuned for {activeCategory} gear!
           </p>
@@ -163,14 +217,15 @@ function formatPrice(cents: number): string {
       )}
     </div>
   </section>
-
+
+
   {/* JSON-LD Product structured data for SEO */}
   {!isDemo && filteredCatalog.length > 0 && (
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "name": "Blackout Shop",
-      "description": "Shop Blackout performance gear — tees, hoodies, hats and more across all sports.",
+      "description": "Shop Blackout performance gear ΓÇö tees, hoodies, hats and more across all sports.",
       "url": "https://brandblackout.com/shop",
       "mainEntity": {
         "@type": "ItemList",

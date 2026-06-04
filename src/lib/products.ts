@@ -1,9 +1,9 @@
-/**
+﻿/**
  * Static product catalog for Blackout Pickleball.
  *
  * Products auto-discovered from Stripe when connected; this file provides
  * the full catalog for demo/development mode with real product data,
- * local 360° images, and accurate descriptions.
+ * local 360┬░ images, and accurate descriptions.
  */
 
 export interface ProductImage {
@@ -35,7 +35,7 @@ export interface Product {
 const MEN_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
 const WOMEN_SIZES = ['XS', 'S', 'M', 'L', 'XL'];
 
-// Cache-bust version — increment when product photos change
+// Cache-bust version ΓÇö increment when product photos change
 const IMG_VERSION = 2;
 
 function makeAngles(slug: string): ProductImage {
@@ -69,23 +69,23 @@ function womenPrices(id: string) {
   }));
 }
 
-const TEE_DESC = `Premium court-ready crew tee — 85% Polyester / 15% Spandex. Breathable 4-way stretch, moisture-wicking technology, anti-odor treatment. Designed for peak performance in the heat of the game.
+const TEE_DESC = `Premium court-ready crew tee ΓÇö 85% Polyester / 15% Spandex. Breathable 4-way stretch, moisture-wicking technology, anti-odor treatment. Designed for peak performance in the heat of the game.
 
 Features:
-• Moisture-wicking technology
-• 4-way stretch for unrestricted movement
-• Anti-odor treatment
-• Tagless comfort
-• Blackout Pickleball branding`;
+ΓÇó Moisture-wicking technology
+ΓÇó 4-way stretch for unrestricted movement
+ΓÇó Anti-odor treatment
+ΓÇó Tagless comfort
+ΓÇó Blackout Pickleball branding`;
 
-const TANK_DESC = `Performance racerback tank — 90% Polyester / 10% Spandex. Ultra-lightweight with open back design for maximum airflow. Breathable mesh panels keep you cool during intense rallies.
+const TANK_DESC = `Performance racerback tank ΓÇö 90% Polyester / 10% Spandex. Ultra-lightweight with open back design for maximum airflow. Breathable mesh panels keep you cool during intense rallies.
 
 Features:
-• Racerback design for full range of motion
-• Moisture-wicking fabric
-• Breathable mesh panels
-• Flatlock seams to reduce chafing
-• Blackout Pickleball branding`;
+ΓÇó Racerback design for full range of motion
+ΓÇó Moisture-wicking fabric
+ΓÇó Breathable mesh panels
+ΓÇó Flatlock seams to reduce chafing
+ΓÇó Blackout Pickleball branding`;
 
 export const PRODUCT_CATALOG: Product[] = [
   {
@@ -104,7 +104,7 @@ export const PRODUCT_CATALOG: Product[] = [
     id: 'black_holo_crew_tee',
     slug: 'black-holographic-crew-tee',
     name: "Black Holographic Men's Crew Tee",
-    description: TEE_DESC.replace('Blackout Pickleball branding', 'Holographic Blackout Pickleball branding — iridescent logo that shifts color in the light'),
+    description: TEE_DESC.replace('Blackout Pickleball branding', 'Holographic Blackout Pickleball branding ΓÇö iridescent logo that shifts color in the light'),
     category: 'mens-crew-tee',
     colorName: 'Black / Holographic',
     colorHex: '#1A1A1A',
@@ -116,7 +116,7 @@ export const PRODUCT_CATALOG: Product[] = [
     id: 'black_racerback_tank',
     slug: 'black-racerback-tank',
     name: "Black Women's Racerback Tank",
-    description: TANK_DESC.replace('Blackout Pickleball branding', 'Holographic Blackout Pickleball branding — iridescent logo that shifts color in the light'),
+    description: TANK_DESC.replace('Blackout Pickleball branding', 'Holographic Blackout Pickleball branding ΓÇö iridescent logo that shifts color in the light'),
     category: 'womens-racerback-tank',
     colorName: 'Black / Holographic',
     colorHex: '#1A1A1A',
@@ -200,7 +200,7 @@ export const PRODUCT_CATALOG: Product[] = [
     id: 'navy_crew_tee',
     slug: 'navy-crew-tee',
     name: "Navy Blue Men's Crew Tee",
-    description: TEE_DESC.replace('Blackout Pickleball branding', 'Holographic Blackout Pickleball branding — iridescent logo that shifts color in the light'),
+    description: TEE_DESC.replace('Blackout Pickleball branding', 'Holographic Blackout Pickleball branding ΓÇö iridescent logo that shifts color in the light'),
     category: 'mens-crew-tee',
     colorName: 'Navy Blue / Holographic',
     colorHex: '#1B2A4A',
@@ -257,7 +257,7 @@ export function toCatalogItem(p: Product) {
     colorName: p.colorName,
     colorHex: p.colorHex,
     category: p.category,
-    // Demo mode — these are FAKE price IDs that won't work with Stripe
+    // Demo mode ΓÇö these are FAKE price IDs that won't work with Stripe
     isLive: false,
     prices: p.prices,
   };
