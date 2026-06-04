@@ -7,13 +7,13 @@ import { stripe, isRealPriceId } from '../../lib/stripe';
 /**
  * Shipping rate options for Stripe Checkout.
  *
- * Stripe Checkout natively supports `shipping_options` — an array of
+ * Stripe Checkout natively supports `shipping_options` ΓÇö an array of
  * shipping rate configs the customer chooses from at checkout. Combined
  * with `shipping_address_collection`, Stripe collects the address and
  * applies the selected rate automatically. No carrier API needed.
  *
  * The store owner can later create persistent Shipping Rates in the Stripe
- * Dashboard (Settings → Shipping rates) and reference them by ID here
+ * Dashboard (Settings ΓåÆ Shipping rates) and reference them by ID here
  * instead of inline `shipping_rate_data`. That way he can adjust prices
  * without a code deploy.
  */
@@ -22,7 +22,7 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
     shipping_rate_data: {
       type: 'fixed_amount',
       fixed_amount: { amount: 599, currency: 'usd' },
-      display_name: 'Standard Shipping (5–7 business days)',
+      display_name: 'Standard Shipping (5ΓÇô7 business days)',
       delivery_estimate: {
         minimum: { unit: 'business_day', value: 5 },
         maximum: { unit: 'business_day', value: 7 },
@@ -33,7 +33,7 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
     shipping_rate_data: {
       type: 'fixed_amount',
       fixed_amount: { amount: 999, currency: 'usd' },
-      display_name: 'Priority Shipping (2–3 business days)',
+      display_name: 'Priority Shipping (2ΓÇô3 business days)',
       delivery_estimate: {
         minimum: { unit: 'business_day', value: 2 },
         maximum: { unit: 'business_day', value: 3 },
@@ -44,7 +44,7 @@ const SHIPPING_OPTIONS: Stripe.Checkout.SessionCreateParams.ShippingOption[] = [
     shipping_rate_data: {
       type: 'fixed_amount',
       fixed_amount: { amount: 1499, currency: 'usd' },
-      display_name: 'Express Shipping (1–2 business days)',
+      display_name: 'Express Shipping (1ΓÇô2 business days)',
       delivery_estimate: {
         minimum: { unit: 'business_day', value: 1 },
         maximum: { unit: 'business_day', value: 2 },
@@ -60,11 +60,16 @@ interface CheckoutItem {
   name?: string;
 }
 
+interface CheckoutBody {
+  items: CheckoutItem[];
+  promoCodeId?: string;
+}
+
 export const POST: APIRoute = async ({ request }) => {
   const headers = { 'Content-Type': 'application/json' };
 
   try {
-    const { items } = await request.json();
+    const { items, promoCodeId } = (await request.json()) as CheckoutBody;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return new Response(JSON.stringify({ error: 'No items provided' }), {
@@ -95,7 +100,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Each price ID now belongs to a per-size Stripe product whose name
     // already includes the size (e.g. "Gold Men's Crew Tee - L").
-    // No need for inline price_data — Stripe shows the product name
+    // No need for inline price_data ΓÇö Stripe shows the product name
     // directly in the dashboard transaction view.
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
@@ -103,6 +108,8 @@ export const POST: APIRoute = async ({ request }) => {
         price: item.priceId,
         quantity: item.quantity,
       })),
+      // Apply promotion code if provided and validated client-side
+      ...(promoCodeId ? { discounts: [{ promotion_code: promoCodeId }] } : { allow_promotion_codes: true }),
       shipping_address_collection: {
         allowed_countries: ['US'],
       },
