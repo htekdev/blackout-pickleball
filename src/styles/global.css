@@ -1,7 +1,7 @@
-@import 'tailwindcss';
+﻿@import 'tailwindcss';
 
 @theme {
-  /* Blackout — Monochrome Premium Theme (Nike/Apple inspired) */
+  /* Blackout ΓÇö Monochrome Premium Theme (Nike/Apple inspired) */
   --color-blackout: #0a0a0a;
   --color-blackout-dark: #000000;
   --color-blackout-light: #1a1a1a;
@@ -18,7 +18,7 @@
   --color-border: #e5e5e5;
   --color-border-light: #f0f0f0;
 
-  /* Typography — Premium sans-serif */
+  /* Typography ΓÇö Premium sans-serif */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Urbanist', 'Inter', system-ui, -apple-system, sans-serif;
 
@@ -29,13 +29,4 @@
 @keyframes spin-slow {
   from { transform: translateY(-50%) rotate(0deg); }
   to { transform: translateY(-50%) rotate(360deg); }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out both;
 }

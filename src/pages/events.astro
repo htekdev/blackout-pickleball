@@ -1,14 +1,148 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getPublicEvents } from '../lib/events';
-import type { BlackoutEvent } from '../lib/events';
-import eventsData from '../data/events.json';
 
-// Load events from data file and filter to only visible/published ones
-const events = getPublicEvents(eventsData as BlackoutEvent[]);
+const events = [
+  {
+    id: 'blackout-chicago-2026',
+    title: 'Blackout Pickleball Chicago',
+    subtitle: 'Chicago Day Party ≡ƒÄ╛ΓÜí∩╕Å',
+    date: 'Saturday, May 16, 2026',
+    time: '1:00 PM ΓÇô 5:00 PM CT',
+    dateISO: '2026-05-16T13:00:00-05:00',
+    venue: 'Chipickle Pickleball Club',
+    address: '1900 South Wabash Avenue, Chicago, IL 60616',
+    city: 'Chicago, IL',
+    image: '/images/events/blackout-chicago.jpg',
+    price: '$37.05',
+    ticketUrl: 'https://www.eventbrite.com/e/blackout-pickleball-chicago-tickets-1988527028873',
+    ticketLabel: 'Get Tickets',
+    description: "Chicago ΓÇö we're bringing the heat to the court. Blackout Pickleball is taking over for a high-energy daytime experience you don't want to miss. This is where sport meets vibes ΓÇö think competition, music, content, and community all in one.",
+    highlights: [
+      'Open play + competitive rotations + pro players',
+      'Music & high-energy atmosphere',
+      'Content-worthy moments all day',
+      "A crowd that's here to connect & have fun",
+    ],
+    refundPolicy: 'No refunds',
+    duration: '4 hours',
+    format: 'In person',
+    status: 'past',
+  },
+  {
+    id: 'juneteenth-chicago-2025',
+    title: 'Juneteenth Pickleball Celebration: Chicago',
+    subtitle: 'Celebrate Freedom, Culture & Community ≡ƒÄë',
+    date: 'Thursday, June 19, 2025',
+    time: '8:00 PM ΓÇô 11:00 PM',
+    dateISO: '2025-06-19T20:00:00-05:00',
+    venue: 'SPF',
+    address: '2121 N. Clybourn Ave',
+    city: 'Chicago, IL',
+    image: '/images/events/juneteenth-chicago-2025.png',
+    price: '$28 GA',
+    ticketUrl: 'https://events.eventnoire.com/e/blackout-pickleball-presents-juneteenth-pickleball',
+    ticketLabel: 'Get Tickets',
+    description: "CHICAGO! The turnout, the energy, the vibes at our last event were so unrealΓÇª we had NO choice but to run it back. This Juneteenth, we're bringing the community together again for another unforgettable night of pickleball, culture, and celebration. Whether you came to the last one or missed out ΓÇö this is your chance to experience what everyone's been talking about.",
+    highlights: [
+      'Live DJ spinning all night',
+      'Prizes & giveaways',
+      'Drinks & food available',
+      'All skill levels welcome',
+      'Coaching for beginners',
+      'Early Bird pricing (first 50 people)',
+    ],
+    refundPolicy: 'All items are non-refundable, all sales are final',
+    duration: '3 hours',
+    format: 'In person',
+    status: 'past',
+  },
+  {
+    id: 'juneteenth-indianapolis-2025',
+    title: 'Juneteenth Pickleball Celebration: Indianapolis',
+    subtitle: 'Celebrate Freedom, Culture & Community ≡ƒÄë',
+    date: 'Thursday, June 19, 2025',
+    time: 'TBA',
+    dateISO: '2025-06-19T00:00:00-05:00',
+    venue: 'TBA',
+    address: '',
+    city: 'Indianapolis, IN',
+    image: '/images/events/juneteenth-indianapolis-2025.png',
+    price: '$28 GA',
+    ticketUrl: 'https://events.eventnoire.com/e/blackout-pickleball-presents-juneteenth-pickleba-2/tickets',
+    ticketLabel: 'Get Tickets',
+    description: "This Juneteenth, we're bringing the community together for an unforgettable celebration of pickleball, culture, and community in Indianapolis. Join us for a night of play, connection, and celebration. More details coming soon!",
+    highlights: [
+      'Live DJ & entertainment',
+      'Prizes & giveaways',
+      'All skill levels welcome',
+      'Coaching for beginners',
+      'Food & drinks available',
+    ],
+    refundPolicy: 'All items are non-refundable, all sales are final',
+    duration: 'TBA',
+    format: 'In person',
+    status: 'past',
+  },
+  {
+    id: 'juneteenth-pb-celebration-2026',
+    title: 'Juneteenth PB Celebration',
+    subtitle: 'Celebrate Freedom on the Court ≡ƒÄë',
+    date: 'Thursday, June 19, 2026',
+    time: 'TBA',
+    dateISO: '2026-06-19T00:00:00-05:00',
+    venue: 'TBA',
+    address: '',
+    city: 'Indianapolis, IN',
+    image: '/images/events/juneteenth-pb-celebration-2026.png',
+    price: 'Free / RSVP',
+    ticketUrl: 'https://juneteenthpbcelebration.rsvpify.com/',
+    ticketLabel: 'RSVP Now',
+    description: 'Join Blackout Pickleball for a special Juneteenth celebration on the courts. Honor the holiday through sport, community, and culture. More details coming soon ΓÇö RSVP to save your spot.',
+    highlights: [
+      'Juneteenth celebration on the courts',
+      'Community gathering & open play',
+      'Celebrate diversity through sport',
+    ],
+    refundPolicy: null,
+    duration: 'TBA',
+    format: 'In person',
+    status: 'on-sale',
+  },
+  {
+    id: 'juneteenth-chicago-2026',
+    title: 'Juneteenth Pickleball Celebration: Chicago',
+    subtitle: 'Celebrate Freedom, Culture & Community 🎉🏓',
+    date: 'Thursday, June 19, 2026',
+    time: 'TBA',
+    dateISO: '2026-06-19T20:00:00-05:00',
+    venue: 'TBA',
+    address: '',
+    city: 'Chicago, IL',
+    image: '/images/events/juneteenth-chicago-2025.png',
+    price: 'Early Bird Available',
+    ticketUrl: 'https://events.eventnoire.com/e/blackout-pickleball-presents-juneteenth-pickleball',
+    ticketLabel: 'Get Tickets',
+    description: "CHICAGO — we're back for Juneteenth 2026! Join Blackout Pickleball for an unforgettable night celebrating freedom, culture, and community on the courts. The vibes were unreal last year — this year we're doing it even bigger.",
+    highlights: [
+      'Live DJ spinning all night',
+      'Prizes & giveaways',
+      'Drinks & food available',
+      'All skill levels welcome',
+      'Coaching for beginners',
+      'Early Bird registration available',
+    ],
+    refundPolicy: 'All items are non-refundable, all sales are final',
+    duration: '3 hours',
+    format: 'In person',
+    status: 'on-sale',
+  },
+];
+
+// Sort events by date (earliest first)
+events.sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTime());
 ---
 
-<BaseLayout title="Events" description="Upcoming Blackout events — pickleball tournaments, community mixers, and celebrations. Join the movement.">
+<BaseLayout title="Events" description="Upcoming Blackout events ΓÇö pickleball tournaments, community mixers, and celebrations. Join the movement.">
 
   <!-- Hero Section -->
   <section class="relative py-20 sm:py-28 bg-white overflow-hidden">
@@ -21,7 +155,7 @@ const events = getPublicEvents(eventsData as BlackoutEvent[]);
       <p class="text-muted font-semibold text-sm uppercase tracking-[0.2em] mb-4">Upcoming Events</p>
       <h1 class="text-4xl sm:text-6xl font-black tracking-tight font-display text-blackout">Pull Up & Play</h1>
       <p class="mt-5 text-text-light text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-        Where sport meets vibes. Competition, music, content, and community — all in one.
+        Where sport meets vibes. Competition, music, content, and community ΓÇö all in one.
       </p>
     </div>
   </section>
@@ -73,7 +207,7 @@ const events = getPublicEvents(eventsData as BlackoutEvent[]);
                   )}
                   <div class="flex items-center gap-1.5">
                     <svg class="w-4 h-4 text-blackout flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                    <span>{event.venue !== 'TBA' ? `${event.venue} · ${event.city}` : event.city}</span>
+                    <span>{event.venue !== 'TBA' ? `${event.venue} ┬╖ ${event.city}` : event.city}</span>
                   </div>
                 </div>
                 <p class="mt-4 text-text-light leading-relaxed">{event.description}</p>
@@ -81,7 +215,7 @@ const events = getPublicEvents(eventsData as BlackoutEvent[]);
                   <ul class="mt-4 space-y-1.5">
                     {event.highlights.map((h) => (
                       <li class="flex items-start gap-2 text-sm text-text-light">
-                        <span class="text-blackout mt-0.5">✦</span>
+                        <span class="text-blackout mt-0.5">Γ£ª</span>
                         <span>{h}</span>
                       </li>
                     ))}

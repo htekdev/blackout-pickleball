@@ -1,7 +1,7 @@
-import Stripe from 'stripe';
+﻿import Stripe from 'stripe';
 import { findProduct, PRODUCT_CATALOG, type Product } from './products';
 
-// Server-only — never import this on the client.
+// Server-only ΓÇö never import this on the client.
 // Use process.env for Vercel serverless runtime access.
 const stripeKey = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY || '';
 export const stripe = new Stripe(stripeKey);
@@ -134,13 +134,13 @@ function findLocalByName(stripeName: string): Product | undefined {
  *
  * Grouping strategy:
  *   1. Products with metadata.base_slug are grouped into one CatalogItem
- *      per base_slug (e.g. all "gold-crew-tee-*" → one display product)
+ *      per base_slug (e.g. all "gold-crew-tee-*" ΓåÆ one display product)
  *   2. Legacy products (metadata.slug, no base_slug) matched 1:1 as before
  *   3. Name-based fuzzy matching as final fallback
  *
  * This merge gives us:
  *   - REAL Stripe price IDs from per-size products (for checkout)
- *   - LOCAL images (for 360° viewer)
+ *   - LOCAL images (for 360┬░ viewer)
  *   - LOCAL color info (for swatches)
  *   - Slug-based IDs (for stable URLs)
  */
@@ -150,7 +150,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
     getActivePrices(),
   ]);
 
-  // ── Group per-size products by base_slug ──────────────────────────────
+  // ΓöÇΓöÇ Group per-size products by base_slug ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   // Products with metadata.base_slug are per-size variants that should be
   // grouped into a single display product with multiple price options.
 
@@ -164,7 +164,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
   for (const product of products) {
     const baseSlug = product.metadata?.base_slug;
     if (baseSlug) {
-      // Per-size product — group by base_slug
+      // Per-size product ΓÇö group by base_slug
       if (!perSizeGroups.has(baseSlug)) {
         perSizeGroups.set(baseSlug, { products: [], prices: [] });
       }
@@ -174,7 +174,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
       const productPrices = prices.filter((p) => p.product === product.id);
       group.prices.push(...productPrices);
     } else {
-      // Legacy product (no base_slug) — handle individually
+      // Legacy product (no base_slug) ΓÇö handle individually
       legacyProducts.push(product);
     }
   }
@@ -182,7 +182,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
   const catalogItems: CatalogItem[] = [];
   const matchedLocalIds = new Set<string>();
 
-  // ── Build catalog items from per-size groups ──────────────────────────
+  // ΓöÇΓöÇ Build catalog items from per-size groups ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   for (const [baseSlug, group] of perSizeGroups) {
     // Find local product by base_slug
     const local = findProduct(baseSlug);
@@ -218,7 +218,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
     });
   }
 
-  // ── Handle legacy products (no base_slug) ─────────────────────────────
+  // ΓöÇΓöÇ Handle legacy products (no base_slug) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
   for (const product of legacyProducts) {
     const slug = product.metadata?.slug;
     let local: Product | undefined = slug ? findProduct(slug) : undefined;
@@ -279,7 +279,7 @@ export async function getProductBySlug(slug: string): Promise<CatalogItem | null
     });
     perSizeProducts = result.data.filter((p) => p.active);
   } catch {
-    // Search API might not be available — fall back below
+    // Search API might not be available ΓÇö fall back below
   }
 
   if (perSizeProducts.length > 0) {
@@ -321,7 +321,7 @@ export async function getProductBySlug(slug: string): Promise<CatalogItem | null
     };
   }
 
-  // Strategy 2: Legacy — search by metadata.slug
+  // Strategy 2: Legacy ΓÇö search by metadata.slug
   let stripeProduct: Stripe.Product | undefined;
   try {
     const products = await stripe.products.search({
@@ -376,7 +376,7 @@ export async function getProductBySlug(slug: string): Promise<CatalogItem | null
 
 /**
  * Validate that a price ID is a real Stripe price (starts with "price_").
- * Fake/demo IDs look like "gold_crew_tee_m" — these will fail at checkout.
+ * Fake/demo IDs look like "gold_crew_tee_m" ΓÇö these will fail at checkout.
  */
 export function isRealPriceId(priceId: string): boolean {
   return priceId.startsWith('price_');
