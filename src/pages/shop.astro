@@ -50,7 +50,7 @@ function formatPrice(cents: number): string {
 }
 ---
 
-<BaseLayout title="Shop" description="Shop Blackout performance gear ΓÇö tees, hoodies, hats and more across all sports.">
+<BaseLayout title="Shop" description="Shop Blackout performance gear — tees, hoodies, hats and more across all sports.">
 
   <section class="py-16 sm:py-24 bg-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,13 +96,13 @@ function formatPrice(cents: number): string {
         </nav>
       </div>
 
-      {/* Preview mode banner removed ΓÇö real product photos are live */}
+      {/* Preview mode banner removed — real product photos are live */}
 
-      {/* Demo mode warning ΓÇö prices won't work at checkout */}
+      {/* Demo mode warning — prices won't work at checkout */}
       {isDemo && (
         <div class="mb-8 p-4 bg-amber-50 border border-amber-200 rounded-xl text-center">
           <p class="text-amber-800 font-semibold text-sm">
-            ≡ƒÅô Preview Mode ΓÇö Products shown with demo pricing. Checkout is disabled until Stripe catalog is configured.
+            ≡ƒÅô Preview Mode — Products shown with demo pricing. Checkout is disabled until Stripe catalog is configured.
           </p>
         </div>
       )}
@@ -159,7 +159,7 @@ function formatPrice(cents: number): string {
                 </span>
               </div>
 
-              {/* Add to Cart (Preact island) ΓÇö pinned to bottom */}
+              {/* Add to Cart (Preact island) — pinned to bottom */}
               <div class="mt-auto pt-2">
               <AddToCartButton
                 client:load
@@ -206,7 +206,7 @@ function formatPrice(cents: number): string {
       {filteredCatalog.length === 0 && isDemo && activeCategory !== 'all' && activeCategory !== 'pickleball' && (
         <div class="bg-blackout/5 rounded-2xl p-12 text-center">
           <span class="text-5xl mb-4 block">≡ƒÄ╛</span>
-          <h2 class="text-2xl font-bold mb-2">{activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} ΓÇö Coming Soon</h2>
+          <h2 class="text-2xl font-bold mb-2">{activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} — Coming Soon</h2>
           <p class="text-text-light max-w-md mx-auto mb-4">
             We're expanding to new sports. Stay tuned for {activeCategory} gear!
           </p>
@@ -225,7 +225,7 @@ function formatPrice(cents: number): string {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "name": "Blackout Shop",
-      "description": "Shop Blackout performance gear ΓÇö tees, hoodies, hats and more across all sports.",
+      "description": "Shop Blackout performance gear — tees, hoodies, hats and more across all sports.",
       "url": "https://brandblackout.com/shop",
       "mainEntity": {
         "@type": "ItemList",

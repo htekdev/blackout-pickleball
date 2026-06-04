@@ -20,11 +20,11 @@ const now = Date.now();
 const daysUntil = Math.ceil((eventTime - now) / (1000 * 60 * 60 * 24));
 const showBanner = daysUntil > 0 && daysUntil <= 30;
 
-// Format date
-const eventDateFormatted = new Date(eventDate).toLocaleDateString('en-US', {
-  month: 'short',
-  day: 'numeric',
-});
+// Format date directly from ISO string — avoids UTC timezone offset shifting the displayed date
+// e.g. "2026-06-19T20:00:00-05:00" must display as "Jun 19", not "Jun 20" (which UTC would give)
+const [_y, _m, _d] = eventDate.split('T')[0].split('-').map(Number);
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const eventDateFormatted = `${MONTHS[_m - 1]} ${_d}`;
 ---
 
 {showBanner && (
