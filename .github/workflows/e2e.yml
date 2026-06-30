@@ -31,8 +31,26 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Start preview server
+        run: npm run preview &
+
+      - name: Wait for preview server
+        run: |
+          echo "Waiting for preview server on port 4321..."
+          for i in $(seq 1 30); do
+            if curl -s -o /dev/null -w "%{http_code}" http://localhost:4321 | grep -qE "^[23]"; then
+              echo "Server ready after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Server failed to start after 30s"
+          exit 1
+
       - name: Run E2E tests
         run: npm run test:e2e
+        env:
+          BASE_URL: http://localhost:4321
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
