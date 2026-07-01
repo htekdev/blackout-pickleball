@@ -30,27 +30,34 @@ jobs:
 
       - name: Build site
         run: npm run build
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY || 'sk_test_placeholder' }}
+          PUBLIC_STRIPE_KEY: ${{ secrets.PUBLIC_STRIPE_TEST_KEY || 'pk_test_placeholder' }}
 
       - name: Start preview server
-        run: npm run preview &
+        run: nohup npx astro preview --host 0.0.0.0 --port 4321 > /tmp/preview.log 2>&1 &
 
       - name: Wait for preview server
         run: |
-          echo "Waiting for preview server on port 4321..."
-          for i in $(seq 1 30); do
-            if curl -s -o /dev/null -w "%{http_code}" http://localhost:4321 | grep -qE "^[23]"; then
-              echo "Server ready after ${i}s"
+          echo "Waiting for preview server on 127.0.0.1:4321..."
+          for i in $(seq 1 60); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4321 2>/dev/null)
+            if echo "$STATUS" | grep -qE "^[2345]"; then
+              echo "Server ready (HTTP $STATUS) after ${i}s"
               exit 0
             fi
             sleep 1
           done
-          echo "Server failed to start after 30s"
+          echo "Server failed to start after 60s"
+          cat /tmp/preview.log || true
           exit 1
 
       - name: Run E2E tests
         run: npm run test:e2e
         env:
-          BASE_URL: http://localhost:4321
+          BASE_URL: http://127.0.0.1:4321
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY || 'sk_test_placeholder' }}
+          PUBLIC_STRIPE_KEY: ${{ secrets.PUBLIC_STRIPE_TEST_KEY || 'pk_test_placeholder' }}
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
