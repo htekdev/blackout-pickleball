@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "Waiting for preview server on 127.0.0.1:4321..."
           for i in $(seq 1 60); do
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4321 2>/dev/null)
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4321 2>/dev/null) || true
             if echo "$STATUS" | grep -qE "^[2345]"; then
               echo "Server ready (HTTP $STATUS) after ${i}s"
               exit 0
