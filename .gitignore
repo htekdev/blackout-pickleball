@@ -14,3 +14,8 @@ keys
 .vercel
 .env*.local
 temp-photos/
+
+# Playwright
+/playwright-report/
+/test-results/
+/playwright/.cache/
