@@ -29,6 +29,10 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Build site
+        env:
+          STRIPE_SECRET_KEY: sk_test_placeholder
+          PUBLIC_STRIPE_KEY: pk_test_placeholder
+          SITE_URL: http://localhost:4321
         run: npm run build
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY || 'sk_test_placeholder' }}
@@ -52,7 +56,25 @@ jobs:
           cat /tmp/preview.log || true
           exit 1
 
+      - name: Start preview server
+        run: npx astro preview --host 0.0.0.0 --port 4321 &
+
+      - name: Wait for preview server
+        run: |
+          echo "Waiting for preview server to be ready..."
+          for i in $(seq 1 30); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/) || true
+            if [ "$STATUS" = "200" ]; then
+              echo "Preview server ready after ${i}s"
+              break
+            fi
+            echo "Attempt $i/30: status=$STATUS — waiting 2s..."
+            sleep 2
+          done
+
       - name: Run E2E tests
+        env:
+          BASE_URL: http://localhost:4321
         run: npm run test:e2e
         env:
           BASE_URL: http://127.0.0.1:4321
